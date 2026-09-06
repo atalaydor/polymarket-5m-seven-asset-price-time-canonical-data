@@ -1,0 +1,44 @@
+name: Independent historical catalog enumeration
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: first-party-catalog-enumeration
+  cancel-in-progress: false
+jobs:
+  stream:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        stream:
+          - series-ascending
+          - series-descending
+          - 2026-08-25-markets-true
+          - 2026-08-25-markets-false
+          - 2026-08-25-events-true
+          - 2026-08-25-events-false
+          - 2026-08-27-markets-true
+          - 2026-08-27-markets-false
+          - 2026-08-27-events-true
+          - 2026-08-27-events-false
+          - 2026-08-28-markets-true
+          - 2026-08-28-markets-false
+          - 2026-08-28-events-true
+          - 2026-08-28-events-false
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.14.7'
+      - run: python -m pip install --no-cache-dir -r requirements.lock
+      - env:
+          PYTHONPATH: src
+          GH_TOKEN: ${{ github.token }}
+          CATALOG_STREAM: ${{ matrix.stream }}
+        run: python -m pflow.catalog_enumerate "$CATALOG_STREAM"
