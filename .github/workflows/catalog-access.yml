@@ -1,0 +1,24 @@
+name: Remaining catalog route access proof
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: first-party-catalog-access
+  cancel-in-progress: false
+jobs:
+  access:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.14.7'
+      - run: python -m pip install --no-cache-dir -r requirements.lock
+      - env:
+          PYTHONPATH: src
+          GH_TOKEN: ${{ github.token }}
+        run: python -m pflow.catalog_access
