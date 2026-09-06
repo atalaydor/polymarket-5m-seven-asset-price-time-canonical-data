@@ -313,6 +313,27 @@ def _mapping_relation(target: dict[str, Any], mapping: dict[str, Any]) -> bool:
     )
 
 
+def _observation_relation(row: dict[str, Any], mapping: dict[str, Any]) -> bool:
+    expected_token = {
+        "UP": mapping["up_token"],
+        "DOWN": mapping["down_token"],
+    }.get(row.get("outcome"))
+    return (
+        row.get("asset") == mapping["asset"]
+        and row.get("start_us") == mapping["start_us"]
+        and row.get("end_us") == mapping["end_us"]
+        and row.get("token") == expected_token
+    )
+
+
+def _resolution_relation(row: dict[str, Any], mapping: dict[str, Any]) -> bool:
+    expected_token = {
+        "UP": mapping["up_token"],
+        "DOWN": mapping["down_token"],
+    }.get(row.get("winning_outcome"))
+    return row.get("asset") == mapping["asset"] and row.get("winning_token") == expected_token
+
+
 def certify_day(target_tag: str, target_sha: str, day: str) -> dict[str, Any]:
     target_catalog = _load_target_catalog(target_tag, target_sha)
     inventory, v3_catalog, index = _load_index()
@@ -345,7 +366,7 @@ def certify_day(target_tag: str, target_sha: str, day: str) -> dict[str, Any]:
     source_errors: list[dict[str, Any]] = []
     sources = []
     for part in index["partitions"]:
-        source_errors.extend(error for error in part["errors"] if error["day"] == day)
+        source_errors.extend(error for error in part["errors"] if error.get("day") == day)
         release = _release(part["tag"])
         _, report_data = _asset(release, "report.json")
         if sha(report_data) != part["report_sha256"]:
@@ -377,11 +398,15 @@ def certify_day(target_tag: str, target_sha: str, day: str) -> dict[str, Any]:
                 raise ValueError("retained canonical shard exceeds target catalog")
             if row["schema"] == OBSERVATION_SCHEMA:
                 validate_observation(row)
+                if not _observation_relation(row, mapping):
+                    raise ValueError("observation contradicts authoritative target mapping")
                 observations += 1
                 if row["availability"] == "observed_ask":
                     by_side[(row["market"], row["outcome"])] += 1
             elif row["schema"] == RESOLUTION_SCHEMA:
                 validate_resolution(row)
+                if not _resolution_relation(row, mapping):
+                    raise ValueError("resolution contradicts authoritative target mapping")
                 winners[row["market"]].add((row["winning_token"], row["winning_outcome"]))
             else:
                 raise ValueError("forbidden canonical row schema")
@@ -751,11 +776,15 @@ def verify_window(tag: str, digest: str) -> dict[str, Any]:
                     raise ValueError("canonical row outside independent target catalog")
                 if row["schema"] == OBSERVATION_SCHEMA:
                     validate_observation(row)
+                    if not _observation_relation(row, row_mapping):
+                        raise ValueError("observation contradicts authoritative target mapping")
                     observations += 1
                     if row["availability"] == "observed_ask":
                         by_side[row["market"]].add(row["outcome"])
                 elif row["schema"] == RESOLUTION_SCHEMA:
                     validate_resolution(row)
+                    if not _resolution_relation(row, row_mapping):
+                        raise ValueError("resolution contradicts authoritative target mapping")
                     winners[row["market"]].add((row["winning_token"], row["winning_outcome"]))
                 else:
                     raise ValueError("depth/opaque canonical row rejected")

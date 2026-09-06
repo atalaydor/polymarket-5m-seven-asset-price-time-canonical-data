@@ -6,6 +6,8 @@ from pflow.target_salvage import (
     TARGET_SCOPE,
     _day_entries,
     _mapping_relation,
+    _observation_relation,
+    _resolution_relation,
     scope_fields,
 )
 
@@ -96,6 +98,27 @@ class TargetSalvageTests(unittest.TestCase):
         self.assertEqual(value["certification_scope"], TARGET_SCOPE)
         self.assertFalse(value["continuity_between_observations_certified"])
         self.assertFalse(value["historical_deleted_listing_completeness_claimed"])
+
+    def test_canonical_rows_must_match_authoritative_orientation(self) -> None:
+        mapping = _day_entries(report(), "BTC", "2026-08-25")[0]
+        observation = {
+            "asset": "BTC",
+            "start_us": mapping["start_us"],
+            "end_us": mapping["end_us"],
+            "outcome": "UP",
+            "token": mapping["up_token"],
+        }
+        resolution = {
+            "asset": "BTC",
+            "winning_outcome": "DOWN",
+            "winning_token": mapping["down_token"],
+        }
+        self.assertTrue(_observation_relation(observation, mapping))
+        self.assertTrue(_resolution_relation(resolution, mapping))
+        observation["token"] = mapping["down_token"]
+        resolution["winning_token"] = mapping["up_token"]
+        self.assertFalse(_observation_relation(observation, mapping))
+        self.assertFalse(_resolution_relation(resolution, mapping))
 
 
 if __name__ == "__main__":
