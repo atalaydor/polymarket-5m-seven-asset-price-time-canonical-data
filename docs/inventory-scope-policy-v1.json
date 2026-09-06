@@ -1,0 +1,16 @@
+{
+  "schema": "pendulumflow-v3-observed-certification-scope-policy.v1",
+  "profile": "PENDULUMFLOW_V3_OBSERVED",
+  "profile_version": 1,
+  "certification_scope": "PINNED_PUBLISHED_PENDULUMFLOW_V3_INVENTORY",
+  "certification_scope_version": 1,
+  "claim": "Complete deterministic in-scope projection of every BTC/ETH/SOL/XRP/DOGE/BNB/HYPE Polymarket 5-minute Up/Down market present in the pinned published PendulumFlow V3 inventory generation, with mapping, recorded best-ask, integrity and official-resolution evidence.",
+  "historical_polymarket_listing_completeness_claimed": false,
+  "inventory_absence_means_never_listed": false,
+  "continuity_between_observations_certified": false,
+  "missed_observation_exclusion_claimed": false,
+  "time_only_crossings_permitted": false,
+  "sender_execution_reconstruction_claimed": false,
+  "canonical_products": ["new_market", "best_bid_ask", "market_resolved"],
+  "future_incompatible_profile": "OWN_RECORDER_EXACT"
+}

@@ -56,3 +56,10 @@ The [observed-profile source review](docs/observed-source-review.md) identifies 
 remaining expected-target catalog gate; no observed day/window or autonomous
 accumulation has been launched. See the additive
 [consumer handoff](docs/observed-consumer-handoff.json) for explicit profile and authority flags.
+
+The final additive policy in [inventory scope v1](docs/inventory-scope-v1.md) accepts
+the discovered native V3 lifecycle universe as the denominator for this temporary
+profile only. The production workflow pins the complete paginated published index and
+each manifest, projects only the three allowed products, publishes immutable day/window
+generations, and runs every six hours. This does not revise the earlier negative
+continuity or historical venue-catalog findings.

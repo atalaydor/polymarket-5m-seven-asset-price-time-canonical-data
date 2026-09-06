@@ -86,7 +86,13 @@ def verify_release(release: dict[str, Any], expected: dict[str, bytes] | None = 
             raise ValueError("release differs from expected payload")
 
 
-def publish(tag: str, payloads: dict[str, bytes], commit: str, title: str) -> dict[str, Any]:
+def publish(
+    tag: str,
+    payloads: dict[str, bytes],
+    commit: str,
+    title: str,
+    body: str = "Source-proof evidence only. No certified research authority.",
+) -> dict[str, Any]:
     assets = {f"{sha(data)}--{name}": data for name, data in payloads.items()}
     if any(not data or len(data) >= 1_900_000_000 for data in assets.values()):
         raise ValueError("empty/oversized release asset")
@@ -101,7 +107,7 @@ def publish(tag: str, payloads: dict[str, bytes], commit: str, title: str) -> di
                 "name": title,
                 "draft": True,
                 "prerelease": False,
-                "body": "Source-proof evidence only. No certified research authority.",
+                "body": body,
             },
         )
     if not release["draft"]:
@@ -114,9 +120,16 @@ def publish(tag: str, payloads: dict[str, bytes], commit: str, title: str) -> di
         for name, data in assets.items():
             if name in existing:
                 item = existing[name]
-                if item["size"] != len(data) or item.get("digest") != "sha256:" + sha(data):
-                    raise ValueError("staged object differs; never overwrite")
-                continue
+                expected_digest = "sha256:" + sha(data)
+                if item.get("state") == "uploaded":
+                    if item["size"] != len(data) or item.get("digest") != expected_digest:
+                        raise ValueError("completed staged object differs; never overwrite")
+                    continue
+                # GitHub can leave a zero-byte starter after an interrupted upload.
+                # It has no completed bytes to preserve and is safe to retry by name.
+                if item.get("size") != 0 or item.get("digest") not in (None, expected_digest):
+                    raise ValueError("incomplete staged object is not a safe upload starter")
+                api(f"releases/assets/{item['id']}", "DELETE")
             path = Path(directory) / name
             path.write_bytes(data)
             subprocess.run(["gh", "release", "upload", tag, str(path), "--repo", REPO], check=True)

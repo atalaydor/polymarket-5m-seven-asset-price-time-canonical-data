@@ -33,6 +33,23 @@ COLUMNS = {
 }
 
 
+class _SourceRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(
+        self,
+        req: urllib.request.Request,
+        fp: Any,
+        code: int,
+        msg: str,
+        headers: Any,
+        newurl: str,
+    ) -> urllib.request.Request | None:
+        valid_url(newurl)
+        return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+
+OPEN = urllib.request.build_opener(_SourceRedirect())
+
+
 def canonical(value: Any) -> bytes:
     return (
         json.dumps(
@@ -84,7 +101,7 @@ class Reader:
         }
         started = time.monotonic()
         request = urllib.request.Request(url, headers=headers)
-        with urllib.request.urlopen(request, timeout=90) as response:
+        with OPEN.open(request, timeout=90) as response:
             valid_url(response.url)
             record.update(
                 status=response.status,
