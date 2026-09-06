@@ -10,7 +10,7 @@ from unittest.mock import MagicMock, patch
 import pyarrow as pa
 import pyarrow.parquet as pq
 
-from pflow.release import publish
+from pflow.release import api, publish
 from pflow.source import Reader, check_schema, fetch_products, sha
 
 
@@ -27,6 +27,21 @@ class MemoryReader(Reader):
 
 
 class AcquisitionTests(unittest.TestCase):
+    def test_release_api_retries_transient_integration_403(self) -> None:
+        denied = MagicMock(
+            returncode=1,
+            stderr=b"gh: Resource not accessible by integration (HTTP 403)",
+            stdout=b"",
+        )
+        allowed = MagicMock(returncode=0, stderr=b"", stdout=b'{"id":1}')
+        with (
+            patch("pflow.release.subprocess.run", side_effect=[denied, allowed]) as run,
+            patch("pflow.release.time.sleep") as sleep,
+        ):
+            self.assertEqual(api("fixture"), {"id": 1})
+        self.assertEqual(run.call_count, 2)
+        sleep.assert_called_once_with(1)
+
     def test_exact_range_and_full_body_rejection(self) -> None:
         response = MagicMock()
         response.url = "https://archive.pendulumflow.com/v3/fixture.parquet"
@@ -180,6 +195,84 @@ class AcquisitionTests(unittest.TestCase):
             publish("fixture", {"report.json": payload}, "f" * 40, "fixture")
         self.assertEqual(events, ["starter_deleted", "sealed"])
         upload.assert_called_once()
+
+    def test_ambiguous_create_response_is_reconciled_by_exact_tag(self) -> None:
+        payload = b'{"fixture":true}\n'
+        commit = "f" * 40
+        name = sha(payload) + "--report.json"
+        asset = {
+            "name": name,
+            "size": len(payload),
+            "digest": "sha256:" + sha(payload),
+            "state": "uploaded",
+        }
+        draft = {
+            "id": 1,
+            "tag_name": "fixture",
+            "target_commitish": commit,
+            "prerelease": False,
+            "draft": True,
+            "assets": [asset],
+        }
+        sealed = {**draft, "draft": False, "immutable": True}
+        calls: list[tuple[str, str]] = []
+
+        def fake_api(path: str, method: str = "GET", body: Any = None) -> Any:
+            calls.append((path, method))
+            if calls == [("releases/tags/fixture", "GET")]:
+                return None
+            if path == "releases" and method == "POST":
+                raise RuntimeError("HTTP 503 after server accepted request")
+            if path == "releases/tags/fixture":
+                return draft
+            if path == "releases/1" and method == "PATCH":
+                return sealed
+            return draft
+
+        with (
+            patch("pflow.release.api", side_effect=fake_api),
+            patch("pflow.release.read_asset", return_value=payload),
+            patch("subprocess.run") as upload,
+        ):
+            publish("fixture", {"report.json": payload}, commit, "fixture")
+        upload.assert_not_called()
+        self.assertEqual(calls.count(("releases", "POST")), 1)
+
+    def test_ambiguous_seal_response_is_reconciled_by_release_id(self) -> None:
+        payload = b'{"fixture":true}\n'
+        name = sha(payload) + "--report.json"
+        asset = {
+            "name": name,
+            "size": len(payload),
+            "digest": "sha256:" + sha(payload),
+            "state": "uploaded",
+        }
+        draft = {"id": 1, "draft": True, "assets": [asset]}
+        sealed = {
+            **draft,
+            "draft": False,
+            "prerelease": False,
+            "immutable": True,
+        }
+        seal_attempted = False
+
+        def fake_api(path: str, method: str = "GET", body: Any = None) -> Any:
+            nonlocal seal_attempted
+            if method == "PATCH":
+                seal_attempted = True
+                raise RuntimeError("HTTP 503 after server accepted request")
+            if path == "releases/1" and seal_attempted:
+                return sealed
+            return draft
+
+        with (
+            patch("pflow.release.api", side_effect=fake_api),
+            patch("pflow.release.read_asset", return_value=payload),
+            patch("subprocess.run") as upload,
+        ):
+            publish("fixture", {"report.json": payload}, "f" * 40, "fixture")
+        upload.assert_not_called()
+        self.assertTrue(seal_attempted)
 
 
 if __name__ == "__main__":

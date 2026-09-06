@@ -6,6 +6,7 @@ import json
 import os
 import subprocess
 import tempfile
+import time
 import urllib.request
 from pathlib import Path
 from typing import Any
@@ -28,16 +29,35 @@ def api(path: str, method: str = "GET", body: dict[str, Any] | None = None) -> A
     ]
     if body is not None:
         command += ["--input", "-"]
-    result = subprocess.run(
-        command,
-        input=canonical(body) if body is not None else None,
-        capture_output=True,
-        check=False,
-    )
-    if result.returncode:
-        if "HTTP 404" in result.stderr.decode():
+    for attempt in range(6):
+        result = subprocess.run(
+            command,
+            input=canonical(body) if body is not None else None,
+            capture_output=True,
+            check=False,
+        )
+        error = result.stderr.decode()
+        if not result.returncode:
+            break
+        if "HTTP 404" in error:
             return None
-        raise RuntimeError(result.stderr.decode())
+        transient_response = any(
+            marker in error
+            for marker in (
+                "HTTP 403",
+                "HTTP 429",
+                "HTTP 502",
+                "HTTP 503",
+                "Resource not accessible by integration",
+                "secondary rate limit",
+            )
+        )
+        retry_is_idempotent = method in {"GET", "DELETE"} or any(
+            marker in error for marker in ("HTTP 403", "HTTP 429")
+        )
+        if not transient_response or not retry_is_idempotent or attempt == 5:
+            raise RuntimeError(error)
+        time.sleep(2**attempt)
     return json.loads(result.stdout) if result.stdout.strip() else None
 
 
@@ -98,18 +118,28 @@ def publish(
         raise ValueError("empty/oversized release asset")
     release = api(f"releases/tags/{tag}")
     if release is None:
-        release = api(
-            "releases",
-            "POST",
-            {
-                "tag_name": tag,
-                "target_commitish": commit,
-                "name": title,
-                "draft": True,
-                "prerelease": False,
-                "body": body,
-            },
-        )
+        create = {
+            "tag_name": tag,
+            "target_commitish": commit,
+            "name": title,
+            "draft": True,
+            "prerelease": False,
+            "body": body,
+        }
+        try:
+            release = api("releases", "POST", create)
+        except RuntimeError as exc:
+            # A failed transport can hide a successful server-side create. Reconcile
+            # the exact tag instead of blindly repeating a non-idempotent POST.
+            release = api(f"releases/tags/{tag}")
+            if release is None:
+                raise exc
+            if (
+                release.get("tag_name") != tag
+                or release.get("target_commitish") != commit
+                or release.get("prerelease") is not False
+            ):
+                raise ValueError("ambiguously created release differs from request") from exc
     if not release["draft"]:
         verify_release(release, assets)
         return dict(release)
@@ -147,7 +177,16 @@ def publish(
             raise ValueError("staged size/digest disagreement")
         if read_asset(item, draft=True) != data:
             raise ValueError("independently read staged bytes differ before sealing")
-    sealed = api(f"releases/{release['id']}", "PATCH", {"draft": False, "make_latest": "false"})
+    try:
+        sealed = api(
+            f"releases/{release['id']}",
+            "PATCH",
+            {"draft": False, "make_latest": "false"},
+        )
+    except RuntimeError as exc:
+        sealed = api(f"releases/{release['id']}")
+        if sealed is None or sealed.get("draft") or not sealed.get("immutable"):
+            raise exc
     # Native publication is atomic with respect to release sealing. Independent
     # read-after-write verifies the sealed bytes; no mutation follows this point.
     verify_release(sealed, assets)
