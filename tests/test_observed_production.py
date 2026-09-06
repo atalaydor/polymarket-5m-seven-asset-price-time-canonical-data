@@ -25,6 +25,7 @@ from pflow.production import (
     _day_batches,
     _existing_partition,
     _implementation_bundle_digest,
+    _resolution_evidence,
     _rolling_day_set_advances,
     _target_like,
     _work_batches,
@@ -258,6 +259,13 @@ class ObservedProductionTests(unittest.TestCase):
         incoming = [*old, "2026-07-30", "2026-07-31"][-30:]
         self.assertTrue(_rolling_day_set_advances(old, incoming))
         self.assertFalse(_rolling_day_set_advances([*old, "2026-07-30"], ["2026-07-31"]))
+
+    def test_missing_resolution_lookup_does_not_create_a_contradiction(self) -> None:
+        winners = {"resolved": {("token", "UP")}}
+        missing, contradictory, count = _resolution_evidence(("missing", "resolved"), winners)
+        self.assertEqual(missing, ["missing"])
+        self.assertEqual(contradictory, [])
+        self.assertEqual(count, 1)
 
     def test_partition_recovery_deletes_only_empty_report_starter(self) -> None:
         release = {

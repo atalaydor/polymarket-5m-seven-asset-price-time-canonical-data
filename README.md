@@ -4,10 +4,11 @@ This is a new, independent, depth-free acquisition project for Polymarket five-m
 Up/Down BTC, ETH, SOL, XRP, DOGE, BNB and HYPE. Development and control run on Windows;
 market payload acquisition and decoding are restricted to standard GitHub-hosted Linux.
 
-**No certified daily or rolling research authority exists.** Source sufficiency is a hard
-gate before scaling. Current native V3 coverage documentation does not establish a
-target-market census or target-token continuity. The bounded canary measures what is
-actually available without turning upstream audit labels into certification.
+**Current status: no certified daily or rolling research authority exists.** The first
+complete production projection is blocked because native observations reference
+conditions that lack identity records in the pinned V3 generation. Earlier checkpoints
+also preserved separate negative findings about historical venue membership and exact
+price continuity; neither is being imposed as the current gate.
 
 The frozen research-facing acquisition path permits only `new_market`, `best_bid_ask`
 and `market_resolved` product ranges.
@@ -52,14 +53,18 @@ This project's projections and proof reports are transformations, not upstream c
 The subsequent user policy authorizes the separate
 [PENDULUMFLOW_V3_OBSERVED v1 profile](docs/observed-profile-v1.md), with source-time
 qualification at recorded observations only. It does not require price continuity.
-The [observed-profile source review](docs/observed-source-review.md) identifies the
-remaining expected-target catalog gate; no observed day/window or autonomous
-accumulation has been launched. See the additive
+The historical v0.3 [observed-profile source review](docs/observed-source-review.md)
+identified an expected-target catalog gate before the later source-inventory scope policy.
+See that checkpoint's
 [consumer handoff](docs/observed-consumer-handoff.json) for explicit profile and authority flags.
 
 The final additive policy in [inventory scope v1](docs/inventory-scope-v1.md) accepts
 the discovered native V3 lifecycle universe as the denominator for this temporary
 profile only. The production workflow pins the complete paginated published index and
 each manifest, projects only the three allowed products, publishes immutable day/window
-generations, and runs every six hours. This does not revise the earlier negative
-continuity or historical venue-catalog findings.
+generations, and fails closed on unresolved native identities. The first complete
+projection found 170,369 condition IDs with no `new_market` classification record in
+the same generation. All three assessed days were excluded, so no research window or
+current reference exists and scheduled acquisition is disabled. See the
+[inventory identity capability gap](docs/inventory-identity-capability-gap.md). This
+does not revise the earlier negative continuity or historical venue-catalog findings.

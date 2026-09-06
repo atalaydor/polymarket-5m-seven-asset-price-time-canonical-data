@@ -1,0 +1,40 @@
+{
+  "schema": "pendulumflow-run2-inventory-identity-blocked-handoff.v1",
+  "repository": "atalaydor/polymarket-5m-seven-asset-price-time-canonical-data",
+  "repository_id": 1358712762,
+  "checkpoint_tag": "run-1-v3-inventory-identity-blocked-v0.5.0",
+  "checkpoint_manifest_locator": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/run-1-v3-inventory-identity-blocked-v0.5.0",
+  "profile": "PENDULUMFLOW_V3_OBSERVED",
+  "profile_version": 1,
+  "certification_scope": "PINNED_PUBLISHED_PENDULUMFLOW_V3_INVENTORY",
+  "certification_scope_version": 1,
+  "status": "BLOCKED_SOURCE_CAPABILITY",
+  "research_import_allowed": false,
+  "continuity_between_observations_certified": false,
+  "historical_polymarket_listing_completeness_claimed": false,
+  "current_window_generation": null,
+  "included_certified_utc_days": [],
+  "excluded_utc_days": ["2026-09-03", "2026-09-04", "2026-09-05"],
+  "pinned_evidence": {
+    "inventory": {"tag": "v3-inventory-v1-ead9a909a8c4fa5ad638a111040087609f6e7ac88c95b3f4596786810586bcc0", "sha256": "c50e57a46b5f0ec0c1ea98381619100ef753de0db54656f952a9af9c121044d4", "release_id": 383597088},
+    "catalog": {"tag": "observed-catalog-v1-305b1e9b81cea2a844f9d9aa48c4a1b70cc7d9dc0d53a7bee369c3423c79a9de", "sha256": "0e49bd231274d0389aa40bf72d1d99c4a033c719f27b936c882fd8887b74f639", "release_id": 383598142},
+    "data_index": {"tag": "observed-data-index-v1-24254f9fc394e161f916285cd8ddbac6644cdb7de1f7524d2f9c323b0d38070f", "sha256": "85c6f7afeb6c19cd8ed891564f04e1adcd5da1058f9e9c4ee30995bc46cc780f", "release_id": 383639220},
+    "identity_gap": {"tag": "inventory-identity-gap-v1-20e03c76f4b665f0d4966dcaa5c572fa1adcb073c3e595bb00d8a95f1c275f21", "sha256": "20e03c76f4b665f0d4966dcaa5c572fa1adcb073c3e595bb00d8a95f1c275f21", "release_id": 383646042, "asset_id": 547403584}
+  },
+  "consumer_rules": [
+    "Reject research import because research_import_allowed is false and no certified window exists",
+    "Require profile PENDULUMFLOW_V3_OBSERVED and never reinterpret it as OWN_RECORDER_EXACT",
+    "Do not infer continuity, persistence, missed-excursion exclusion or time-only crossings",
+    "Do not infer that a condition absent from the pinned V3 inventory was never listed on Polymarket",
+    "Treat immutable staging and excluded-day manifests as evidence only, not research authority"
+  ],
+  "verification": [
+    "Resolve checkpoint_tag and require its commit to equal checkpoint-manifest.commit",
+    "Verify every checkpoint asset name embeds its SHA-256 and matches GitHub size/digest metadata",
+    "Read the identity-gap asset from its exact immutable Release and require SHA-256 20e03c76f4b665f0d4966dcaa5c572fa1adcb073c3e595bb00d8a95f1c275f21",
+    "Require unresolved_unique_condition_count=170369, target_membership_reconciled=false and all three independent closure flags=true"
+  ],
+  "accumulation_running": false,
+  "scheduled_accumulation": false,
+  "continuation_condition": "A content-bound native V3 identity/lifecycle mapping for every unresolved condition ID, or an evidence-backed native exclusion/day-bound for each relevant unresolved ID, must make the complete pinned inventory projection decidable. Newly published evidence requires a new pinned inventory generation."
+}

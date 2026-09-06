@@ -441,3 +441,110 @@ Disposition: **publication retry/concurrency repair approved; no remaining block
 identified in this change**. The approval covers safe bounded recovery machinery.
 Independent real recovery, canonical day/window verification and autonomous
 continuation evidence are still required for research acceptance.
+
+## Final runtime and source-blocker review — 2026-09-06
+
+Reviewed baseline `9fc8aab3712fcf69a8131c4608423369d7ae8d73` and the subsequent
+working-tree checkpoint, documentation and resolution-accounting repairs. This
+review used local source files and four already downloaded immutable asset copies
+under `work/final-review`. It made no network request, source acquisition or server
+connection. The reviewer independently recomputed each small asset's SHA-256 from
+its bytes and checked its identifiers, counts and disposition against the proposed
+status and consumer handoff. The large inventory, catalog and data index were not
+downloaded or independently scanned again in this review.
+
+The accepted compact gap evidence is Release `383646042`, asset `547403584`,
+3,304 bytes, SHA-256
+`20e03c76f4b665f0d4966dcaa5c572fa1adcb073c3e595bb00d8a95f1c275f21`, tag
+`inventory-identity-gap-v1-20e03c76f4b665f0d4966dcaa5c572fa1adcb073c3e595bb00d8a95f1c275f21`.
+It binds inventory generation
+`ead9a909a8c4fa5ad638a111040087609f6e7ac88c95b3f4596786810586bcc0`,
+catalog generation
+`305b1e9b81cea2a844f9d9aa48c4a1b70cc7d9dc0d53a7bee369c3423c79a9de`,
+and data-index generation
+`24254f9fc394e161f916285cd8ddbac6644cdb7de1f7524d2f9c323b0d38070f`.
+The report records the complete expected set of 116 data partitions, with unresolved
+condition references in all 116: 170,369 unique IDs, 5,876,014 summed partition
+references, and zero conditionless BBA/resolution rows. Its sorted unresolved-set
+digest is `11c7ae4f3732a232dbb07c183b73a7b7fa655a7e52af211231514020bfea3984`.
+
+The report's three verification flags concern catalog/mapping closure, the exact
+expected data-partition set and recomputed condition differences. Inspection of
+`inventory_gap.py` confirms those are the checks performed; they do not claim a new
+independent verification of every canonical observation payload. The reported Linux
+verification provenance is run `34044977198`, job `101518323111`, at the reviewed
+baseline. This reviewer verified the compact report locally, rather than rerunning
+that remote scan or independently querying its job status.
+
+The three locally verified assessment manifests all deny research import:
+
+| UTC day | Release / asset | Markets | Observations | Manifest SHA-256 |
+| --- | --- | ---: | ---: | --- |
+| 2026-09-03 | `383641354` / `547387159` | 2,009 | 5,968,996 | `8e1e03bb080612bc7a1a4bb2c1ad8b3a3d1c88a24cdf3c28d5d899a346e8e052` |
+| 2026-09-04 | `383641565` / `547387935` | 2,015 | 6,624,910 | `d7909f5c57d932cc3ed1c100665f618fda48d688607b4a1a84bac0b07043840a` |
+| 2026-09-05 | `383640992` / `547385886` | 2,016 | 4,505,198 | `e9c3f0f609341255ca7f11f1f46352e29e9b5ccaf1e8ce4152a7d00d56a7862e` |
+
+All three are `EXCLUDED` for unresolved source-condition membership. September 3
+also lacks recorded ask-side evidence and five native resolutions. Review identified
+a real accounting defect in its historical manifest: reading absent winners from a
+`defaultdict` inserted empty sets, causing exactly the same five missing IDs to be
+listed as contradictory and inflating the resolution count from 2,004 to 2,009.
+The reviewer checked that the two five-ID sets coincide; this does not establish
+conflicting winners. The repaired helper uses a non-mutating lookup, identifies
+contradictions only where more than one distinct winner exists, and counts nonempty
+winner sets. The new regression fixture passes. Documentation explicitly preserves
+the sealed assessment while rejecting its erroneous contradiction label and count
+as source facts. No old release was rewritten. The independent identity exclusion
+remains sufficient regardless of this accounting correction.
+
+The remaining blocker is within the newly authorized finite inventory scope:
+conditions present in native BBA/resolution products cannot all be classified using
+the same generation's native mapping evidence. Unknown conditions have not thereby
+been proved to be seven-asset targets. Conversely, declaring them irrelevant solely
+because they lack target mappings would make the projected set define its own
+completeness. Reopening the gate requires content-bound native mapping or supported
+native exclusion/day-bound evidence that makes every relevant reference decidable,
+followed by a new generation and fresh assessments. This is neither a continuity
+requirement nor a historical venue-listing-census requirement, and it does not claim
+that future native evidence is impossible.
+
+Completed durable projection machinery and reported selective recovery remain useful
+engineering evidence. The status attributes successful reuse and failed-partition
+recovery to production run `34036701676` at
+`bc18255ce620507a4eda4ffa0b3ae73c7baf4225`; this reviewer did not reread those job
+logs in this final offline review. The 40,488,664,657-byte measurement is explicitly
+a sum of accepted partition reports, including reused partitions. The resumed run's
+inventory-equivalent completion rate is not presented as fresh-download throughput.
+There is no supported remaining-backfill duration estimate while this source gate
+is blocked.
+
+The current documentation, status and handoff consistently report zero certified
+days, no current window, `research_import_allowed: false`, and accumulation stopped.
+The committed production workflow has no cron and retains manual dispatch for a
+later evidence-backed continuation. The earlier six-hour schedule and launch
+approval above are historical engineering decisions; they are not claims that
+accumulation remains active or that the real acceptance objective was achieved.
+The final checkpoint publisher will independently check active-run/current-ref/window
+state before sealing; this offline review does not substitute for those live guards.
+
+The initially missing checkpoint bindings have been repaired. The publisher compares
+status and handoff authority/profile/scope, schedule, current reference, excluded
+days, continuation and evidence pins; checks the compact gap's counts, set digest,
+inventory/catalog/index identities and closure flags; and checks each immutable
+excluded manifest's day, generation, counts and reasons. It also requires a clean
+committed tree, exact repository identity, remote main commit, native release
+immutability, preserved earlier checkpoint pins, successful CI for that commit,
+the expected production and gap-run results, and no current/window authority. Its
+publication helper verifies checkpoint assets before and after sealing. This review
+approves running those guards and sealing the accurately named
+`run-1-v3-inventory-identity-blocked-v0.5.0` evidence checkpoint if they pass; it does
+not assert that this proposed checkpoint has already been published.
+
+Independent offline checks passed: both inventory-gap tests, all twelve
+production-focused tests including the accounting regression, and structural checks
+for all twelve workflows. The reviewer edited only this review document.
+
+**Final disposition: BLOCKED_SOURCE_CAPABILITY for the pinned inventory generation.
+All actionable findings from this final review are repaired; evidence-only checkpoint
+publication is approved subject to its live guards. Research acceptance, certified
+day/window authority, autonomous accumulation and Run-1 completion are not approved.**

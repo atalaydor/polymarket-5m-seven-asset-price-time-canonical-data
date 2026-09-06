@@ -1040,6 +1040,15 @@ def data_index(
     return value
 
 
+def _resolution_evidence(
+    markets: Iterable[str], winners: dict[str, set[tuple[str, str]]]
+) -> tuple[list[str], list[str], int]:
+    missing = sorted(market for market in markets if not winners.get(market))
+    contradictory = sorted(market for market, values in winners.items() if len(values) > 1)
+    count = sum(bool(values) for values in winners.values())
+    return missing, contradictory, count
+
+
 def certify_day(
     catalog_tag: str, catalog_sha: str, index_tag: str, index_sha: str, day: str
 ) -> dict[str, Any]:
@@ -1098,8 +1107,9 @@ def certify_day(
         for side in ("UP", "DOWN")
         if not by_side[(market, side)]
     )
-    missing_resolution = sorted(market for market in market_map if not by_winner[market])
-    contradictory = sorted(market for market, winners in by_winner.items() if len(winners) != 1)
+    missing_resolution, contradictory, resolution_count = _resolution_evidence(
+        market_map, by_winner
+    )
     reasons = []
     if index_value.get("complete_expected_partition_set") is not True:
         reasons.append("incomplete_expected_source_partition_set")
@@ -1156,7 +1166,7 @@ def certify_day(
         "resolution_schema": RESOLUTION_SCHEMA,
         "market_count": len(mappings),
         "observation_count": observation_count,
-        "resolution_count": len(by_winner),
+        "resolution_count": resolution_count,
         "missing_sides": missing_sides,
         "missing_resolutions": missing_resolution,
         "contradictory_resolutions": contradictory,
