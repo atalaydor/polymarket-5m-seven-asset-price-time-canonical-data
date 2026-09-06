@@ -382,3 +382,62 @@ actually reconciles, or that scheduled backlog/recovery has been proven. The req
 independent published-byte verification, measured acquisition, several real complete
 days, selective failed-shard recovery and autonomous continuation evidence still
 determine the final Run-1 verdict.
+
+## GitHub publication retry and concurrency repair review
+
+Inspected baseline commit: `c17b5453cb8bc861bcb79917a64c7b50e9139254`, plus the
+publication helper, acquisition-test and workflow repairs. The orchestrator reported
+that run `34035546351` produced durable successes alongside two Release-creation
+responses saying `Resource not accessible by integration (HTTP 403)`. This reviewer
+did not independently fetch that run or its data objects; neither the HTTP cause nor
+real successful recovery is established by the offline review alone.
+
+The initial retry patch blindly repeated mutations after HTTP 502/503. The reviewer
+flagged that a failed response can hide a successful server-side create or seal.
+The repaired helper retries reads/deletes for the selected failure statuses and
+retries explicit HTTP 403/429 denials, but does not blindly repeat an ambiguous
+502/503 POST/PATCH. Release creation instead re-reads the exact tag and checks the
+requested tag/target/prerelease contract. Sealing instead re-reads the exact release
+ID and requires an immutable completed release. Both paths still independently
+verify the exact expected asset inventory and bytes. A mismatched or absent recovery
+object fails closed; no completed asset is overwritten or appended after sealing.
+
+Retries are capped at six attempts with waits of 1, 2, 4, 8 and 16 seconds, totaling
+31 seconds of backoff. A persistent permission denial remains an error after the
+bound; this patch does not reinterpret it as success or establish that every 403 is
+transient. The existing immutable shard/checkpoint rules remain unchanged. Failed
+unfinished partitions can resume, and sealed successful siblings remain reusable.
+
+The production workflow retains a single non-cancelling concurrency group, standard
+Linux runners, at most 128 worker batches, `fail-fast: false`, and the six-hour
+schedule. Mapping concurrency is 16; data publication concurrency is reduced to 8;
+certification concurrency is 3. Worker/certification/window/verification jobs have
+45-minute limits, with shorter planning and reconciliation limits. Dependency
+barriers prevent mapping and data stages from independently multiplying those limits.
+This repair changes neither canonical transforms nor source partition identities:
+the publication helper and workflow are outside the bound acquisition implementation
+bundle, so successful source work is not invalidated by this control-plane repair.
+
+Independent verification: all eight acquisition/publication tests passed, including
+the new exact-tag creation recovery, release-ID sealing recovery and integration-403
+retry fixtures. The known Windows temporary-directory ACL restriction required the
+same narrow offline test permission used earlier; all source and release operations
+were mocked. Additional inline fixtures independently proved six-attempt exhaustion,
+non-repetition of an ambiguous POST, and successful create/seal reconciliation with
+zero reuploads of completed assets. The orchestrator separately reported its full
+52-test suite and lint/format/type/workflow/diff checks passing; that is a report from
+the orchestrator, distinct from the focused checks rerun here.
+
+Reviewed SHA-256 values below identify raw local working-tree bytes, rather than an
+inferred future Git commit or a line-ending-normalized copy:
+
+| File | SHA-256 |
+| --- | --- |
+| `src/pflow/release.py` | `ae0a226aa6bb7aff68efa0091f38092d57b8619f6fb5393fdef47e76fa205ee0` |
+| `.github/workflows/observed-production.yml` | `b41830972d606ea8101b4d72828b3fccd8bc84ca21cf797a1e370e1ff70f2301` |
+| `tests/test_acquisition.py` | `6b4f522d50e069a1e04ecc3edc48e7b51daf39c104268d6d7a72d712da70bf35` |
+
+Disposition: **publication retry/concurrency repair approved; no remaining blocker
+identified in this change**. The approval covers safe bounded recovery machinery.
+Independent real recovery, canonical day/window verification and autonomous
+continuation evidence are still required for research acceptance.
