@@ -904,8 +904,13 @@ def publish_window(
                 "day": day,
                 "status": manifest["status"],
                 "reasons": manifest["certification_reasons"],
+                "generation": manifest["generation"],
+                "tag": release["tag_name"],
+                "release_id": release["id"],
+                "inventory_release_id": manifest["inventory_release_id"],
+                "inventory_last_hour": manifest["inventory_last_hour"],
             }
-            for day, (_, manifest) in sorted(latest.items())
+            for day, (release, manifest) in sorted(latest.items())
             if manifest["status"] != "CERTIFIED"
         ],
         "current_rollover_blocked_by_failed_newer_days": rollover_blocked_by,
@@ -1118,14 +1123,42 @@ def verify_window(tag: str, digest: str, expected_profile: str = PROFILE) -> dic
     for item in excluded:
         if (
             not isinstance(item, dict)
-            or set(item) != {"day", "status", "reasons"}
+            or set(item)
+            != {
+                "day",
+                "status",
+                "reasons",
+                "generation",
+                "tag",
+                "release_id",
+                "inventory_release_id",
+                "inventory_last_hour",
+            }
             or not _is_canonical_day(item.get("day"))
             or item.get("status") != "EXCLUDED"
             or item.get("reasons") != DAY_STATUS_REASONS["EXCLUDED"]
         ):
             raise ValueError("bounded window exclusion ledger invalid")
+        excluded_release = api("releases/" + str(item["release_id"]))
+        if excluded_release is None or excluded_release.get("tag_name") != item["tag"]:
+            raise ValueError("bounded excluded day release unavailable")
+        _, excluded_manifest = _load_day_release(excluded_release)
+        if (
+            any(
+                excluded_manifest[field] != item[field]
+                for field in (
+                    "day",
+                    "status",
+                    "generation",
+                    "inventory_release_id",
+                    "inventory_last_hour",
+                )
+            )
+            or excluded_manifest["certification_reasons"] != item["reasons"]
+        ):
+            raise ValueError("bounded window exclusion binding invalid")
         excluded_days.append(item["day"])
-    if excluded_days != sorted(set(excluded_days)) or set(excluded_days) & set(names):
+    if excluded_days != sorted(set(excluded_days)):
         raise ValueError("bounded window exclusion ledger invalid")
     rollover = value.get("current_rollover_blocked_by_failed_newer_days")
     if (
@@ -1133,6 +1166,7 @@ def verify_window(tag: str, digest: str, expected_profile: str = PROFILE) -> dic
         or not all(_is_canonical_day(day) for day in rollover)
         or rollover != sorted(set(rollover))
         or not set(rollover).issubset(excluded_days)
+        or not (set(excluded_days) & set(names)).issubset(rollover)
     ):
         raise ValueError("bounded window rollover ledger invalid")
     totals = Counter[str]()
