@@ -1,0 +1,64 @@
+{
+  "schema": "pendulumflow-historical-catalog-consumer-handoff.v1",
+  "repository": "atalaydor/polymarket-5m-seven-asset-price-time-canonical-data",
+  "repository_id": 1358712762,
+  "checkpoint_tag": "run-1-historical-catalog-blocked-v0.4.0",
+  "checkpoint_manifest_locator": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/run-1-historical-catalog-blocked-v0.4.0",
+  "checkpoint_commit_source": "Require immutable tag target equal checkpoint-manifest.commit",
+  "semantic_profile": "PENDULUMFLOW_V3_OBSERVED",
+  "semantic_profile_version": 1,
+  "policy_contracts": [
+    {
+      "bytes": 1664,
+      "path": "docs/observed-profile-policy-v1.json",
+      "sha256": "8bcb7bfdc2571045b5fc25c01c214f076ad9ca7993dd60973176ba7dc11f5193"
+    },
+    {
+      "bytes": 9075,
+      "path": "docs/observed-profile-v1.md",
+      "sha256": "cc1e03888ee3fa67cebee112d697bb5eeed79f02006fb7e1625aebb8cd542ad2"
+    }
+  ],
+  "research_import_allowed": false,
+  "continuity_between_observations_certified": false,
+  "current_window_generation": null,
+  "included_certified_utc_days": [],
+  "canonical_objects": [],
+  "canonical_schema_id": null,
+  "canonical_schema_status": "UNIMPLEMENTED_SOURCE_AUTHORITY_GATE_BLOCKED",
+  "first_meaning": "earliest_lawfully_ordered_qualifying_recorded_observation_in_pinned_certified_scope",
+  "ordering_clock": "venue_reported_source_event_time",
+  "remaining_time": "(expiry_us-source_event_us)/1000000_exact_decimal",
+  "predicate": "0 < remaining_seconds < T AND price > m*remaining_seconds+b",
+  "limitations": [
+    "No inferred persistence, interpolation or time-only crossing",
+    "No missed-excursion exclusion, actual-first-crossing or hypothetical sender receipt/execution claim",
+    "Ties fail closed; result-changing ordering ambiguity is INDETERMINATE",
+    "Positive first-party catalog rows do not establish exhaustive historical membership"
+  ],
+  "pending_utc_days": [
+    "2026-08-25",
+    "2026-08-27",
+    "2026-08-28"
+  ],
+  "continuation_condition": "An authoritative first-party finite historical listing/exception inventory, historical snapshot, or normative listing/identity rule plus explicit delisting/relisting exceptions; independently pinnable and able to distinguish never listed from removed/omitted historical membership. Equivalent exhaustive native expected membership also qualifies.",
+  "evidence_inventory": "catalog-evidence-inventory.json",
+  "accumulation_running": false,
+  "scheduled_accumulation": false,
+  "verification_instructions": [
+    "Reject research import: no certified window exists and research_import_allowed=false",
+    "For evidence-only review, independently pin/read the native immutable checkpoint release and checkpoint-manifest SHA-256",
+    "Resolve its tag and require the exact manifest.commit; require exact uploaded asset inventory, SHA-256 and sizes",
+    "Read/hash each referenced asset independently; compare false authority flags and observed-profile version 1",
+    "Catalog evidence is metadata-only; do not treat it, old native canaries or a green workflow as certified research authority",
+    "The independent review workflow reads pinned public Release objects on standard Linux without Windows state"
+  ],
+  "independent_review": {
+    "run_id": 34029408059,
+    "release_id": 383554272,
+    "tag": "catalog-independent-review-663f13177d380429a01000b9c5241e1e0640257f54b82dba67e42ef0a7b9723b",
+    "sha256": "663f13177d380429a01000b9c5241e1e0640257f54b82dba67e42ef0a7b9723b",
+    "bytes": 13459,
+    "scope": "positive_identity_evidence_only"
+  }
+}

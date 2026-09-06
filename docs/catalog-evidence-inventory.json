@@ -1,0 +1,707 @@
+{
+  "schema": "catalog-evidence-inventory.v1",
+  "research_import_allowed": false,
+  "releases": [
+    {
+      "release_id": 383534763,
+      "tag": "catalog-probe-94843dedb39d4ed3549c45636c0cde9fa58e14209c835d4d8a8086333ae67231",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-probe-94843dedb39d4ed3549c45636c0cde9fa58e14209c835d4d8a8086333ae67231",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547023882,
+          "name": "5e6e658e15bcc1e58b8bfe830af6c807afb1358ecc7793c98ff12dee5d19835f--catalog-report.json",
+          "size": 21475,
+          "digest": "sha256:5e6e658e15bcc1e58b8bfe830af6c807afb1358ecc7793c98ff12dee5d19835f",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-probe-94843dedb39d4ed3549c45636c0cde9fa58e14209c835d4d8a8086333ae67231/5e6e658e15bcc1e58b8bfe830af6c807afb1358ecc7793c98ff12dee5d19835f--catalog-report.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383539333,
+      "tag": "catalog-access-bfb585a2b40c98ae7c1d195bbbbda7962c85d72e6d2cf65a071c1b75641edc93",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-access-bfb585a2b40c98ae7c1d195bbbbda7962c85d72e6d2cf65a071c1b75641edc93",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547039472,
+          "name": "550c7e1c87fb2690dc5b24b5e280f3d1bc625c5129d45237ae8c80d28792442c--access-report.json",
+          "size": 1187518,
+          "digest": "sha256:550c7e1c87fb2690dc5b24b5e280f3d1bc625c5129d45237ae8c80d28792442c",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-access-bfb585a2b40c98ae7c1d195bbbbda7962c85d72e6d2cf65a071c1b75641edc93/550c7e1c87fb2690dc5b24b5e280f3d1bc625c5129d45237ae8c80d28792442c--access-report.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383544217,
+      "tag": "catalog-enumeration-2dab7fa990e73f333ed367569ea37aa46cac503324b171df6a03b4419328294b",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-enumeration-2dab7fa990e73f333ed367569ea37aa46cac503324b171df6a03b4419328294b",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547056147,
+          "name": "458b67883ea04dad7b18ed4766c1d29408cdbda4bcf4ca7475a5578d7b852d40--catalog-stream.json",
+          "size": 24613,
+          "digest": "sha256:458b67883ea04dad7b18ed4766c1d29408cdbda4bcf4ca7475a5578d7b852d40",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-enumeration-2dab7fa990e73f333ed367569ea37aa46cac503324b171df6a03b4419328294b/458b67883ea04dad7b18ed4766c1d29408cdbda4bcf4ca7475a5578d7b852d40--catalog-stream.json"
+        },
+        {
+          "id": 547056164,
+          "name": "97a337a03984e990c622e7b594d288bde3d4da0a5761c22b9f4a00549b09e42f--summary.json",
+          "size": 2216,
+          "digest": "sha256:97a337a03984e990c622e7b594d288bde3d4da0a5761c22b9f4a00549b09e42f",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-enumeration-2dab7fa990e73f333ed367569ea37aa46cac503324b171df6a03b4419328294b/97a337a03984e990c622e7b594d288bde3d4da0a5761c22b9f4a00549b09e42f--summary.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383544222,
+      "tag": "catalog-enumeration-ca221e6942c6899343ae1a63ad638b20210cc440589bba8ceecb984a1589e299",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-enumeration-ca221e6942c6899343ae1a63ad638b20210cc440589bba8ceecb984a1589e299",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547056168,
+          "name": "2b3472714c719a08b697bd853f8e604209d72c8460a909342b7892bbed82c700--catalog-stream.json",
+          "size": 25101,
+          "digest": "sha256:2b3472714c719a08b697bd853f8e604209d72c8460a909342b7892bbed82c700",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-enumeration-ca221e6942c6899343ae1a63ad638b20210cc440589bba8ceecb984a1589e299/2b3472714c719a08b697bd853f8e604209d72c8460a909342b7892bbed82c700--catalog-stream.json"
+        },
+        {
+          "id": 547056178,
+          "name": "72873b54016002f4b3daae627f37d6f02b8a3b36afce333f2e739ee5bd1c75a6--summary.json",
+          "size": 563,
+          "digest": "sha256:72873b54016002f4b3daae627f37d6f02b8a3b36afce333f2e739ee5bd1c75a6",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-enumeration-ca221e6942c6899343ae1a63ad638b20210cc440589bba8ceecb984a1589e299/72873b54016002f4b3daae627f37d6f02b8a3b36afce333f2e739ee5bd1c75a6--summary.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383544296,
+      "tag": "catalog-enumeration-6df1ad8d88de4346ed70664df684b4d42d6248bcf1bf752e86a0cd6444965e26",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-enumeration-6df1ad8d88de4346ed70664df684b4d42d6248bcf1bf752e86a0cd6444965e26",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547056473,
+          "name": "8b125514543007cb9ec1d6dd5681093f46ddf526b9a10bcdb10d154f084c032f--summary.json",
+          "size": 574,
+          "digest": "sha256:8b125514543007cb9ec1d6dd5681093f46ddf526b9a10bcdb10d154f084c032f",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-enumeration-6df1ad8d88de4346ed70664df684b4d42d6248bcf1bf752e86a0cd6444965e26/8b125514543007cb9ec1d6dd5681093f46ddf526b9a10bcdb10d154f084c032f--summary.json"
+        },
+        {
+          "id": 547056464,
+          "name": "d08461ea65b320626dba4462edc6ef5c8695dd5d4c38586aca5363df4b892e7a--catalog-stream.json",
+          "size": 1299920,
+          "digest": "sha256:d08461ea65b320626dba4462edc6ef5c8695dd5d4c38586aca5363df4b892e7a",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-enumeration-6df1ad8d88de4346ed70664df684b4d42d6248bcf1bf752e86a0cd6444965e26/d08461ea65b320626dba4462edc6ef5c8695dd5d4c38586aca5363df4b892e7a--catalog-stream.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383544358,
+      "tag": "catalog-enumeration-64780eb9a37bf853cf74df3608ba7f111c0e7186b4eeddf3dcbc6a081f29f5be",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-enumeration-64780eb9a37bf853cf74df3608ba7f111c0e7186b4eeddf3dcbc6a081f29f5be",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547056661,
+          "name": "1be661e972c83162344f2cf24277ea89fe8932865c843210c83eb815b2f4aeb4--catalog-stream.json",
+          "size": 11573526,
+          "digest": "sha256:1be661e972c83162344f2cf24277ea89fe8932865c843210c83eb815b2f4aeb4",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-enumeration-64780eb9a37bf853cf74df3608ba7f111c0e7186b4eeddf3dcbc6a081f29f5be/1be661e972c83162344f2cf24277ea89fe8932865c843210c83eb815b2f4aeb4--catalog-stream.json"
+        },
+        {
+          "id": 547056712,
+          "name": "5196b7b73dd3ca6831b5aa3bcbfaa6d1bd21f9c94b282489d3ef3f22c17af524--summary.json",
+          "size": 578,
+          "digest": "sha256:5196b7b73dd3ca6831b5aa3bcbfaa6d1bd21f9c94b282489d3ef3f22c17af524",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-enumeration-64780eb9a37bf853cf74df3608ba7f111c0e7186b4eeddf3dcbc6a081f29f5be/5196b7b73dd3ca6831b5aa3bcbfaa6d1bd21f9c94b282489d3ef3f22c17af524--summary.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383544434,
+      "tag": "catalog-enumeration-6034eb1c28a46561fdaf8058fe25ef4d2695ea8a20a692352d6d7b06c732a351",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-enumeration-6034eb1c28a46561fdaf8058fe25ef4d2695ea8a20a692352d6d7b06c732a351",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547056987,
+          "name": "547e6b82319ca11bd31068ca3b476e457fb28163480c6840156c27095315f293--catalog-stream.json",
+          "size": 791666,
+          "digest": "sha256:547e6b82319ca11bd31068ca3b476e457fb28163480c6840156c27095315f293",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-enumeration-6034eb1c28a46561fdaf8058fe25ef4d2695ea8a20a692352d6d7b06c732a351/547e6b82319ca11bd31068ca3b476e457fb28163480c6840156c27095315f293--catalog-stream.json"
+        },
+        {
+          "id": 547056992,
+          "name": "9eb995cd15f54520d2b808ba45b5465777fda0e0e9984e41be603874520ddd55--summary.json",
+          "size": 571,
+          "digest": "sha256:9eb995cd15f54520d2b808ba45b5465777fda0e0e9984e41be603874520ddd55",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-enumeration-6034eb1c28a46561fdaf8058fe25ef4d2695ea8a20a692352d6d7b06c732a351/9eb995cd15f54520d2b808ba45b5465777fda0e0e9984e41be603874520ddd55--summary.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383544516,
+      "tag": "catalog-enumeration-dd7020478ae06381dc862906063394ef9d251221559abf662c51c981ec82f5ac",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-enumeration-dd7020478ae06381dc862906063394ef9d251221559abf662c51c981ec82f5ac",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547057311,
+          "name": "0963435263978af4eefe040523b76dfd67f5b547c98485a8cd72e0b2b4eab25e--summary.json",
+          "size": 571,
+          "digest": "sha256:0963435263978af4eefe040523b76dfd67f5b547c98485a8cd72e0b2b4eab25e",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-enumeration-dd7020478ae06381dc862906063394ef9d251221559abf662c51c981ec82f5ac/0963435263978af4eefe040523b76dfd67f5b547c98485a8cd72e0b2b4eab25e--summary.json"
+        },
+        {
+          "id": 547057302,
+          "name": "d52658fd8af413a7aadefb682aa11837131a1239aaf4f04db64a827c69339dd3--catalog-stream.json",
+          "size": 80038,
+          "digest": "sha256:d52658fd8af413a7aadefb682aa11837131a1239aaf4f04db64a827c69339dd3",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-enumeration-dd7020478ae06381dc862906063394ef9d251221559abf662c51c981ec82f5ac/d52658fd8af413a7aadefb682aa11837131a1239aaf4f04db64a827c69339dd3--catalog-stream.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383544519,
+      "tag": "catalog-enumeration-eeab37d449e0e660cd74769b864f9365f47d8ad48d0b2a45b023cdfc918f709e",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-enumeration-eeab37d449e0e660cd74769b864f9365f47d8ad48d0b2a45b023cdfc918f709e",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547057355,
+          "name": "2c08460b2a8150d58fd24bf296f1a34409eb2ca2d880a74f13140709dbcbbc9b--summary.json",
+          "size": 578,
+          "digest": "sha256:2c08460b2a8150d58fd24bf296f1a34409eb2ca2d880a74f13140709dbcbbc9b",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-enumeration-eeab37d449e0e660cd74769b864f9365f47d8ad48d0b2a45b023cdfc918f709e/2c08460b2a8150d58fd24bf296f1a34409eb2ca2d880a74f13140709dbcbbc9b--summary.json"
+        },
+        {
+          "id": 547057335,
+          "name": "8325b561953ac9daf2030acb38dd2fe7182a97ec794392b16d67d774078933ef--catalog-stream.json",
+          "size": 11645507,
+          "digest": "sha256:8325b561953ac9daf2030acb38dd2fe7182a97ec794392b16d67d774078933ef",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-enumeration-eeab37d449e0e660cd74769b864f9365f47d8ad48d0b2a45b023cdfc918f709e/8325b561953ac9daf2030acb38dd2fe7182a97ec794392b16d67d774078933ef--catalog-stream.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383544590,
+      "tag": "catalog-enumeration-26070afe91aa88ac5dac173cc369c089e913c0962036dffcfdbe20b3a1f9e355",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-enumeration-26070afe91aa88ac5dac173cc369c089e913c0962036dffcfdbe20b3a1f9e355",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547057577,
+          "name": "0ab717fbd96236cb74dec6d1d885e8631f94737ec456a32ec219267091a21f3e--catalog-stream.json",
+          "size": 207432,
+          "digest": "sha256:0ab717fbd96236cb74dec6d1d885e8631f94737ec456a32ec219267091a21f3e",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-enumeration-26070afe91aa88ac5dac173cc369c089e913c0962036dffcfdbe20b3a1f9e355/0ab717fbd96236cb74dec6d1d885e8631f94737ec456a32ec219267091a21f3e--catalog-stream.json"
+        },
+        {
+          "id": 547057588,
+          "name": "a7b4564a4d41bc84fb9aed089dc68f83157b56660d4587dfe5bf615ef4c9e5fb--summary.json",
+          "size": 570,
+          "digest": "sha256:a7b4564a4d41bc84fb9aed089dc68f83157b56660d4587dfe5bf615ef4c9e5fb",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-enumeration-26070afe91aa88ac5dac173cc369c089e913c0962036dffcfdbe20b3a1f9e355/a7b4564a4d41bc84fb9aed089dc68f83157b56660d4587dfe5bf615ef4c9e5fb--summary.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383544661,
+      "tag": "catalog-enumeration-eaab15c19e27fdbff8bfe8ba79391511f58cfbf33c05fe6d2de80869f2686aa9",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-enumeration-eaab15c19e27fdbff8bfe8ba79391511f58cfbf33c05fe6d2de80869f2686aa9",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547057822,
+          "name": "371e3e3841e74cc477c5d221194a59077a5992144e8fc4b4a630c08bd7b91a75--summary.json",
+          "size": 571,
+          "digest": "sha256:371e3e3841e74cc477c5d221194a59077a5992144e8fc4b4a630c08bd7b91a75",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-enumeration-eaab15c19e27fdbff8bfe8ba79391511f58cfbf33c05fe6d2de80869f2686aa9/371e3e3841e74cc477c5d221194a59077a5992144e8fc4b4a630c08bd7b91a75--summary.json"
+        },
+        {
+          "id": 547057807,
+          "name": "9c1e625c974172206ce115d1dee67852e92372bb3cdf38156a098cf6ce183781--catalog-stream.json",
+          "size": 227845,
+          "digest": "sha256:9c1e625c974172206ce115d1dee67852e92372bb3cdf38156a098cf6ce183781",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-enumeration-eaab15c19e27fdbff8bfe8ba79391511f58cfbf33c05fe6d2de80869f2686aa9/9c1e625c974172206ce115d1dee67852e92372bb3cdf38156a098cf6ce183781--catalog-stream.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383544772,
+      "tag": "catalog-enumeration-d9f0ca64d67d321ce3634d421d50014042ae98af743e63e38c7f3bba281c4a82",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-enumeration-d9f0ca64d67d321ce3634d421d50014042ae98af743e63e38c7f3bba281c4a82",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547058268,
+          "name": "0b9c4d993a62fe47137f44a57642efede7cd869ed24171fe9cf09a0047f6ae9c--catalog-stream.json",
+          "size": 11612768,
+          "digest": "sha256:0b9c4d993a62fe47137f44a57642efede7cd869ed24171fe9cf09a0047f6ae9c",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-enumeration-d9f0ca64d67d321ce3634d421d50014042ae98af743e63e38c7f3bba281c4a82/0b9c4d993a62fe47137f44a57642efede7cd869ed24171fe9cf09a0047f6ae9c--catalog-stream.json"
+        },
+        {
+          "id": 547058277,
+          "name": "22fa7f7eac1a1721f396cd7d45cf5fe6de7785d13f648551ded46e25cb1c1d91--summary.json",
+          "size": 578,
+          "digest": "sha256:22fa7f7eac1a1721f396cd7d45cf5fe6de7785d13f648551ded46e25cb1c1d91",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-enumeration-d9f0ca64d67d321ce3634d421d50014042ae98af743e63e38c7f3bba281c4a82/22fa7f7eac1a1721f396cd7d45cf5fe6de7785d13f648551ded46e25cb1c1d91--summary.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383544857,
+      "tag": "catalog-enumeration-12f415a87da835f29e4694884f17cbb81518d87677f71b5b1e499b60101b618d",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-enumeration-12f415a87da835f29e4694884f17cbb81518d87677f71b5b1e499b60101b618d",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547058512,
+          "name": "3a4e06a547da4b187227e4a3c091d0916bbb039b5a3d3c3414feb90bfd39a2cb--summary.json",
+          "size": 571,
+          "digest": "sha256:3a4e06a547da4b187227e4a3c091d0916bbb039b5a3d3c3414feb90bfd39a2cb",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-enumeration-12f415a87da835f29e4694884f17cbb81518d87677f71b5b1e499b60101b618d/3a4e06a547da4b187227e4a3c091d0916bbb039b5a3d3c3414feb90bfd39a2cb--summary.json"
+        },
+        {
+          "id": 547058493,
+          "name": "554e891c3d5b67abd6999bee40572d0c3ab05d6ec9b7af82fcc04f4c4d27a5ac--catalog-stream.json",
+          "size": 434999,
+          "digest": "sha256:554e891c3d5b67abd6999bee40572d0c3ab05d6ec9b7af82fcc04f4c4d27a5ac",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-enumeration-12f415a87da835f29e4694884f17cbb81518d87677f71b5b1e499b60101b618d/554e891c3d5b67abd6999bee40572d0c3ab05d6ec9b7af82fcc04f4c4d27a5ac--catalog-stream.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383545430,
+      "tag": "catalog-inspection-dc5371a9139e691dd6d6f1b137f2312e1db46f002af81d3a71b49fa9b6c0728e",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-inspection-dc5371a9139e691dd6d6f1b137f2312e1db46f002af81d3a71b49fa9b6c0728e",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547060359,
+          "name": "dc5371a9139e691dd6d6f1b137f2312e1db46f002af81d3a71b49fa9b6c0728e--inspection.json",
+          "size": 24439,
+          "digest": "sha256:dc5371a9139e691dd6d6f1b137f2312e1db46f002af81d3a71b49fa9b6c0728e",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-inspection-dc5371a9139e691dd6d6f1b137f2312e1db46f002af81d3a71b49fa9b6c0728e/dc5371a9139e691dd6d6f1b137f2312e1db46f002af81d3a71b49fa9b6c0728e--inspection.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383545434,
+      "tag": "catalog-enumeration-4c065ce9d6c76e8b07835b97a04c96cab6cffaf88e3d83c99b1d2c66ea8ea478",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-enumeration-4c065ce9d6c76e8b07835b97a04c96cab6cffaf88e3d83c99b1d2c66ea8ea478",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547060374,
+          "name": "bb768b15509faed8ce70316562100b28cb119568c259834134fcea76f742ac68--summary.json",
+          "size": 22226,
+          "digest": "sha256:bb768b15509faed8ce70316562100b28cb119568c259834134fcea76f742ac68",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-enumeration-4c065ce9d6c76e8b07835b97a04c96cab6cffaf88e3d83c99b1d2c66ea8ea478/bb768b15509faed8ce70316562100b28cb119568c259834134fcea76f742ac68--summary.json"
+        },
+        {
+          "id": 547060367,
+          "name": "f4dbb82576c1001d25d82cb91163b51250da20cdc3c48bbe89e78ce3658e3c05--catalog-stream.json",
+          "size": 1139549,
+          "digest": "sha256:f4dbb82576c1001d25d82cb91163b51250da20cdc3c48bbe89e78ce3658e3c05",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-enumeration-4c065ce9d6c76e8b07835b97a04c96cab6cffaf88e3d83c99b1d2c66ea8ea478/f4dbb82576c1001d25d82cb91163b51250da20cdc3c48bbe89e78ce3658e3c05--catalog-stream.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383545482,
+      "tag": "catalog-enumeration-7c6512c01e8f1d3642cf658c682d51f8f1a369f4c97c7db80018c9e56053687d",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-enumeration-7c6512c01e8f1d3642cf658c682d51f8f1a369f4c97c7db80018c9e56053687d",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547060538,
+          "name": "42f1e04183603e84d8e85fa08ebf4bd46bbf3ad1578f4855c476d44ce84a9b6d--catalog-stream.json",
+          "size": 1139656,
+          "digest": "sha256:42f1e04183603e84d8e85fa08ebf4bd46bbf3ad1578f4855c476d44ce84a9b6d",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-enumeration-7c6512c01e8f1d3642cf658c682d51f8f1a369f4c97c7db80018c9e56053687d/42f1e04183603e84d8e85fa08ebf4bd46bbf3ad1578f4855c476d44ce84a9b6d--catalog-stream.json"
+        },
+        {
+          "id": 547060728,
+          "name": "49ac84f8d855c97652a82da9826e661889534f65be4a9513cd62247d27dcd21e--summary.json",
+          "size": 22227,
+          "digest": "sha256:49ac84f8d855c97652a82da9826e661889534f65be4a9513cd62247d27dcd21e",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-enumeration-7c6512c01e8f1d3642cf658c682d51f8f1a369f4c97c7db80018c9e56053687d/49ac84f8d855c97652a82da9826e661889534f65be4a9513cd62247d27dcd21e--summary.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383548088,
+      "tag": "catalog-targets-537a1de71f435bed033ac1343f38ec524b1f5b1dd5e151a9f1dff6b71f0f8786",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-targets-537a1de71f435bed033ac1343f38ec524b1f5b1dd5e151a9f1dff6b71f0f8786",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547070436,
+          "name": "5cf3abbcbbcb8e537d00c32735cfcb3c273062a561e8acf46e852c73e58874b9--target-series.json",
+          "size": 2006865,
+          "digest": "sha256:5cf3abbcbbcb8e537d00c32735cfcb3c273062a561e8acf46e852c73e58874b9",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-targets-537a1de71f435bed033ac1343f38ec524b1f5b1dd5e151a9f1dff6b71f0f8786/5cf3abbcbbcb8e537d00c32735cfcb3c273062a561e8acf46e852c73e58874b9--target-series.json"
+        },
+        {
+          "id": 547070450,
+          "name": "f7d1eaf75781f1b1841cee2bf55eb0dcb44bebdf5ac861b33dadac4992ea6ab3--summary.json",
+          "size": 12191,
+          "digest": "sha256:f7d1eaf75781f1b1841cee2bf55eb0dcb44bebdf5ac861b33dadac4992ea6ab3",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-targets-537a1de71f435bed033ac1343f38ec524b1f5b1dd5e151a9f1dff6b71f0f8786/f7d1eaf75781f1b1841cee2bf55eb0dcb44bebdf5ac861b33dadac4992ea6ab3--summary.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383548111,
+      "tag": "catalog-targets-cec376a71017f65590a0eacbcc4ae680260f99622bfddd1651f1bf57b5689253",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-targets-cec376a71017f65590a0eacbcc4ae680260f99622bfddd1651f1bf57b5689253",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547070528,
+          "name": "489ca1fc40f5bccbeaf0d2d7a540adcf79f41d660c448f1f87fdc28589af1660--summary.json",
+          "size": 12181,
+          "digest": "sha256:489ca1fc40f5bccbeaf0d2d7a540adcf79f41d660c448f1f87fdc28589af1660",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-targets-cec376a71017f65590a0eacbcc4ae680260f99622bfddd1651f1bf57b5689253/489ca1fc40f5bccbeaf0d2d7a540adcf79f41d660c448f1f87fdc28589af1660--summary.json"
+        },
+        {
+          "id": 547070496,
+          "name": "642a56cb6dc1ed2a82ec0619b98e12a1010800ddb6cd324506c9b29c35166022--target-series.json",
+          "size": 2008489,
+          "digest": "sha256:642a56cb6dc1ed2a82ec0619b98e12a1010800ddb6cd324506c9b29c35166022",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-targets-cec376a71017f65590a0eacbcc4ae680260f99622bfddd1651f1bf57b5689253/642a56cb6dc1ed2a82ec0619b98e12a1010800ddb6cd324506c9b29c35166022--target-series.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383548184,
+      "tag": "catalog-targets-60a158da35341f65e9dddad274ce9e6921557a91480b7ef73d10063cbc9f2876",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-targets-60a158da35341f65e9dddad274ce9e6921557a91480b7ef73d10063cbc9f2876",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547070809,
+          "name": "1d997008fef7c39f9571d6a47fbffd5850fa148e7b64926b6f96712d1db7823b--summary.json",
+          "size": 12199,
+          "digest": "sha256:1d997008fef7c39f9571d6a47fbffd5850fa148e7b64926b6f96712d1db7823b",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-targets-60a158da35341f65e9dddad274ce9e6921557a91480b7ef73d10063cbc9f2876/1d997008fef7c39f9571d6a47fbffd5850fa148e7b64926b6f96712d1db7823b--summary.json"
+        },
+        {
+          "id": 547070797,
+          "name": "e302dc2b9b3d6e99c12425167d0f0753320d4651ee2c14b816a1a7d645a3c142--target-series.json",
+          "size": 2005102,
+          "digest": "sha256:e302dc2b9b3d6e99c12425167d0f0753320d4651ee2c14b816a1a7d645a3c142",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-targets-60a158da35341f65e9dddad274ce9e6921557a91480b7ef73d10063cbc9f2876/e302dc2b9b3d6e99c12425167d0f0753320d4651ee2c14b816a1a7d645a3c142--target-series.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383548224,
+      "tag": "catalog-targets-fc9fd8de84370a604c6dbf46f11ee6c8562370449c3dbcc240f21165ce13c058",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-targets-fc9fd8de84370a604c6dbf46f11ee6c8562370449c3dbcc240f21165ce13c058",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547070984,
+          "name": "0c9e4a1b6d9b3abafe086331cba19573e6d9836a227ae53a33fa13e82e7cd54b--summary.json",
+          "size": 12192,
+          "digest": "sha256:0c9e4a1b6d9b3abafe086331cba19573e6d9836a227ae53a33fa13e82e7cd54b",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-targets-fc9fd8de84370a604c6dbf46f11ee6c8562370449c3dbcc240f21165ce13c058/0c9e4a1b6d9b3abafe086331cba19573e6d9836a227ae53a33fa13e82e7cd54b--summary.json"
+        },
+        {
+          "id": 547070972,
+          "name": "608239b2e3b98853fe804921411f5cb0b622bedc420c3fa697c438f4be51544d--target-series.json",
+          "size": 1998963,
+          "digest": "sha256:608239b2e3b98853fe804921411f5cb0b622bedc420c3fa697c438f4be51544d",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-targets-fc9fd8de84370a604c6dbf46f11ee6c8562370449c3dbcc240f21165ce13c058/608239b2e3b98853fe804921411f5cb0b622bedc420c3fa697c438f4be51544d--target-series.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383548283,
+      "tag": "catalog-targets-35daa283d99bbc146639840f0b6303c77fbe219ad3b8434b0c179ec314ba7bd0",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-targets-35daa283d99bbc146639840f0b6303c77fbe219ad3b8434b0c179ec314ba7bd0",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547071138,
+          "name": "4d68177a622b63b28a91bdea1ad7f7c5278ccce4110a2f8dbf37aebe5556116c--target-series.json",
+          "size": 2017369,
+          "digest": "sha256:4d68177a622b63b28a91bdea1ad7f7c5278ccce4110a2f8dbf37aebe5556116c",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-targets-35daa283d99bbc146639840f0b6303c77fbe219ad3b8434b0c179ec314ba7bd0/4d68177a622b63b28a91bdea1ad7f7c5278ccce4110a2f8dbf37aebe5556116c--target-series.json"
+        },
+        {
+          "id": 547071155,
+          "name": "c8ae5266319f734a1a0cf236d06b3bf1a5af8da7507c74d1e977b51c66eb4571--summary.json",
+          "size": 12225,
+          "digest": "sha256:c8ae5266319f734a1a0cf236d06b3bf1a5af8da7507c74d1e977b51c66eb4571",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-targets-35daa283d99bbc146639840f0b6303c77fbe219ad3b8434b0c179ec314ba7bd0/c8ae5266319f734a1a0cf236d06b3bf1a5af8da7507c74d1e977b51c66eb4571--summary.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383548320,
+      "tag": "catalog-targets-413d5ddc6e9f25197acdd34f03c5e13eed543983ed7eac103d439f2dfca3f272",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-targets-413d5ddc6e9f25197acdd34f03c5e13eed543983ed7eac103d439f2dfca3f272",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547071218,
+          "name": "0373dcbd1d83db8a7aef7ca91de271aab1e78cb610fe6bf96bcd40370f880fdc--target-series.json",
+          "size": 2002507,
+          "digest": "sha256:0373dcbd1d83db8a7aef7ca91de271aab1e78cb610fe6bf96bcd40370f880fdc",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-targets-413d5ddc6e9f25197acdd34f03c5e13eed543983ed7eac103d439f2dfca3f272/0373dcbd1d83db8a7aef7ca91de271aab1e78cb610fe6bf96bcd40370f880fdc--target-series.json"
+        },
+        {
+          "id": 547071236,
+          "name": "2940310eb90a11c2dd9e68cff1180ac1b3594e499071c85b1f30fa7f5c13e91a--summary.json",
+          "size": 12195,
+          "digest": "sha256:2940310eb90a11c2dd9e68cff1180ac1b3594e499071c85b1f30fa7f5c13e91a",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-targets-413d5ddc6e9f25197acdd34f03c5e13eed543983ed7eac103d439f2dfca3f272/2940310eb90a11c2dd9e68cff1180ac1b3594e499071c85b1f30fa7f5c13e91a--summary.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383548375,
+      "tag": "catalog-targets-22b534ca89cfc8cfebd3e998e491c523438b7004ef3c4ec6a237524b99bdb6f7",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-targets-22b534ca89cfc8cfebd3e998e491c523438b7004ef3c4ec6a237524b99bdb6f7",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547071419,
+          "name": "554622969833cf73965dbb6771833b9fe8b5765bc60b166f27a2b82add12dc16--target-series.json",
+          "size": 2022633,
+          "digest": "sha256:554622969833cf73965dbb6771833b9fe8b5765bc60b166f27a2b82add12dc16",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-targets-22b534ca89cfc8cfebd3e998e491c523438b7004ef3c4ec6a237524b99bdb6f7/554622969833cf73965dbb6771833b9fe8b5765bc60b166f27a2b82add12dc16--target-series.json"
+        },
+        {
+          "id": 547071429,
+          "name": "cae2578ebf96ba655f8b398d50626905c973a71c1c3b0e05cf3674f894098828--summary.json",
+          "size": 12223,
+          "digest": "sha256:cae2578ebf96ba655f8b398d50626905c973a71c1c3b0e05cf3674f894098828",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-targets-22b534ca89cfc8cfebd3e998e491c523438b7004ef3c4ec6a237524b99bdb6f7/cae2578ebf96ba655f8b398d50626905c973a71c1c3b0e05cf3674f894098828--summary.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383549454,
+      "tag": "catalog-series-detail-fffe46230ca6d973dda27662885d066fd8afcd54a6efd05024e45f73979826fb",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-series-detail-fffe46230ca6d973dda27662885d066fd8afcd54a6efd05024e45f73979826fb",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547075283,
+          "name": "029c998e9b62d2a3ae942f1fa822c7f8bfe47ac7fb1e4dc152079b15cc5922e3--series-detail.json",
+          "size": 16238,
+          "digest": "sha256:029c998e9b62d2a3ae942f1fa822c7f8bfe47ac7fb1e4dc152079b15cc5922e3",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-series-detail-fffe46230ca6d973dda27662885d066fd8afcd54a6efd05024e45f73979826fb/029c998e9b62d2a3ae942f1fa822c7f8bfe47ac7fb1e4dc152079b15cc5922e3--series-detail.json"
+        },
+        {
+          "id": 547075290,
+          "name": "21ea196e13a4d08da14d46bd24de4ec8320c3510fe51f37c66d098f29b6520f4--summary.json",
+          "size": 1624,
+          "digest": "sha256:21ea196e13a4d08da14d46bd24de4ec8320c3510fe51f37c66d098f29b6520f4",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-series-detail-fffe46230ca6d973dda27662885d066fd8afcd54a6efd05024e45f73979826fb/21ea196e13a4d08da14d46bd24de4ec8320c3510fe51f37c66d098f29b6520f4--summary.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383549465,
+      "tag": "catalog-series-detail-8757ae21c0d8b90082e30552a135ab0c4f515337f7308d0dd222ef1dfde61b94",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-series-detail-8757ae21c0d8b90082e30552a135ab0c4f515337f7308d0dd222ef1dfde61b94",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547075322,
+          "name": "2bdf176f254a5520cf78c44f97361f6dbca20cd211091b1e59efd6c71f4572c7--series-detail.json",
+          "size": 16258,
+          "digest": "sha256:2bdf176f254a5520cf78c44f97361f6dbca20cd211091b1e59efd6c71f4572c7",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-series-detail-8757ae21c0d8b90082e30552a135ab0c4f515337f7308d0dd222ef1dfde61b94/2bdf176f254a5520cf78c44f97361f6dbca20cd211091b1e59efd6c71f4572c7--series-detail.json"
+        },
+        {
+          "id": 547075336,
+          "name": "7d5b5b3ccfd5e0f120cd3d750834f40227dc88b155474c4b483018066fdb4db7--summary.json",
+          "size": 1625,
+          "digest": "sha256:7d5b5b3ccfd5e0f120cd3d750834f40227dc88b155474c4b483018066fdb4db7",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-series-detail-8757ae21c0d8b90082e30552a135ab0c4f515337f7308d0dd222ef1dfde61b94/7d5b5b3ccfd5e0f120cd3d750834f40227dc88b155474c4b483018066fdb4db7--summary.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383549517,
+      "tag": "catalog-series-detail-8f5282295e7a794bab430ffc36420afdda89a33b80a4e399ee0952e5a7839b13",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-series-detail-8f5282295e7a794bab430ffc36420afdda89a33b80a4e399ee0952e5a7839b13",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547075501,
+          "name": "1e12726f9bf15ab3d3c4921d2bdae84c18e5f2f997c7d69d261f877a38029bf9--summary.json",
+          "size": 1624,
+          "digest": "sha256:1e12726f9bf15ab3d3c4921d2bdae84c18e5f2f997c7d69d261f877a38029bf9",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-series-detail-8f5282295e7a794bab430ffc36420afdda89a33b80a4e399ee0952e5a7839b13/1e12726f9bf15ab3d3c4921d2bdae84c18e5f2f997c7d69d261f877a38029bf9--summary.json"
+        },
+        {
+          "id": 547075476,
+          "name": "c1b3bd4eaaf5cfcab43b6407674964c08f285c8412ab389ef81abd4b5c1e3e05--series-detail.json",
+          "size": 16218,
+          "digest": "sha256:c1b3bd4eaaf5cfcab43b6407674964c08f285c8412ab389ef81abd4b5c1e3e05",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-series-detail-8f5282295e7a794bab430ffc36420afdda89a33b80a4e399ee0952e5a7839b13/c1b3bd4eaaf5cfcab43b6407674964c08f285c8412ab389ef81abd4b5c1e3e05--series-detail.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383549537,
+      "tag": "catalog-series-detail-3f8a501170b90b05237989b7ee218e7e8cda76f9d937014311f5b573db8fd642",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-series-detail-3f8a501170b90b05237989b7ee218e7e8cda76f9d937014311f5b573db8fd642",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547075596,
+          "name": "0be681f90d2f4276a995f545d403823a24d998a647d48324a5dee4961cf30788--summary.json",
+          "size": 1624,
+          "digest": "sha256:0be681f90d2f4276a995f545d403823a24d998a647d48324a5dee4961cf30788",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-series-detail-3f8a501170b90b05237989b7ee218e7e8cda76f9d937014311f5b573db8fd642/0be681f90d2f4276a995f545d403823a24d998a647d48324a5dee4961cf30788--summary.json"
+        },
+        {
+          "id": 547075590,
+          "name": "9b4ecc1f7dd2dd7ed5e109d44415b0528eccd01599765df26a8334b36c09825b--series-detail.json",
+          "size": 16158,
+          "digest": "sha256:9b4ecc1f7dd2dd7ed5e109d44415b0528eccd01599765df26a8334b36c09825b",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-series-detail-3f8a501170b90b05237989b7ee218e7e8cda76f9d937014311f5b573db8fd642/9b4ecc1f7dd2dd7ed5e109d44415b0528eccd01599765df26a8334b36c09825b--series-detail.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383549578,
+      "tag": "catalog-series-detail-11fbd208acd9ecc9d93d7d0496a831c03a51b837bcb14b410e1cc872e98f4d45",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-series-detail-11fbd208acd9ecc9d93d7d0496a831c03a51b837bcb14b410e1cc872e98f4d45",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547075734,
+          "name": "99f7fa2fa6b5f4a79f78f841d4512f606c3c183050e3480308483b1c30c5e0c5--series-detail.json",
+          "size": 16323,
+          "digest": "sha256:99f7fa2fa6b5f4a79f78f841d4512f606c3c183050e3480308483b1c30c5e0c5",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-series-detail-11fbd208acd9ecc9d93d7d0496a831c03a51b837bcb14b410e1cc872e98f4d45/99f7fa2fa6b5f4a79f78f841d4512f606c3c183050e3480308483b1c30c5e0c5--series-detail.json"
+        },
+        {
+          "id": 547075745,
+          "name": "d70444dd39a300a75a31a2f7dc5fa540e6f17ca7ba43c48d13308e30a097bcf8--summary.json",
+          "size": 1630,
+          "digest": "sha256:d70444dd39a300a75a31a2f7dc5fa540e6f17ca7ba43c48d13308e30a097bcf8",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-series-detail-11fbd208acd9ecc9d93d7d0496a831c03a51b837bcb14b410e1cc872e98f4d45/d70444dd39a300a75a31a2f7dc5fa540e6f17ca7ba43c48d13308e30a097bcf8--summary.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383549597,
+      "tag": "catalog-series-detail-1cfb27be2070ee718c1dd3ceb5182f2c23ca41423b5827bbdfeb096fde6b3930",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-series-detail-1cfb27be2070ee718c1dd3ceb5182f2c23ca41423b5827bbdfeb096fde6b3930",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547075792,
+          "name": "341ae30d5dee6c42516fb2bbba8584e2b505e57d3a078d0c1b3d5dcfc31106ae--series-detail.json",
+          "size": 16166,
+          "digest": "sha256:341ae30d5dee6c42516fb2bbba8584e2b505e57d3a078d0c1b3d5dcfc31106ae",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-series-detail-1cfb27be2070ee718c1dd3ceb5182f2c23ca41423b5827bbdfeb096fde6b3930/341ae30d5dee6c42516fb2bbba8584e2b505e57d3a078d0c1b3d5dcfc31106ae--series-detail.json"
+        },
+        {
+          "id": 547075803,
+          "name": "fdc77ab2035e4f0ce18ebda711a6f752d12b356dfa1014b13629af3136e40e0f--summary.json",
+          "size": 1625,
+          "digest": "sha256:fdc77ab2035e4f0ce18ebda711a6f752d12b356dfa1014b13629af3136e40e0f",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-series-detail-1cfb27be2070ee718c1dd3ceb5182f2c23ca41423b5827bbdfeb096fde6b3930/fdc77ab2035e4f0ce18ebda711a6f752d12b356dfa1014b13629af3136e40e0f--summary.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383549634,
+      "tag": "catalog-series-detail-7442a724dd57409f3335d46df8fb1b7e3f642c31bb64170e556c14680d869763",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-series-detail-7442a724dd57409f3335d46df8fb1b7e3f642c31bb64170e556c14680d869763",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547075922,
+          "name": "c6d9fa67cc6c9c993409c92169ab6698f4337dbd0d815d735124f7980115c280--summary.json",
+          "size": 1629,
+          "digest": "sha256:c6d9fa67cc6c9c993409c92169ab6698f4337dbd0d815d735124f7980115c280",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-series-detail-7442a724dd57409f3335d46df8fb1b7e3f642c31bb64170e556c14680d869763/c6d9fa67cc6c9c993409c92169ab6698f4337dbd0d815d735124f7980115c280--summary.json"
+        },
+        {
+          "id": 547075909,
+          "name": "c9fcdae4c7379e49fb9427f8e0f1301c29b6f7c53a354f8923ec2274498eab1b--series-detail.json",
+          "size": 16386,
+          "digest": "sha256:c9fcdae4c7379e49fb9427f8e0f1301c29b6f7c53a354f8923ec2274498eab1b",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-series-detail-7442a724dd57409f3335d46df8fb1b7e3f642c31bb64170e556c14680d869763/c9fcdae4c7379e49fb9427f8e0f1301c29b6f7c53a354f8923ec2274498eab1b--series-detail.json"
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY"
+    },
+    {
+      "release_id": 383552489,
+      "tag": "catalog-independent-review-892c12abc44d17e54188bb2707d40dc91e6dbb6e3a896d4fc79f0f99e0bac04b",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-independent-review-892c12abc44d17e54188bb2707d40dc91e6dbb6e3a896d4fc79f0f99e0bac04b",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547086233,
+          "name": "892c12abc44d17e54188bb2707d40dc91e6dbb6e3a896d4fc79f0f99e0bac04b--independent-review.json",
+          "size": 12862,
+          "digest": "sha256:892c12abc44d17e54188bb2707d40dc91e6dbb6e3a896d4fc79f0f99e0bac04b",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-independent-review-892c12abc44d17e54188bb2707d40dc91e6dbb6e3a896d4fc79f0f99e0bac04b/892c12abc44d17e54188bb2707d40dc91e6dbb6e3a896d4fc79f0f99e0bac04b--independent-review.json"
+        }
+      ],
+      "authority": "INDEPENDENT_POSITIVE_IDENTITY_REVIEW_ONLY"
+    },
+    {
+      "release_id": 383554272,
+      "tag": "catalog-independent-review-663f13177d380429a01000b9c5241e1e0640257f54b82dba67e42ef0a7b9723b",
+      "url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/catalog-independent-review-663f13177d380429a01000b9c5241e1e0640257f54b82dba67e42ef0a7b9723b",
+      "immutable": true,
+      "assets": [
+        {
+          "id": 547092907,
+          "name": "663f13177d380429a01000b9c5241e1e0640257f54b82dba67e42ef0a7b9723b--independent-review.json",
+          "size": 13459,
+          "digest": "sha256:663f13177d380429a01000b9c5241e1e0640257f54b82dba67e42ef0a7b9723b",
+          "browser_download_url": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/download/catalog-independent-review-663f13177d380429a01000b9c5241e1e0640257f54b82dba67e42ef0a7b9723b/663f13177d380429a01000b9c5241e1e0640257f54b82dba67e42ef0a7b9723b--independent-review.json"
+        }
+      ],
+      "authority": "INDEPENDENT_POSITIVE_IDENTITY_REVIEW_ONLY"
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "schema": "pendulumflow-historical-catalog-status.v1",
+  "verdict": "BLOCKED_HISTORICAL_EXPECTED_MEMBERSHIP_UNPROVEN",
+  "repository": "atalaydor/polymarket-5m-seven-asset-price-time-canonical-data",
+  "repository_id": 1358712762,
+  "path": "C:\\letsgo\\polymarket-5m-seven-asset-price-time-canonical-data",
+  "branch": "main",
+  "checkpoint_tag": "run-1-historical-catalog-blocked-v0.4.0",
+  "checkpoint_commit_source": "immutable checkpoint-manifest.commit",
+  "semantic_profile": "PENDULUMFLOW_V3_OBSERVED",
+  "semantic_profile_version": 1,
+  "research_import_allowed": false,
+  "continuity_between_observations_certified": false,
+  "expected_catalog_certified": false,
+  "certified_days": [],
+  "excluded_days": [],
+  "pending_days": [
+    {
+      "day": "2026-08-25",
+      "reason": "HISTORICAL_EXPECTED_MEMBERSHIP_UNPROVEN",
+      "scope": "positive catalog probe only; no complete native day certification"
+    },
+    {
+      "day": "2026-08-27",
+      "reason": "HISTORICAL_EXPECTED_MEMBERSHIP_UNPROVEN",
+      "scope": "positive catalog probe only; no complete native day certification"
+    },
+    {
+      "day": "2026-08-28",
+      "reason": "HISTORICAL_EXPECTED_MEMBERSHIP_UNPROVEN",
+      "scope": "positive catalog probe only; no complete native day certification"
+    }
+  ],
+  "current_window_generation": null,
+  "canonical_objects": [],
+  "production_pipeline_implemented": false,
+  "accumulation_running": false,
+  "scheduled_accumulation": false,
+  "new_native_payload_bytes": 0,
+  "source_gap_condition": "An authoritative first-party finite historical listing/exception inventory, historical snapshot, or normative listing/identity rule plus explicit delisting/relisting exceptions; independently pinnable and able to distinguish never listed from removed/omitted historical membership. Equivalent exhaustive native expected membership also qualifies.",
+  "source_gap_kind": "currently_published_historical_catalog_authority_missing; not proven fundamental to future first-party capabilities",
+  "positive_target_metadata": {
+    "named_day_entries": 6048,
+    "terminal_day_queries": 42,
+    "source_response_bytes": 42532081,
+    "network_seconds": "28.215456621",
+    "scope": "returned positive first-party identities; no historical denominator certification"
+  },
+  "production_throughput": null,
+  "production_eta": null,
+  "eta_reason": "No production launch; metadata probe timing is not V3 production throughput",
+  "workflows": [
+    {
+      "run_id": 34025801897,
+      "purpose": "initial catalog capability"
+    },
+    {
+      "run_id": 34026602233,
+      "purpose": "alternative first-party access"
+    },
+    {
+      "run_id": 34027566646,
+      "purpose": "bounded broad enumeration; caps and failed oversized event responses preserved"
+    },
+    {
+      "run_id": 34027804994,
+      "purpose": "corrected series enumeration and durable inspection"
+    },
+    {
+      "run_id": 34028123954,
+      "purpose": "failed before target source access; serialized-query verifier repaired"
+    },
+    {
+      "run_id": 34028303954,
+      "purpose": "successful target-series historical slices"
+    },
+    {
+      "run_id": 34028569845,
+      "purpose": "successful date-free series detail diagnostics"
+    }
+  ],
+  "selective_recovery": {
+    "reused_previous_proof": true,
+    "run_id": 34015632358,
+    "attempt": 2,
+    "release_id": 383483634,
+    "new_payload_bytes": 0,
+    "scope": "previous native shard recovery; no new production recovery claim"
+  },
+  "evidence_inventory": "docs/catalog-evidence-inventory.json",
+  "source_review": "docs/catalog-authority-review.md",
+  "implementation_review": "docs/catalog-implementation-review.md",
+  "preserved_checkpoint_tags": [
+    "run-1-source-proof-blocked-v0.1.0",
+    "run-1-continuity-blocked-v0.2.0",
+    "run-1-observed-catalog-blocked-v0.3.0"
+  ],
+  "independent_review": {
+    "run_id": 34029408059,
+    "release_id": 383554272,
+    "sha256": "663f13177d380429a01000b9c5241e1e0640257f54b82dba67e42ef0a7b9723b",
+    "distinct_positive_named_day_markets": 6048,
+    "native_identity_matches": 14,
+    "extra_series": {
+      "id": "12517",
+      "slug": "zec-up-or-down-5m",
+      "classification": "OUTSIDE_SEVEN_ASSET_UNIVERSE"
+    },
+    "expected_catalog_certified": false
+  },
+  "validation": {
+    "local_tests_passed": 37,
+    "independent_reviewer_self_tests_passed": true,
+    "ruff_format_lint_passed": true,
+    "mypy_passed": true,
+    "workflow_structural_checks_passed": 10,
+    "final_commit_CI": "required_by_checkpoint_publisher"
+  }
+}

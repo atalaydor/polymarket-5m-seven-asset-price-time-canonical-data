@@ -347,3 +347,314 @@ fixed. Actual reports, terminal behavior and pinned immutable stream/summary obj
 require independent post-run verification on Linux for bulky streams. This review
 does not change old native artifacts, source assumptions, OBSERVED-profile schema
 status, daily gates or the absence of certified research authority.
+
+## Page-clamp correction review and invalidated terminal inference
+
+The refinement reviewed here is commit
+`8659c75117a2b2acf080cea49ee0143d54ef25ae`, dispatched as workflow run
+`34027804994`. The preceding enumeration ran under transform
+`65b474aad96b6adde2901ba4d5b2944dd9353ce5` in run `34027566646`.
+The earlier review's assumption that a short offset page establishes terminal closure
+is **invalidated by actual API behavior**. A request for one hundred series returned
+fifty, and the two opposite-order first-page identity projections differed. Existing
+immutable reports retain their original `terminal_observed=true` claims as historical
+diagnostics; those claims must not be interpreted as proved terminal catalog closure.
+
+The reviewer read the saved small summaries independently. Both contain fifty rows
+and one page; their stable identity digests are respectively
+`1b362c2e1ceebc08a7158fb34aae7abdcbc0c70fbfb527d1018dd563ac6663f8`
+and `405b43ef2540f4c31dc3da8730635c5ab0d9d549e2d9702a5c9a40fc944d59ff`.
+The local inspection record `work/catalog-query-inspection.json` has canonical digest
+`dc5371a9139e691dd6d6f1b137f2312e1db46f002af81d3a71b49fa9b6c0728e`;
+it explicitly marks `series_short_page_terminal_claim_invalidated=true` and retains
+false research-import and catalog-certification flags. These are local evidence reads,
+not a claim that this reviewer freshly downloaded and independently verified every
+old full stream.
+
+The repaired scanner increments offsets by the actual number of returned rows and
+continues until an explicit empty page or its budget/error boundary. This prevents
+skipping records when the server clamps a requested page size. New
+`series-complete-ascending` and `series-complete-descending` specifications request
+fifty rows and their validators require the explicit empty terminal response.
+The new refinement workflow makes only these two fresh first-party traversals. Its
+separate Linux inspection job reads already published projected streams, preserving
+successful keyset work without repeating that source acquisition. Each job remains
+bounded to twenty minutes on standard Ubuntu; the two series streams use at most two
+concurrent runners. No metadata projection or source-price/depth permission expands.
+
+The saved inspection distinguishes three closed-market streams that exhausted their
+fifty-page limits at five thousand rows from six observed terminal open-market/event
+streams. The three closed-event streams have no sealed report. The implementer
+reported oversized event responses hitting the response cap; the inspection's
+`NO_SEALED_STREAM` alone does not independently establish the cause of that failure.
+Neither a missing artifact nor a cap-limited traversal is an empty catalog.
+
+Thirteen focused catalog tests independently passed in 0.045 seconds, including the
+new fifty-row clamp, actual offsets 50 and 51, and explicit empty terminal fixture.
+Changed-file Ruff lint/format and strict mypy passed; all seven workflow structural
+checks passed. This also resolves the earlier mechanical verifier-formatting item.
+
+Two actionable follow-ups were sent to the implementer during this review:
+
+- Legacy short-page validation is selected by the stream name in the reviewed
+  commit. Current acquisition always uses the empty-page rule. The reviewer reproduced
+  a current `series-ascending` traversal containing a nonempty short page followed by
+  an empty page that its own validator rejects as `pages after terminal/error`.
+  The new `series-complete` execution is unaffected, but the existing enumeration
+  workflow's original names must use current semantics for new transforms. Historical
+  compatibility should be bound to the exact old acquisition commit.
+- `catalog_inspect` checks immutable content-addressed release assets and validates
+  the stream report, but the reviewed version does not enforce its expected two-asset
+  inventory, recompute/compare the summary or verify the tag's exact transform commit.
+  Those checks should match the exact-pin consumer before the inspection is described
+  as complete independent verification of the old stream/summary pair. The existing
+  native hashes and projected metadata remain preserved; this finding does not require
+  fresh first-party source acquisition.
+
+The new offset traversal is accepted as bounded diagnostic machinery. Complete
+expected membership, historical listing-rule coverage and certified OBSERVED research
+days remain unapproved. An explicit empty response repairs this observed pagination
+fault; it does not establish atomic catalog snapshots, undocumented default inclusion
+rules, or freedom from consistent upstream omissions.
+
+## Refinement follow-up and target-series diagnostic review
+
+Both refinement findings above are resolved in the next local implementation.
+Legacy short-page semantics are now limited to the exact old transform
+`65b474aad96b6adde2901ba4d5b2944dd9353ce5`; an independently rerun fixture confirms
+that a current original-name series traversal with a short nonempty page followed by
+an empty page now validates. The inspector now recomputes the deterministic summary,
+requires the exact two-asset inventory and checks the tag object type and exact
+transform commit. These repairs strengthen future inspection and do not rewrite the
+earlier immutable reports or relabel their invalidated terminal claims.
+
+The new target diagnostic selects seven series IDs from the independently pinned
+projected series report, verifies its immutable report/summary inventory and transform,
+and requires each selected series ID to occur once with the expected series slug.
+The seed report SHA-256 is
+`f4dbb82576c1001d25d82cb91163b51250da20cdc3c48bbe89e78ce3658e3c05`, from transform
+`8659c75117a2b2acf080cea49ee0143d54ef25ae`. Selection is based on independently
+discovered first-party series metadata, not absence or presence of native price rows.
+It does not by itself prove that those series constitute all possible target listings.
+
+Each asset has ten fixed event-keyset queries: four date-free first/last ID sentinels
+cover both closed states and ordering directions, and six day-filtered traversals
+cover both closed states for the three prior canary days. Sentinels request one page
+of one row; daily probes request at most ten pages of one hundred rows. The inherited
+request/byte caps remain in force. The workflow has seven bounded standard Ubuntu
+jobs, at most two concurrent workers, no sibling cancellation, and no native-source
+payload acquisition. ID extrema are not assumed to be chronological listing extrema.
+
+Source bodies continue through the strict event/market/series metadata projection.
+The summary exports only interval, market, condition, token and listing diagnostics,
+with fixed false catalog-certification and research-import flags. Up/Down labels are
+token identity labels; no winning outcome, external price or depth value is retained.
+Date-filtered results are counted by their independently parsed event start times;
+the five-minute end-date margin does not extend a certified research window because
+this diagnostic certifies none.
+
+Pre-dispatch review identified three target-specific corrections still requiring
+verification at this point: reuse validation must bind the complete cursor/request
+ledger, exact per-query page limits, row totals and terminal/error/duplicate accounting;
+two outcome token IDs must be distinct numeric identities to avoid an error-free
+diagnostic for duplicate tokens; and timestamp conversion must reject unsupported
+sub-microsecond precision instead of silently truncating it. The reviewer reproduced
+duplicate-token acceptance and sub-microsecond truncation with offline fixtures.
+An exact-pin consumer path for the new report/summary pair is also required before
+post-run independent artifact acceptance. No foreign-field projection leak was found.
+
+The target corrections were subsequently inspected and independently checked. Target
+reuse now invokes the shared strict page validator with the fixed one-page or ten-page
+budget for each query, then requires the flattened ledger to equal the complete
+request ledger. A synthetic ten-query report passed; independent mutations of the
+page budget, terminal claim, duplicate IDs, error claim, request URL and row total were
+all rejected. Token identities must now be two distinct positive decimal strings,
+with either explicitly paired Up/Down label order permitted. The small summary also
+retains the corresponding outcome labels alongside the token list, preserving that
+orientation. Timestamp parsing accepts only an explicit timezone and zero to six
+fractional digits; unsupported finer precision fails closed without truncation.
+
+Fifteen focused catalog tests independently passed in 0.031 seconds. Ruff lint and
+strict mypy passed for the four changed implementation/test files; their format checks,
+all eight workflow structural checks and `git diff --check` passed. The independently
+observed synthetic-report mutation checks were additional offline checks. No new
+source payload was acquired during this review.
+
+**Cleared for the bounded metadata-only target diagnostic.** Its independently pinned
+published report/summary pair, measured route behavior and exact-pin consumer path
+still require post-run acceptance. No catalog closure, source completeness, native
+official outcome, certified day or research-import authority is granted by this code
+review or by an error-free interval diagnostic.
+
+## Actual target summaries and independent remote review implementation
+
+The reviewer read all seven small target summaries and their saved immutable release
+metadata from run `34028303954`, transform
+`c4df60f9bfaa2ae1ea4f5d8838c33f73d6025e0b`. Each closed-state day query reports 290
+returned events, including 288 starts within its intended UTC day and two boundary
+neighbors; the corresponding open-state day queries report zero rows. These measured
+queries have terminal cursor evidence and zero interval errors. Their combined source
+request measurements are 42,532,081 bytes and 28,215,456,621 nanoseconds. These local
+summary checks alone do not independently prove unique full identities, reconcile
+every series candidate, or establish a historical expected denominator.
+
+At the user's independent-review request, this reviewer implemented
+`tools/review_catalog_remote.py`; no acquisition implementation module was changed by
+the reviewer. The script freezes exact release IDs, report asset IDs, transform commits
+and report SHA-256 pins for the two complete series reports, seven target reports and
+prior native Aug28 source report. It requires Actions Linux before any report read.
+Its only reads are existing GitHub Release objects and tag metadata; it does not call
+any first-party market endpoint or acquire a native source payload.
+
+The remote review independently verifies native release immutability, exact inventory,
+report hashes, strict report projections, query ledgers, recomputed summaries and tag
+transforms. It compares all 2,414 stable series identities between opposite-order
+traversals, scans every preserved row for null metadata and fixed five-minute candidate
+patterns, and records unknown/ambiguous candidates rather than hiding them. This
+classification is explicitly a heuristic over preserved metadata; it does not claim
+complete historical alias coverage or prove that an unmarked row cannot be a target.
+
+For targets it independently derives event/market interval agreement and oriented
+Up/Down token identities, requires unique positive listings within each observed
+asset-day, and checks 6,048 globally distinct condition, market and event identities
+across the 21 asset-days. The 288-start grid is labeled a positive query diagnostic,
+with `expected_membership_inferred=false`. All fourteen prior native quote-side
+identities are compared by condition, interval and oriented token. The native asks
+themselves do not enter the review output.
+
+The script publishes only a fixed allowlist of small metadata counters, diagnostic
+hashes, bounded candidate ID samples and exact evidence pointers, with a 64 KB output
+bound and explicit false research/certification flags. Its offline self-tests cover
+orientation, duplicate tokens, unsupported timestamp precision, missing/duplicate
+day rows and null/unknown candidate classification. Self-tests, Ruff lint/format and
+strict mypy passed locally. The root-provided standard Linux review workflow passed
+the structural check. Actual independent remote verification and the sealed review
+report are pending execution; no result is inferred from the implementation alone.
+
+## Series-detail probe review and retained measurement limits
+
+The bounded detail probe makes one documented series-by-ID request per discovered
+asset on standard Linux, with a 128 MB response cap and no redirects. It projects
+explicit series/event/market identity and listing metadata, dropping foreign prices,
+winner values, statistics, books and quantities. Null event relations remain null.
+The cap stores only a prefix hash claim and null projected metadata when a full body
+was not acquired; it does not publish raw or partial payloads as catalog evidence.
+
+The reviewer identified two measurement/integrity limits in executed detail v1:
+its `network_ns` includes JSON decoding/projection, and completion was inferred from
+being below the cap without comparing declared response length. They are preserved
+limitations of transform `f858dc3b16675148617749a16b122b755f69318b`, not retroactively
+repaired claims. Future v2 code records `declared_bytes`, classifies an early EOF
+against a larger declaration as prefix-only, and stops the network timer immediately
+after reading the response. The reviewer inspected those repairs and independently
+ran the new truncation fixture. Seventeen focused catalog tests passed in 0.031
+seconds. V1 acquisition must not be repeated merely to replace these measurements.
+
+The seven saved v1 detail summaries each report HTTP 200 and twenty returned recent
+events, with twenty interval diagnostic errors. The inspected BTC/DOGE examples mark
+missing or nonunique market evidence and absent back-relations; these are
+unsupported nested identity shapes for that checker, not proof that the listed markets
+do not exist. The route's successful response does not establish the SDK description's
+suggested full historical membership. Full-history or native outcome authority remains
+unapproved, and all earlier immutable target and detail evidence is preserved.
+
+## Independently verified remote review result and remaining candidate
+
+The Linux review completed in run `34029087406` under transform
+`ee9398287209aee3cbea25e0a6c1cafd415ff67c`. This reviewer then freshly read its small
+public GitHub report and independently verified the exact SHA-256, immutable release
+inventory and transform tag:
+
+| Evidence | Exact identifier |
+| --- | --- |
+| Release / asset | `383552489` / `547086233` |
+| Tag | `catalog-independent-review-892c12abc44d17e54188bb2707d40dc91e6dbb6e3a896d4fc79f0f99e0bac04b` |
+| Report SHA-256 | `892c12abc44d17e54188bb2707d40dc91e6dbb6e3a896d4fc79f0f99e0bac04b` |
+| Report bytes | `12862` |
+
+The sealed result establishes agreement between the two full pinned series identity
+sets, positive observed listings for 6,048 globally unique conditions, market IDs and
+event IDs across the 21 asset-days, and agreement for all fourteen native oriented
+quote-side identities. This is independently verified positive catalog/mapping
+evidence, not merely a count of returned entries or a green workflow. The report binds
+the exact ten input generations and makes no new first-party or native payload
+request. It retains false catalog-certification and research-import flags.
+
+The all-row classification scanned 2,414 series. No row had a null slug, title or
+ticker; two had null recurrence. It found eight five-minute candidates: the seven
+known target series and additional series ID `12517`, whose asset could not be resolved
+from v1's deliberately small candidate output. This candidate remains pending. It
+must not be silently excluded or converted into an absence/complete-denominator claim.
+
+Reviewer v2 adds only the already acquired series slug, title and recurrence to the
+candidate output, with explicit nullable string types, 2,048-character field bounds
+and the existing strict candidate allowlist. All input pins remain unchanged; the
+follow-up rereads existing immutable GitHub evidence on Linux and makes no new source
+query. V1 stays immutable. Offline self-tests, Ruff lint/format and strict mypy passed;
+extra raw-body, nested-title and oversized-title mutations were rejected. The pending
+candidate must be identified from the v2 evidence before the catalog checkpoint is
+finalized. Historical denominator proof and certified research days remain unapproved
+regardless of the positive identity checks already accepted.
+
+## Final independent acceptance of positive evidence and candidate disposition
+
+The reviewer freshly read and verified the v2 public report from run `34029408059`,
+including its strict output allowlist, independent SHA-256 pin, exact single-asset
+native immutable release and exact transform tag:
+
+| Evidence | Exact identifier |
+| --- | --- |
+| Release / asset | `383554272` / `547092907` |
+| Transform commit | `e723ebab3537d65f576520ecc75b47729ca1d633` |
+| Tag | `catalog-independent-review-663f13177d380429a01000b9c5241e1e0640257f54b82dba67e42ef0a7b9723b` |
+| Report SHA-256 | `663f13177d380429a01000b9c5241e1e0640257f54b82dba67e42ef0a7b9723b` |
+| Report bytes | `13459` |
+
+Series `12517` is explicitly named **ZEC Up or Down 5m**, with slug
+`zec-up-or-down-5m` and recurrence `5m`. Its pending identity is therefore resolved:
+it is outside the frozen BTC/ETH/SOL/XRP/DOGE/BNB/HYPE universe. It is retained in the
+immutable evidence and is not silently dropped. The report's heuristic count of one
+candidate outside its seven known target IDs remains an accurate historical output;
+this reviewed disposition explains that candidate using the newly exposed first-party
+identity text. No further unresolved candidate remains among these eight returned
+five-minute candidates. That statement does not claim complete historical alias or
+removed-listing coverage beyond the pinned returned catalog.
+
+**Accepted as independently verified positive metadata evidence:** both full pinned
+series identity sets agree; the three named UTC days contain 6,048 globally unique
+returned condition/market/event identities across the seven assets; and all fourteen
+native oriented token/interval identity comparisons agree. The v2 review required no
+new first-party query or native payload acquisition. It grants no historical expected
+denominator, official native outcome, certified day/window or research import.
+
+The reviewer also inspected `tools/publish_catalog_checkpoint.py`. It requires a clean
+committed worktree, the intended repository identity, remote main at the selected
+commit, enabled release immutability, preserved old checkpoint tags/releases and a
+successful push-triggered CI run for that exact main commit. It packages exact Git
+blob bytes, verifies frozen policy hashes and rejects nonempty certified-day/window
+or running-accumulation claims. Publication uses the previously reviewed draft-stage,
+byte-verification and native immutable-release helper. Ruff lint/format and strict
+mypy passed independently for the publisher.
+
+No fatal publication or authority issue was found for the reviewed blocker-only
+payloads. One pre-seal consistency item was sent to the implementer: the status file
+still referenced v1 while the bundled independent result was v2. Its pointer must be
+updated, and comparing the status digest with the exact bundled Git bytes prevents
+that mismatch recurring. This is a metadata consistency correction, not permission
+to promote research data. Final checkpoint publication and its exact resulting tag,
+manifest and asset identities remain the root orchestrator's verification step.
+
+The pre-seal consistency item is resolved. The reviewer re-read both status and
+consumer handoff pointers and confirmed that their v2 digest equals the exact bundled
+13,459-byte review payload. The publisher now rejects either stale digest, independently
+reads and verifies the referenced immutable single-asset review release against those
+Git bytes, and requires its tag to match the handoff locator. Changed-publisher Ruff
+lint/format and strict mypy passed again. The implementer reports a passing 37-test
+full suite; the independent checks and their narrower scopes are recorded above.
+
+**Final review ready:** no unresolved implementation-review finding blocks sealing
+this accurately named evidence/blocker checkpoint after its own exact-commit CI gates
+pass. Accepted authority remains positive catalog and native identity evidence only.
+Expected historical membership, certified research days/windows and autonomous
+production accumulation remain explicitly unproven or unimplemented; this checkpoint
+must not be consumed as a research dataset.
