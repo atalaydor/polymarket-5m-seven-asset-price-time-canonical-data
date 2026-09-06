@@ -12,7 +12,7 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
-from pflow.model import ASSETS, mapping, micros, quote, validate_quote
+from pflow.model import ASSETS, mapping, micros, quote, token, validate_quote
 from pflow.release import api, current_commit, publish, read_asset, verify_release
 from pflow.source import COLUMNS, PRODUCTS, Reader, canonical, fetch_products, sha
 
@@ -242,7 +242,11 @@ def run(hour: str, history: int = 30, after: int = 6) -> dict[str, Any]:
         mapped = observed_mappings.get(row["market"])
         if mapped is None or row["winning_asset_id"] is None:
             continue
-        winning = str(int.from_bytes(row["winning_asset_id"], "big"))
+        winning = token(row["winning_asset_id"])
+        actual_tokens = {token(value) for value in row["assets_ids"] or []}
+        if actual_tokens != {mapped["up_token"], mapped["down_token"]}:
+            contradictions.add(row["market"])
+            continue
         expected = (
             mapped["up_token"]
             if row["winning_outcome"] == "Up"

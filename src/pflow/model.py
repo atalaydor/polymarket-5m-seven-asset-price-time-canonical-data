@@ -36,6 +36,8 @@ def mapping(row: dict[str, Any]) -> dict[str, Any] | None:
         raise ValueError("ambiguous outcomes")
     if not tokens or len(tokens) != 2 or tokens[0] == tokens[1]:
         raise ValueError("ambiguous outcome tokens")
+    if not isinstance(row["market"], bytes) or len(row["market"]) != 32:
+        raise ValueError("condition identity must be 32 native bytes")
     start = int(match[2]) * 1_000_000
     if start % 300_000_000:
         raise ValueError("unaligned 5m start")

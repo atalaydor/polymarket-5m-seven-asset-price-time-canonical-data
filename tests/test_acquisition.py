@@ -50,6 +50,8 @@ class AcquisitionTests(unittest.TestCase):
             table = pa.table(
                 {
                     "event_type": ["best_bid_ask"],
+                    "market": pa.array([bytes([1]) * 32], type=pa.binary(32)),
+                    "asset_id": pa.array([bytes([2]) * 32], type=pa.binary(32)),
                     "timestamp": pa.array(
                         [datetime(2026, 9, 1, tzinfo=UTC)], type=pa.timestamp("ms", tz="UTC")
                     ),

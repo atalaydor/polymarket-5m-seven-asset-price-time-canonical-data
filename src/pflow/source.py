@@ -232,3 +232,15 @@ def check_schema(schema: Any, product: str) -> None:
     for name, expected in required.items():
         if name not in schema.names or schema.field(name).type != expected:
             raise ValueError(f"unsupported native exact schema: {name}")
+    identities = ["market", "asset_id"] if product == "best_bid_ask" else ["market"]
+    if product == "market_resolved":
+        identities.append("winning_asset_id")
+    for name in identities:
+        if name not in schema.names:
+            raise ValueError(f"missing identity: {name}")
+        kind = schema.field(name).type
+        if not (
+            pa.types.is_binary(kind)
+            or (pa.types.is_fixed_size_binary(kind) and kind.byte_width == 32)
+        ):
+            raise ValueError(f"unsupported binary identity: {name}")
