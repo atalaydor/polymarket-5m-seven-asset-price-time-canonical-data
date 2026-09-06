@@ -7,7 +7,7 @@ first-party series queries independently returned 6,048 distinct target contract
 aligned UP/DOWN token identities. That returned cohort is independent of V3 quote
 presence.
 
-It did not prove the required exhaustive historical target denominator. The retained
+It did not prove complete target membership within the retained V3 generation. The retained
 first-party interface evidence has no historical deletion/tombstone contract, no
 transactional as-of snapshot, and no closure for moved or null-dated membership. A
 complete 288-slot returned grid is observed corroboration, not a rule excluding an
@@ -23,9 +23,10 @@ The minimum additional authority is one of:
 - positive first-party identity/exclusion evidence for the subset of the 170,369 V3
   conditions capable of belonging to those seven target series and days.
 
-This is the same missing historical-membership fact preserved at v0.4.0, narrowed to
-the target-first join. No further archive-wide classification or V3 acquisition is
-justified.
+This is the v0.4.0 historical-membership limitation narrowed to one precise current
+question: whether any retained unidentified V3 condition changes membership in the
+seven-asset target set. No global venue census, archive-wide classification or V3
+acquisition is justified.
 
 ## Rejected tentative outputs
 
