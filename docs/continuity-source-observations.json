@@ -1,0 +1,50 @@
+[
+  {
+    "etag": "\"db371c7caaaa07a434d6fdb56eff0a65\"",
+    "last_modified": "Fri, 28 Aug 2026 18:56:42 GMT",
+    "observed_at": "2026-09-06T07:56:10.244566+00:00",
+    "sha256": "e0eaf9f38222ebe4ba78df9ba525cd56b89b273d577f8bec8af058457ef52c5b",
+    "size": 9302,
+    "url": "https://archive.pendulumflow.com/v3/2026-08-28/11/manifest.json"
+  },
+  {
+    "etag": "\"32f5dd651fff57b87230b42f54ec1104\"",
+    "last_modified": "Fri, 28 Aug 2026 19:01:39 GMT",
+    "observed_at": "2026-09-06T07:56:11.053146+00:00",
+    "sha256": "b7d00beb5e0590d88482824580493f793ad379024cce94a28e20f6a21ad0145b",
+    "size": 9300,
+    "url": "https://archive.pendulumflow.com/v3/2026-08-28/12/manifest.json"
+  },
+  {
+    "etag": null,
+    "last_modified": null,
+    "observed_at": "2026-09-06T07:56:15.396234+00:00",
+    "sha256": "20f1c8e0aa7dbd7dbb0ac2776d7776863e3383f2923635e5421cc6c946a28205",
+    "size": 101655,
+    "url": "https://archive.pendulumflow.com/formats/v3"
+  },
+  {
+    "etag": null,
+    "last_modified": null,
+    "observed_at": "2026-09-06T07:56:16.124619+00:00",
+    "sha256": "490b895164fabee6f728cbde98b3bdc8e647449f55186e252d627a093c8d4f0b",
+    "size": 81298,
+    "url": "https://archive.pendulumflow.com/data-notes"
+  },
+  {
+    "etag": null,
+    "last_modified": null,
+    "observed_at": "2026-09-06T07:56:16.851984+00:00",
+    "sha256": "ad64ea400d57a4324619c8a88acce80f4c03c0596da2815bc4bf101cb9b236e4",
+    "size": 25593,
+    "url": "https://archive.pendulumflow.com/llms.txt"
+  },
+  {
+    "etag": null,
+    "last_modified": null,
+    "observed_at": "2026-09-06T07:56:20.506366+00:00",
+    "sha256": "e122bfb95c5cacbcfe19d48e55e08c180201dfb1b8c45a6f164d416a81ee1bb3",
+    "size": 150716,
+    "url": "https://archive.pendulumflow.com/audit"
+  }
+]
