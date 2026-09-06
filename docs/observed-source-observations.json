@@ -1,0 +1,50 @@
+[
+  {
+    "etag": null,
+    "last_modified": null,
+    "observed_at": "2026-09-06T09:14:53.629082+00:00",
+    "sha256": "5af11e733b2b30728818da919d99cb51af04d7538411bfbdc1b638fb6b9e56cc",
+    "size": 101655,
+    "url": "https://archive.pendulumflow.com/formats/v3"
+  },
+  {
+    "etag": null,
+    "last_modified": null,
+    "observed_at": "2026-09-06T09:14:53.962956+00:00",
+    "sha256": "8fce7fbc74852a563597c3183dbff7701cc47519f64f13a8824f4c421e83a9c0",
+    "size": 81298,
+    "url": "https://archive.pendulumflow.com/data-notes"
+  },
+  {
+    "etag": null,
+    "last_modified": null,
+    "observed_at": "2026-09-06T09:14:54.262912+00:00",
+    "sha256": "ad64ea400d57a4324619c8a88acce80f4c03c0596da2815bc4bf101cb9b236e4",
+    "size": 25593,
+    "url": "https://archive.pendulumflow.com/llms.txt"
+  },
+  {
+    "etag": null,
+    "last_modified": null,
+    "observed_at": "2026-09-06T09:14:56.143291+00:00",
+    "sha256": "158dce2f9c38bf28bb712f444878d71d03175041bd993d9f532e4db5ce6aab60",
+    "size": 124844,
+    "url": "https://archive.pendulumflow.com/v3/"
+  },
+  {
+    "etag": null,
+    "last_modified": null,
+    "observed_at": "2026-09-06T09:14:56.455348+00:00",
+    "sha256": "76ec0a7dca51e774b3eb7a50aca315ea3df2e8b3cea94e997fda348c32341b03",
+    "size": 1579,
+    "url": "https://archive.pendulumflow.com/v3/SCHEMA.json"
+  },
+  {
+    "etag": null,
+    "last_modified": null,
+    "observed_at": "2026-09-06T09:14:57.770860+00:00",
+    "sha256": "7cb7a40d3c13fea1e476e5403ee784e473ebe3fdf0820ad5f7d415448d1edd77",
+    "size": 81774,
+    "url": "https://archive.pendulumflow.com/audit/hour/2026-09-06/04"
+  }
+]

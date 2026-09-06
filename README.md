@@ -48,3 +48,11 @@ Source: [PendulumFlow V3](https://archive.pendulumflow.com/formats/v3),
 [native coverage criteria](https://archive.pendulumflow.com/audit#per-hour-coverage-v3).
 Native data is credited to PendulumFlow under CC BY 4.0. The free archive is supported by donations.
 This project's projections and proof reports are transformations, not upstream certification.
+
+The subsequent user policy authorizes the separate
+[PENDULUMFLOW_V3_OBSERVED v1 profile](docs/observed-profile-v1.md), with source-time
+qualification at recorded observations only. It does not require price continuity.
+The [observed-profile source review](docs/observed-source-review.md) identifies the
+remaining expected-target catalog gate; no observed day/window or autonomous
+accumulation has been launched. See the additive
+[consumer handoff](docs/observed-consumer-handoff.json) for explicit profile and authority flags.

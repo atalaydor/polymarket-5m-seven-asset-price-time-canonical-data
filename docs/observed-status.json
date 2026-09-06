@@ -1,0 +1,179 @@
+{
+  "accumulation_running": false,
+  "branch": "main",
+  "canonical_schema_implemented": false,
+  "certified_days": [],
+  "checkpoint_commit_location": "Exact target commit is bound by the immutable checkpoint manifest",
+  "checkpoint_tag": "run-1-observed-catalog-blocked-v0.3.0",
+  "completed": [
+    "Accepted observed-profile policy preserved as version 1",
+    "Current native documentation/index metadata inspected",
+    "Independent source and acceptance review",
+    "Previous report hashes rechecked locally; no successful acquisition repeated"
+  ],
+  "continuation_condition": "Native V3 must provide an applicable exhaustive expected-target catalog/schedule rule or published day membership that makes all seven assets' five-minute target markets and exceptions checkable at the pinned source generation. No price continuity or venue-emission completeness proof is required for this observed profile.",
+  "continuity_diagnostic_pin": {
+    "asset_id": 546922721,
+    "immutable": true,
+    "release_id": 383511393,
+    "research_import_allowed": false,
+    "sha256": "b107e4a5033ba09e1ace47439e37e2e5c529be94e7a91561884070f49c71c619",
+    "tag": "continuity-probe-c387591627194c3c5a6f668cbea707da7085c658ba94b3c054b41ce30c6a3b51",
+    "verified": true
+  },
+  "continuity_is_a_gate_for_this_profile": false,
+  "control_metadata_bytes": 416743,
+  "current_window_generation": null,
+  "day_assessment_status": "No complete day was assessed under the new profile; all await the source gate",
+  "day_window_pipeline_implemented": false,
+  "eta_reason": "Expected-target source gate blocks production before a new transform canary",
+  "excluded_days": [],
+  "historical_throughput_evidence": {
+    "canary_run_id": 34021182240,
+    "continuity_canary_commit": "529e6b5e2b18d46834815e90ad2f1b0ff45c599c",
+    "decode_seconds": 10.975252366999982,
+    "downloaded_bytes": 1894050290,
+    "network_seconds": 121.52682149500004,
+    "scope": "Reused diagnostic measurement, not new observed-profile production throughput"
+  },
+  "implementation_commit": "2c0062d90f6839516859368542ba3167cc41eadc",
+  "independent_reviews": [
+    "docs/observed-source-review.md",
+    "docs/observed-acceptance-review.md"
+  ],
+  "new_market_payload_bytes": 0,
+  "observation_eligibility": "source_event_time_in_market_start_inclusive_expiry_exclusive",
+  "observed_at": "2026-09-06T09:23:02.031923+00:00",
+  "observed_profile_canary_run_id": null,
+  "observed_profile_throughput": null,
+  "observed_replay_engine_implemented": false,
+  "path": "C:\\letsgo\\polymarket-5m-seven-asset-price-time-canonical-data",
+  "pending_days": [],
+  "policy_contracts": [
+    {
+      "bytes": 1664,
+      "path": "docs/observed-profile-policy-v1.json",
+      "sha256": "8bcb7bfdc2571045b5fc25c01c214f076ad9ca7993dd60973176ba7dc11f5193"
+    },
+    {
+      "bytes": 9075,
+      "path": "docs/observed-profile-v1.md",
+      "sha256": "cc1e03888ee3fa67cebee112d697bb5eeed79f02006fb7e1625aebb8cd542ad2"
+    }
+  ],
+  "positive_source_capability": "Complete finite served-object inventory supports extraction relative to exact pinned published bytes",
+  "preserved_checkpoints": [
+    {
+      "commit": "7c313b1e31f73cbba20465d0ed05d12b52a19bce",
+      "release_id": 383485962,
+      "tag": "run-1-source-proof-blocked-v0.1.0"
+    },
+    {
+      "commit": "2c0062d90f6839516859368542ba3167cc41eadc",
+      "release_id": 383513515,
+      "tag": "run-1-continuity-blocked-v0.2.0"
+    }
+  ],
+  "prior_canary_pins": [
+    {
+      "asset_id": 546814566,
+      "hour": "2026-08-25/12",
+      "immutable": true,
+      "release_id": 383483634,
+      "sha256": "21bc23026b7af5f2d56d4a56d073fd23f54ac322445638bd12c968bbf7903dc1",
+      "tag": "source-probe-895f9dc0dc88dcb8aaa681babdc182753d08991a0b7ac35c64781eba91189e80"
+    },
+    {
+      "asset_id": 546813960,
+      "hour": "2026-08-27/12",
+      "immutable": true,
+      "release_id": 383483454,
+      "sha256": "f9ede8837faa8973f8f77261657515856efa7375e7d5bce8aeea21eec2519d6a",
+      "tag": "source-probe-e351a89837a1a06d7f1fcd300a163d1d7f75650e64ba003e9e8ac3c1153e4caa"
+    },
+    {
+      "asset_id": 546816669,
+      "hour": "2026-08-28/12",
+      "immutable": true,
+      "release_id": 383484175,
+      "sha256": "61347d5fdd408676adff2d40a5224934e5b646175a59d2c562a6b042ec355173",
+      "tag": "source-probe-8e650e70605997c050bf7d32ef898e8077105fe19ebaa21c1089d07b0a1cc31c"
+    }
+  ],
+  "profile": "PENDULUMFLOW_V3_OBSERVED",
+  "profile_version": 1,
+  "recovery_evidence_reused": {
+    "attempt2_jobs": [
+      {
+        "completed_at": "2026-09-06T06:13:39Z",
+        "conclusion": "success",
+        "id": 101439543171,
+        "name": "probe (2026-08-25/12)",
+        "started_at": "2026-09-06T06:13:10Z"
+      },
+      {
+        "completed_at": "2026-09-06T06:12:09Z",
+        "conclusion": "success",
+        "id": 101439543658,
+        "name": "probe (2026-08-28/12)",
+        "started_at": "2026-09-06T06:08:54Z"
+      },
+      {
+        "completed_at": "2026-09-06T06:06:25Z",
+        "conclusion": "success",
+        "id": 101439556718,
+        "name": "plan",
+        "started_at": "2026-09-06T06:06:18Z"
+      },
+      {
+        "completed_at": "2026-09-06T06:08:51Z",
+        "conclusion": "success",
+        "id": 101439559413,
+        "name": "probe (2026-08-27/12)",
+        "started_at": "2026-09-06T06:06:28Z"
+      }
+    ],
+    "injection": "Intentional process failure after Aug25 immutable report sealing on attempt 1",
+    "new_source_payload_bytes": 0,
+    "proof": "Attempt 2 log contains checkpoint_reused=true; siblings retain attempt 1 start/end times",
+    "retry": "gh run rerun 34015632358 --failed",
+    "reused_release_id": 383483634,
+    "successful_siblings_reacquired": false,
+    "unfinished_recovery": "Interrupted starter uploads are preserved and fail closed; automatic draft cleanup is not implemented"
+  },
+  "remaining_background_work": [],
+  "remote_backfill_eta": null,
+  "repository": "atalaydor/polymarket-5m-seven-asset-price-time-canonical-data",
+  "repository_id": 1358712762,
+  "research_day_membership": "market_start_in_UTC_day",
+  "research_import_allowed": false,
+  "scheduled_accumulation": false,
+  "schema": "pendulumflow-observed-bootstrap-status.v1",
+  "source_gate": "EXPECTED_TARGET_CATALOG_UNESTABLISHED",
+  "source_inventory_scope": "complete_content_pinned_served_inventory_at_discovery_cutoff",
+  "unchanged_file_sha256_at_base": {
+    "docs/consumer-handoff.json": "c29630bb0e4e6fd77f8c7d2845f16bdc7c44acffb3e62adc6052658663c3c370",
+    "docs/continuity-consumer-handoff.json": "8e62fc0dac24af9e9fd3a34c74f90e75f90b481bcbd3ff1793c34492472db1aa",
+    "docs/continuity-status.json": "c5bc3807e9744cc69f4e0e1ff4215c288536829a8ac4fd0bf518543a27d49057",
+    "docs/daily-acceptance-v1.md": "563efaf768d77079c56b151b5c99e3e2a1c7965e53ac51268386b29f258b8449",
+    "docs/run-1-status.json": "a285cb098ca4436340e3d7f0a453d8ea0cf30f268e94085d661e7623677d9a04",
+    "src/pflow/consumer.py": "0b9f047a4337e325d7bfcd26fbf36d8c67f989a82731760074c7c9bc08a2f00c",
+    "src/pflow/continuity_probe.py": "8ce503f59258b57638142896585b2543853d917eb5d0c6c5f4e265ed900428ea",
+    "src/pflow/integrity.py": "3804d818b696085301de7bb561282fe3be8a6041ff6de98f9c5ebabc01741ef9",
+    "src/pflow/model.py": "25f1bf6f27f50f036f1312757d5d455158b093bde8cdff9c24a399084d6125c7",
+    "src/pflow/probe.py": "f2dcab7311fcd603860bcf79db217b7a2ce88a307aa5b8e88d562416d7faecac",
+    "src/pflow/release.py": "826842e391b641ff7990529c3102c982cb2ba048281a4b014be396889d9b4f5d",
+    "src/pflow/source.py": "4306c26077af71360d613481abdf233e04a922cb1f5f0952bf983cdafca4d7ac"
+  },
+  "validation": {
+    "diff": "pass",
+    "format": "pass",
+    "policy_json": "parse and explicit inactive profile flags pass",
+    "prior_report_sha256": "four pins pass",
+    "ruff": "pass",
+    "strict_mypy": "pass",
+    "structural_workflows": "pass",
+    "unchanged_implementation_tests": "Prior evidence reused; final existing CI bound in checkpoint manifest"
+  },
+  "verdict": "BLOCKED_EXPECTED_TARGET_CATALOG_UNESTABLISHED"
+}

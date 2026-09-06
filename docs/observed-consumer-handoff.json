@@ -1,0 +1,84 @@
+{
+  "accumulation_running": false,
+  "canonical_objects": [],
+  "canonical_schema_id": null,
+  "canonical_schema_status": "NOT_IMPLEMENTED_SOURCE_GATE_BLOCKED",
+  "checkpoint_commit_verification": "Resolve the immutable tag and require equality with checkpoint-manifest.commit",
+  "checkpoint_manifest_locator": "https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/run-1-observed-catalog-blocked-v0.3.0",
+  "checkpoint_tag": "run-1-observed-catalog-blocked-v0.3.0",
+  "continuation_condition": "Native V3 must provide an applicable exhaustive expected-target catalog/schedule rule or published day membership that makes all seven assets' five-minute target markets and exceptions checkable at the pinned source generation. No price continuity or venue-emission completeness proof is required for this observed profile.",
+  "continuity_between_observations_certified": false,
+  "current_window_generation": null,
+  "first_meaning": "earliest_lawfully_ordered_qualifying_recorded_observation_in_pinned_certified_scope",
+  "implementation_commit": "2c0062d90f6839516859368542ba3167cc41eadc",
+  "included_certified_utc_days": [],
+  "limitations": [
+    "No continuity, interpolation or time-only qualification",
+    "No actual-first-crossing or sender HTTP/execution claim",
+    "Expected target catalog unestablished; no observed-profile research authority exists"
+  ],
+  "ordering_clock": "venue_reported_source_event_time",
+  "policy_contracts": [
+    {
+      "bytes": 1664,
+      "path": "docs/observed-profile-policy-v1.json",
+      "sha256": "8bcb7bfdc2571045b5fc25c01c214f076ad9ca7993dd60973176ba7dc11f5193"
+    },
+    {
+      "bytes": 9075,
+      "path": "docs/observed-profile-v1.md",
+      "sha256": "cc1e03888ee3fa67cebee112d697bb5eeed79f02006fb7e1625aebb8cd542ad2"
+    }
+  ],
+  "predicate": "0 < remaining_seconds < T AND price > m*remaining_seconds+b",
+  "prior_continuity_evidence": {
+    "asset_id": 546922721,
+    "immutable": true,
+    "release_id": 383511393,
+    "research_import_allowed": false,
+    "sha256": "b107e4a5033ba09e1ace47439e37e2e5c529be94e7a91561884070f49c71c619",
+    "tag": "continuity-probe-c387591627194c3c5a6f668cbea707da7085c658ba94b3c054b41ce30c6a3b51",
+    "verified": true
+  },
+  "prior_source_evidence": [
+    {
+      "asset_id": 546814566,
+      "hour": "2026-08-25/12",
+      "immutable": true,
+      "release_id": 383483634,
+      "sha256": "21bc23026b7af5f2d56d4a56d073fd23f54ac322445638bd12c968bbf7903dc1",
+      "tag": "source-probe-895f9dc0dc88dcb8aaa681babdc182753d08991a0b7ac35c64781eba91189e80"
+    },
+    {
+      "asset_id": 546813960,
+      "hour": "2026-08-27/12",
+      "immutable": true,
+      "release_id": 383483454,
+      "sha256": "f9ede8837faa8973f8f77261657515856efa7375e7d5bce8aeea21eec2519d6a",
+      "tag": "source-probe-e351a89837a1a06d7f1fcd300a163d1d7f75650e64ba003e9e8ac3c1153e4caa"
+    },
+    {
+      "asset_id": 546816669,
+      "hour": "2026-08-28/12",
+      "immutable": true,
+      "release_id": 383484175,
+      "sha256": "61347d5fdd408676adff2d40a5224934e5b646175a59d2c562a6b042ec355173",
+      "tag": "source-probe-8e650e70605997c050bf7d32ef898e8077105fe19ebaa21c1089d07b0a1cc31c"
+    }
+  ],
+  "remaining_time": "(expiry_us-source_event_us)/1000000_exact_decimal",
+  "repository": "atalaydor/polymarket-5m-seven-asset-price-time-canonical-data",
+  "repository_id": 1358712762,
+  "research_import_allowed": false,
+  "scheduled_accumulation": false,
+  "schema": "pendulumflow-observed-consumer-handoff.v1",
+  "semantic_profile": "PENDULUMFLOW_V3_OBSERVED",
+  "semantic_profile_version": 1,
+  "verification_instructions": [
+    "Reject research import: research_import_allowed=false and there is no certified window",
+    "Evidence-only review may read the named native immutable non-draft Release",
+    "Require exact asset inventory, uploaded state, SHA-256/sizes and content-addressed names from checkpoint-manifest",
+    "Independently read/hash every asset; verify profile/version and false authority flags in this handoff/policy",
+    "Do not substitute legacy source-probe reports or OWN_RECORDER_EXACT authority"
+  ]
+}
