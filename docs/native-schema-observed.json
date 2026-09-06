@@ -1,0 +1,99 @@
+{
+ "generated_utc": "2026-08-28T08:40:13Z",
+ "products": {
+  "best_bid_ask": [
+   "arrival_skew",
+   "asset_id",
+   "best_ask",
+   "best_bid",
+   "market",
+   "sequence",
+   "source_witness",
+   "spread",
+   "timestamp",
+   "timestamp_received",
+   "witness_set"
+  ],
+  "book": [
+   "arrival_skew",
+   "asks",
+   "asset_id",
+   "bids",
+   "market",
+   "sequence",
+   "source_witness",
+   "timestamp",
+   "timestamp_received",
+   "witness_set"
+  ],
+  "last_trade_price": [
+   "arrival_skew",
+   "asset_id",
+   "fee_rate_bps",
+   "market",
+   "price",
+   "sequence",
+   "side",
+   "size",
+   "source_witness",
+   "timestamp",
+   "timestamp_received",
+   "transaction_hash",
+   "witness_set"
+  ],
+  "market_resolved": [
+   "arrival_skew",
+   "assets_ids",
+   "id",
+   "market",
+   "sequence",
+   "source_witness",
+   "timestamp",
+   "timestamp_received",
+   "winning_asset_id",
+   "winning_outcome",
+   "witness_set"
+  ],
+  "new_market": [
+   "arrival_skew",
+   "assets_ids",
+   "id",
+   "market",
+   "outcomes",
+   "question",
+   "sequence",
+   "slug",
+   "source_witness",
+   "timestamp",
+   "timestamp_received",
+   "witness_set"
+  ],
+  "price_change": [
+   "arrival_skew",
+   "asset_id",
+   "best_ask",
+   "best_bid",
+   "market",
+   "price",
+   "sequence",
+   "side",
+   "size",
+   "source_witness",
+   "timestamp",
+   "timestamp_received",
+   "witness_set"
+  ],
+  "tick_size_change": [
+   "arrival_skew",
+   "asset_id",
+   "market",
+   "new_tick_size",
+   "old_tick_size",
+   "sequence",
+   "source_witness",
+   "timestamp",
+   "timestamp_received",
+   "witness_set"
+  ]
+ }
+}

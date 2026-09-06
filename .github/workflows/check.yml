@@ -1,0 +1,27 @@
+name: Source-proof implementation checks
+on:
+  push:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.14.7'
+      - run: python -m pip install --no-cache-dir -r requirements.lock
+      - env:
+          PYTHONPATH: src
+        run: python -m unittest discover -s tests -v
+      - run: ruff check . && ruff format --check . && mypy
+      - run: python tools/check_workflows.py && git diff --check
+      - name: Pinned actionlint in project-local tooling directory
+        env:
+          GOBIN: ${{ github.workspace }}/work/tools
+        run: |
+          go install github.com/rhysd/actionlint/cmd/actionlint@v1.7.7
+          work/tools/actionlint -color

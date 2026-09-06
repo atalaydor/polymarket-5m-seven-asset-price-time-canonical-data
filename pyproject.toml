@@ -1,0 +1,22 @@
+[project]
+name = "pendulumflow-price-time"
+version = "0.1.0"
+requires-python = ">=3.14,<3.15"
+description = "Fail-closed native V3 price-time source proof"
+
+[tool.ruff]
+target-version = "py314"
+line-length = 100
+include = ["src/**/*.py", "tests/**/*.py", "tools/**/*.py"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.mypy]
+python_version = "3.14"
+strict = true
+files = ["src", "tests", "tools"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]

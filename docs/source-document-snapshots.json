@@ -1,0 +1,58 @@
+[
+    {
+        "url":  "https://archive.pendulumflow.com/audit/hour/2026-09-06/00",
+        "observed_at":  "2026-09-06T05:57:56.775470+00:00",
+        "sha256":  "10dff397432cba9e3ba8fd5c4f369c28f2296e0ee1109e51bc09d6b98c82aae3",
+        "size":  82437,
+        "etag":  null,
+        "last_modified":  null
+    },
+    {
+        "url":  "https://archive.pendulumflow.com/v3/SCHEMA.json",
+        "observed_at":  "2026-09-06T05:57:54.110245+00:00",
+        "sha256":  "76ec0a7dca51e774b3eb7a50aca315ea3df2e8b3cea94e997fda348c32341b03",
+        "size":  1579,
+        "etag":  null,
+        "last_modified":  null
+    },
+    {
+        "url":  "https://archive.pendulumflow.com/audit",
+        "observed_at":  "2026-09-06T05:57:53.611693+00:00",
+        "sha256":  "94e36d8e384626f1bda3eeae85d9fea6d2eab628a1d54bf1dde1f23f5a764a7f",
+        "size":  150716,
+        "etag":  null,
+        "last_modified":  null
+    },
+    {
+        "url":  "https://archive.pendulumflow.com/v3/2026-09-05/00/manifest.json",
+        "observed_at":  "2026-09-06T05:44:06.251498+00:00",
+        "sha256":  "9cc1359a053912532d42577156e59461cd6e2f55cb519e226f083b1763bc434c",
+        "size":  32182,
+        "etag":  "\"c6d69b5b5fbd78bc8bd5e9a5122bb40d\"",
+        "last_modified":  "Sat, 05 Sep 2026 02:22:23 GMT"
+    },
+    {
+        "url":  "https://archive.pendulumflow.com/llms.txt",
+        "observed_at":  "2026-09-06T05:57:48.888511+00:00",
+        "sha256":  "ad64ea400d57a4324619c8a88acce80f4c03c0596da2815bc4bf101cb9b236e4",
+        "size":  25593,
+        "etag":  null,
+        "last_modified":  null
+    },
+    {
+        "url":  "https://archive.pendulumflow.com/formats/v3",
+        "observed_at":  "2026-09-06T05:44:05.819118+00:00",
+        "sha256":  "da9e46e037882ae8095d8f031fed7a1f47f64699250af45b73651d1e859483c0",
+        "size":  101655,
+        "etag":  null,
+        "last_modified":  null
+    },
+    {
+        "url":  "https://archive.pendulumflow.com/data-notes",
+        "observed_at":  "2026-09-06T05:46:44.948077+00:00",
+        "sha256":  "f1e8aa7766d7be5101b10e726538277cf02b60e8a30829d601378b247bba16fe",
+        "size":  81298,
+        "etag":  null,
+        "last_modified":  null
+    }
+]

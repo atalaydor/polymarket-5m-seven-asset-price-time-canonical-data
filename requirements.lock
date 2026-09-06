@@ -1,0 +1,8 @@
+pyarrow==25.0.1
+ruff==0.12.12
+mypy==1.17.1
+mypy_extensions==1.1.0
+pathspec==1.1.1
+typing_extensions==4.16.0
+PyYAML==6.0.3
+types-PyYAML==6.0.12.20250822
