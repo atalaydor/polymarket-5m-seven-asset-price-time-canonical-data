@@ -29,6 +29,7 @@
   "current_reference_exists": false,
   "scheduled_accumulation_enabled": false,
   "independent_review": {
+    "evidence": "docs/target-first-independent-review.md",
     "source": "rejected inventory-wide target completeness; approved only exact returned cohort identity",
     "implementation": "rejected consumer shard closure and strict manifest acceptance"
   }
