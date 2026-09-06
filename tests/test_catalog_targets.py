@@ -32,6 +32,8 @@ class TargetTests(unittest.TestCase):
         self.assertEqual(result["errors"], [])
         row = project(raw, "event")
         row["markets"][0]["outcomes"].reverse()
+        self.assertNotIn("UNPROVEN_TOKEN_ORIENTATION", interval(row, "BTC")["errors"])
+        row["markets"][0]["clobTokenIds"] = ["11", "11"]
         self.assertIn("UNPROVEN_TOKEN_ORIENTATION", interval(row, "BTC")["errors"])
         row["startTime"] = None
         self.assertIn("UNPROVEN_5M_INTERVAL", interval(row, "BTC")["errors"])
@@ -39,6 +41,8 @@ class TargetTests(unittest.TestCase):
 
     def test_exact_timestamp_and_query_bounds(self) -> None:
         self.assertEqual(instant("1970-01-01T00:00:00.000001Z"), 1)
+        with self.assertRaises(ValueError):
+            instant("1970-01-01T00:00:00.0000001Z")
         with self.assertRaises(ValueError):
             instant("2026-08-28T00:00:00")
         q = queries("DOGE")

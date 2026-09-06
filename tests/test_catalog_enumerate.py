@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import unittest
 from copy import deepcopy
 from typing import Any
@@ -74,6 +75,8 @@ class EnumerationTests(unittest.TestCase):
         self.assertIn("offset=51", reader.ledger[2]["url"])
         report = report_fixture("series-complete-ascending", [[{"id": "1"}], []])
         validate(report, report["specification"], report["commit"])
+        decoded = json.loads(canonical(report))
+        validate(decoded, decoded["specification"], decoded["commit"])
 
     def test_query_scope_is_independent_bounded_and_explicit(self) -> None:
         self.assertNotIn("closed", specification("series-ascending")["parameters"])

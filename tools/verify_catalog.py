@@ -16,24 +16,34 @@ from pflow.catalog_enumerate import summary as enumeration_summary
 from pflow.catalog_enumerate import validate as validate_enumeration
 from pflow.catalog_probe import SCHEMA as SCOUT_SCHEMA
 from pflow.catalog_probe import validate_report as validate_scout
+from pflow.catalog_targets import SCHEMA_TARGET
+from pflow.catalog_targets import summary as target_summary
+from pflow.catalog_targets import validate as validate_target
 from pflow.release import api, read_asset, verify_release
 from pflow.source import canonical, sha
 
 
 def verify(tag: str, digest: str) -> dict[str, Any]:
-    if not re.fullmatch(r"catalog-(probe|access|enumeration)-[0-9a-f]{64}", tag):
+    if not re.fullmatch(r"catalog-(probe|access|enumeration|targets)-[0-9a-f]{64}", tag):
         raise ValueError("exact catalog diagnostic tag required")
     if not re.fullmatch("[0-9a-f]{64}", digest):
         raise ValueError("independent SHA-256 pin required")
     release = api("releases/tags/" + tag)
     enumeration = tag.startswith("catalog-enumeration-")
-    if release is None or len(release["assets"]) != (2 if enumeration else 1):
+    target = tag.startswith("catalog-targets-")
+    if release is None or len(release["assets"]) != (2 if enumeration or target else 1):
         raise ValueError("exact report asset inventory required")
     suffix = (
-        "--catalog-stream.json"
-        if enumeration
+        "--target-series.json"
+        if target
         else (
-            "--access-report.json" if tag.startswith("catalog-access-") else "--catalog-report.json"
+            "--catalog-stream.json"
+            if enumeration
+            else (
+                "--access-report.json"
+                if tag.startswith("catalog-access-")
+                else "--catalog-report.json"
+            )
         )
     )
     matches = [a for a in release["assets"] if a["name"].endswith(suffix)]
@@ -56,6 +66,10 @@ def verify(tag: str, digest: str) -> dict[str, Any]:
     elif report["schema"] == ENUM_SCHEMA and tag == "catalog-enumeration-" + report["identity"]:
         validate_enumeration(report, report["specification"], report["commit"])
         overview = canonical(enumeration_summary(report))
+        expected[sha(overview) + "--summary.json"] = overview
+    elif report["schema"] == SCHEMA_TARGET and tag == "catalog-targets-" + report["identity"]:
+        validate_target(report, report["asset"], report["commit"])
+        overview = canonical(target_summary(report))
         expected[sha(overview) + "--summary.json"] = overview
     else:
         raise ValueError("report/tag/schema mismatch")

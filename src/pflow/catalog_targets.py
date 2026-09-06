@@ -11,6 +11,7 @@ from typing import Any
 
 from pflow.catalog_enumerate import summary as stream_summary
 from pflow.catalog_enumerate import validate as validate_stream
+from pflow.catalog_enumerate import validate_pages
 from pflow.catalog_probe import (
     PRIOR_SHA,
     PRIOR_TAG,
@@ -81,6 +82,10 @@ def series_evidence() -> dict[str, Any]:
 def instant(value: str | None) -> int | None:
     if value is None:
         return None
+    if not re.fullmatch(
+        r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?(?:Z|[+-]\d{2}:\d{2})", value
+    ):
+        raise ValueError("unsupported/non-exact first-party timestamp precision")
     dt = datetime.fromisoformat(value.replace("Z", "+00:00"))
     if dt.tzinfo is None:
         raise ValueError("naive first-party interval")
@@ -103,10 +108,13 @@ def interval(row: dict[str, Any], asset: str) -> dict[str, Any]:
             errors.append("MARKET_EVENT_START_MISMATCH")
         if instant(market["endDate"]) != end:
             errors.append("MARKET_EVENT_END_MISMATCH")
+        tokens = market["clobTokenIds"]
         if (
-            market["outcomes"] != ["Up", "Down"]
-            or not market["clobTokenIds"]
-            or len(market["clobTokenIds"]) != 2
+            market["outcomes"] not in (["Up", "Down"], ["Down", "Up"])
+            or not tokens
+            or len(tokens) != 2
+            or len(set(tokens)) != 2
+            or any(not re.fullmatch(r"[1-9][0-9]*", token) for token in tokens)
         ):
             errors.append("UNPROVEN_TOKEN_ORIENTATION")
         if not market["conditionId"] or not re.fullmatch(r"0x[0-9a-f]{64}", market["conditionId"]):
@@ -123,6 +131,7 @@ def interval(row: dict[str, Any], asset: str) -> dict[str, Any]:
         market_id=market["id"] if market else None,
         condition=market["conditionId"] if market else None,
         tokens=market["clobTokenIds"] if market else None,
+        outcomes=market["outcomes"] if market else None,
         errors=errors,
     )
 
@@ -192,6 +201,13 @@ def validate(report: dict[str, Any], asset: str, commit: str) -> None:
         raise ValueError("target query inventory mismatch")
     if any(s["path"] != "/events/keyset" for s in evidence["scans"]):
         raise ValueError("target query route mismatch")
+    requests = []
+    for stream in evidence["scans"]:
+        ledger = [page["request"] for page in stream["pages"]]
+        validate_pages(stream, ledger, 1 if stream["parameters"]["limit"] == "1" else 10)
+        requests.extend(ledger)
+    if requests != evidence["requests"]:
+        raise ValueError("target request ledger mismatch")
 
 
 def run(asset: str) -> None:

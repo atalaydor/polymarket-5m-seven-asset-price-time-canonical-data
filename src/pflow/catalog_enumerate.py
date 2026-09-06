@@ -174,13 +174,29 @@ def validate(report: dict[str, Any], spec: dict[str, Any], commit: str) -> None:
         raise ValueError("enumeration query changed")
     if stream["page_budget"] != spec["max_pages"]:
         raise ValueError("enumeration bound changed")
+    validate_pages(
+        stream,
+        evidence["requests"],
+        spec["max_pages"],
+        commit == "65b474aad96b6adde2901ba4d5b2944dd9353ce5",
+    )
+
+
+def validate_pages(
+    stream: dict[str, Any],
+    requests: list[dict[str, Any]],
+    max_pages: int,
+    legacy_offset: bool = False,
+) -> None:
     pages = stream["pages"]
-    if not 1 <= len(pages) <= spec["max_pages"] or evidence["requests"] != [
-        page["request"] for page in pages
-    ]:
+    if (
+        stream["page_budget"] != max_pages
+        or not 1 <= len(pages) <= max_pages
+        or requests != [page["request"] for page in pages]
+    ):
         raise ValueError("enumeration request/page ledger mismatch")
-    query = dict(spec["parameters"])
-    keyset = spec["path"].endswith("/keyset")
+    query = dict(stream["parameters"])
+    keyset = stream["path"].endswith("/keyset")
     count = 0
     terminal = False
     error = None
@@ -190,9 +206,17 @@ def validate(report: dict[str, Any], spec: dict[str, Any], commit: str) -> None:
             raise ValueError("pages after terminal/error")
         if not keyset:
             query["offset"] = str(count)
-        expected_url = "https://gamma-api.polymarket.com" + spec["path"] + "?"
-        expected_url += urllib.parse.urlencode(query)
-        if page["request"]["url"] != expected_url:
+        actual_url = urllib.parse.urlsplit(page["request"]["url"])
+        actual_query = urllib.parse.parse_qsl(
+            actual_url.query, keep_blank_values=True, strict_parsing=True
+        )
+        if (
+            actual_url.scheme != "https"
+            or actual_url.netloc != "gamma-api.polymarket.com"
+            or actual_url.path != stream["path"]
+            or actual_url.fragment
+            or sorted(actual_query) != sorted(query.items())
+        ):
             raise ValueError("pagination request chain mismatch")
         if page["request"]["status"] != 200:
             if page["row_count"] is not None or page["next_cursor"] is not None:
@@ -215,8 +239,7 @@ def validate(report: dict[str, Any], spec: dict[str, Any], commit: str) -> None:
         else:
             if cursor is not None:
                 raise ValueError("offset page has cursor")
-            legacy = commit == "65b474aad96b6adde2901ba4d5b2944dd9353ce5"
-            terminal = n < int(query["limit"]) if legacy else n == 0
+            terminal = n < int(query["limit"]) if legacy_offset else n == 0
     ids = [row["id"] for row in stream["rows"]]
     if any(not isinstance(value, str) or not value for value in ids):
         raise ValueError("enumeration row lacks identity")
@@ -226,7 +249,7 @@ def validate(report: dict[str, Any], spec: dict[str, Any], commit: str) -> None:
         or stream["duplicate_ids"] != duplicates
         or stream["terminal_observed"] is not terminal
         or stream["error"] != error
-        or (not terminal and error is None and len(pages) != spec["max_pages"])
+        or (not terminal and error is None and len(pages) != max_pages)
     ):
         raise ValueError("pagination closure/accounting mismatch")
 
