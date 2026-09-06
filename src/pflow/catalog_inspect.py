@@ -8,7 +8,7 @@ import platform
 from collections import Counter
 from typing import Any
 
-from pflow.catalog_enumerate import ENUM_SCHEMA, specification, validate
+from pflow.catalog_enumerate import ENUM_SCHEMA, specification, summary, validate
 from pflow.release import api, current_commit, publish, read_asset, verify_release
 from pflow.source import canonical, sha
 
@@ -33,11 +33,15 @@ def run() -> None:
         if release is None or release["draft"]:
             streams.append(dict(name=name, status="NO_SEALED_STREAM"))
             continue
-        verify_release(release)
         asset = next(a for a in release["assets"] if a["name"].endswith("--catalog-stream.json"))
         raw = read_asset(asset)
         report = json.loads(raw)
         validate(report, spec, PRIOR_COMMIT)
+        overview = canonical(summary(report))
+        verify_release(release, {asset["name"]: raw, sha(overview) + "--summary.json": overview})
+        ref = api("git/ref/tags/" + tag)
+        if ref["object"]["type"] != "commit" or ref["object"]["sha"] != PRIOR_COMMIT:
+            raise ValueError("inspection tag/transform mismatch")
         result = report["evidence"]["scans"][0]
         rows = result["rows"]
         end_dates = sorted(row["endDate"] for row in rows if row.get("endDate"))

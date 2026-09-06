@@ -215,7 +215,8 @@ def validate(report: dict[str, Any], spec: dict[str, Any], commit: str) -> None:
         else:
             if cursor is not None:
                 raise ValueError("offset page has cursor")
-            terminal = n == 0 if "complete" in spec["name"] else n < int(query["limit"])
+            legacy = commit == "65b474aad96b6adde2901ba4d5b2944dd9353ce5"
+            terminal = n < int(query["limit"]) if legacy else n == 0
     ids = [row["id"] for row in stream["rows"]]
     if any(not isinstance(value, str) or not value for value in ids):
         raise ValueError("enumeration row lacks identity")

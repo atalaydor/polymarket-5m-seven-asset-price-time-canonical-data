@@ -349,6 +349,7 @@ def validate_report(report: dict[str, Any], identity: str) -> None:
             "exclude_events",
             "end_date_min",
             "end_date_max",
+            "series_id",
         }
         if not result["parameters"].keys() <= allowed_params or any(
             not isinstance(v, str) for v in result["parameters"].values()
