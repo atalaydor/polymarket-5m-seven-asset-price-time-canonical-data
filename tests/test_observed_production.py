@@ -233,10 +233,17 @@ class ObservedProductionTests(unittest.TestCase):
 
     def test_target_like_classification_catches_alternate_and_null_slugs(self) -> None:
         self.assertTrue(_target_like("btc-up-or-down-5m-1788609600", None))
+        self.assertTrue(_target_like("btc-up-or-down-5-minute-1788609600", None))
         self.assertTrue(_target_like("", "Bitcoin Up or Down 5 minute market"))
         self.assertTrue(_target_like("", "Bitcoin Up or Down tomorrow"))
         self.assertTrue(_target_like("broken-slug", "Bitcoin Up or Down 5 minute market"))
         self.assertFalse(_target_like("bitcoin-up-or-down-tomorrow", "Bitcoin tomorrow"))
+        self.assertFalse(
+            _target_like(
+                "doge-updown-15m-1787121000",
+                "Dogecoin Up or Down - August 19, 2:30AM-2:45AM ET",
+            )
+        )
 
     def test_transform_bundle_changes_only_for_bound_inputs(self) -> None:
         base = {"production.py": b"a", "observed_v1.py": b"b"}

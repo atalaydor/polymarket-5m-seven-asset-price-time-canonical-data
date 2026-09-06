@@ -104,11 +104,11 @@ def _target_like(slug: str, question: Any) -> bool:
         for asset, aliases in ASSET_ALIASES.items()
         if any(re.search(rf"(?:^|-){re.escape(alias)}(?:-|$)", slug) for alias in aliases)
     }
-    slug_five = any(term in slug for term in ("5m", "5-min", "5-minute"))
+    slug_five = re.search(r"(?:^|-)5(?:m|-?min|-?minute)(?:-|$)", slug) is not None
     slug_direction = "updown" in slug or ("up" in slug and "down" in slug)
     text = question.lower() if isinstance(question, str) else ""
     question_target = bool(_question_assets(question) and "up" in text and "down" in text)
-    question_five = any(term in text for term in ("5m", "5 min", "5-min", "5 minute"))
+    question_five = re.search(r"\b5\s*-?\s*(?:m|min|minute)s?\b", text) is not None
     return bool(slug_assets and slug_five and slug_direction) or bool(
         question_target and (not slug or question_five)
     )
