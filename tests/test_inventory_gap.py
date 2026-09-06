@@ -9,8 +9,9 @@ from pflow.source import canonical, sha
 class InventoryGapTests(unittest.TestCase):
     def test_summary_reconciles_partition_union_and_denies_authority(self) -> None:
         value = {
-            "semantic_profile": "PENDULUMFLOW_V3_OBSERVED",
-            "semantic_profile_version": 1,
+            "schema": "pendulumflow-v3-observed-data-index.v1",
+            "profile": "PENDULUMFLOW_V3_OBSERVED",
+            "profile_version": 1,
             "certification_scope": "PINNED_PUBLISHED_PENDULUMFLOW_V3_INVENTORY",
             "certification_scope_version": 1,
             "inventory_generation": "a" * 64,
@@ -34,6 +35,9 @@ class InventoryGapTests(unittest.TestCase):
                 "wall_seconds_us": 5,
             },
         }
+        value["generation"] = sha(
+            canonical({key: item for key, item in value.items() if key != "generation"})
+        )
         report = summarize_index(value)
         self.assertEqual(report["unresolved_unique_condition_count"], 2)
         self.assertEqual(report["partition_condition_reference_count"], 3)
@@ -43,13 +47,23 @@ class InventoryGapTests(unittest.TestCase):
         )
         self.assertFalse(report["research_import_allowed"])
         self.assertEqual(report["certified_days"], [])
+        self.assertEqual(report["profile"], "PENDULUMFLOW_V3_OBSERVED")
 
     def test_summary_rejects_unreconciled_global_and_partition_sets(self) -> None:
         value = {
+            "schema": "pendulumflow-v3-observed-data-index.v1",
+            "profile": "PENDULUMFLOW_V3_OBSERVED",
+            "profile_version": 1,
+            "certification_scope": "PINNED_PUBLISHED_PENDULUMFLOW_V3_INVENTORY",
+            "certification_scope_version": 1,
+            "complete_expected_partition_set": True,
+            "target_membership_reconciled": False,
             "unresolved_condition_references": ["condition-1"],
             "unresolved_conditionless_rows": {},
             "partitions": [{"unresolved_condition_references": ["condition-2"]}],
+            "measurements": {},
         }
+        value["generation"] = sha(canonical(value))
         with self.assertRaises(ValueError):
             summarize_index(value)
 

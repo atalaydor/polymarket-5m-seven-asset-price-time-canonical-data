@@ -4,15 +4,28 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from typing import Any
 
+from pflow.observed_v1 import (
+    CERTIFICATION_SCOPE,
+    CERTIFICATION_SCOPE_VERSION,
+    PROFILE,
+    PROFILE_VERSION,
+    iter_jsonl_gzip,
+)
 from pflow.release import api, current_commit, publish, read_asset, verify_release
 from pflow.source import canonical, sha
 
 SCHEMA = "pendulumflow-v3-inventory-identity-gap.v1"
+DATA_INDEX_SCHEMA = "pendulumflow-v3-observed-data-index.v1"
 
 
 def summarize_index(value: dict[str, Any]) -> dict[str, Any]:
+    generation = value.get("generation")
+    base = {key: item for key, item in value.items() if key != "generation"}
+    if value.get("schema") != DATA_INDEX_SCHEMA or generation != sha(canonical(base)):
+        raise ValueError("data index schema/generation mismatch")
     unresolved = value.get("unresolved_condition_references")
     conditionless = value.get("unresolved_conditionless_rows")
     partitions = value.get("partitions")
@@ -39,11 +52,27 @@ def summarize_index(value: dict[str, Any]) -> dict[str, Any]:
     measurements = value.get("measurements", {})
     if not isinstance(measurements, dict):
         raise ValueError("data index measurements malformed")
+    if (
+        value.get("profile") != PROFILE
+        or value.get("profile_version") != PROFILE_VERSION
+        or value.get("certification_scope") != CERTIFICATION_SCOPE
+        or value.get("certification_scope_version") != CERTIFICATION_SCOPE_VERSION
+    ):
+        raise ValueError("data index profile/scope mismatch")
+    expected_reconciled = not unresolved and not sum(counts.values())
+    if value.get("complete_expected_partition_set") is not True:
+        raise ValueError("incomplete partition set cannot prove this capability gap")
+    if value.get("target_membership_reconciled") is not expected_reconciled:
+        raise ValueError("data index membership closure flag is inconsistent")
+    if expected_reconciled:
+        raise ValueError("no unresolved native condition identity exists")
+    if not unresolved:
+        raise ValueError("this report requires unresolved condition IDs")
     return {
         "schema": SCHEMA,
         "verdict": "BLOCKED_SOURCE_CAPABILITY",
-        "semantic_profile": value.get("semantic_profile"),
-        "semantic_profile_version": value.get("semantic_profile_version"),
+        "profile": value["profile"],
+        "profile_version": value["profile_version"],
         "certification_scope": value.get("certification_scope"),
         "certification_scope_version": value.get("certification_scope_version"),
         "inventory_generation": value.get("inventory_generation"),
@@ -73,13 +102,15 @@ def summarize_index(value: dict[str, Any]) -> dict[str, Any]:
         "current_window_generation": None,
         "limitation": (
             "best_bid_ask and/or market_resolved rows reference condition IDs for which the "
-            "complete pinned native V3 inventory contains no new_market identity record; native "
-            "V3 therefore cannot determine whether those conditions are in-scope targets"
+            "complete pinned native V3 inventory generation contains no new_market identity "
+            "record; its currently published native evidence therefore cannot determine whether "
+            "those conditions are in-scope targets"
         ),
         "continuation_condition": (
             "A content-bound native V3 identity/lifecycle mapping for every unresolved condition "
-            "ID, or a documented native guarantee that all such references are out of scope, must "
-            "make the complete pinned inventory projection decidable."
+            "ID, or an evidence-backed native exclusion/day-bound for each relevant unresolved "
+            "ID, must make the complete pinned inventory projection decidable; newly published "
+            "mapping evidence requires a new pinned inventory generation."
         ),
     }
 
@@ -101,6 +132,52 @@ def _load_index(tag: str, expected_sha: str) -> tuple[dict[str, Any], dict[str, 
     return dict(release), value
 
 
+def _load_json_release(tag: str, expected_sha: str, suffix: str) -> dict[str, Any]:
+    release = api("releases/tags/" + tag)
+    if release is None or release.get("tag_name") != tag:
+        raise ValueError("exact dependency release not found")
+    verify_release(release)
+    matches = [asset for asset in release["assets"] if asset["name"].endswith("--" + suffix)]
+    if len(matches) != 1:
+        raise ValueError("dependency release asset inventory mismatch")
+    data = read_asset(matches[0])
+    if sha(data) != expected_sha:
+        raise ValueError("dependency release content pin mismatch")
+    return dict(json.loads(data))
+
+
+def verify_condition_closure(value: dict[str, Any]) -> None:
+    catalog = _load_json_release(value["catalog_tag"], value["catalog_sha256"], "catalog.json")
+    if catalog.get("generation") != value["catalog_generation"]:
+        raise ValueError("catalog generation mismatch")
+    classified = {row["market"] for row in catalog["source_condition_classifications"]}
+    seen_partitions: set[str] = set()
+    for part in value["partitions"]:
+        source_partition = part.get("source_partition")
+        if not isinstance(source_partition, str) or not re.fullmatch(
+            r"[0-9a-f]{64}", source_partition
+        ):
+            raise ValueError("source partition identity malformed")
+        if source_partition in seen_partitions:
+            raise ValueError("duplicate source partition")
+        seen_partitions.add(source_partition)
+        tag = "observed-conditions-v1-" + source_partition
+        release = api("releases/tags/" + tag)
+        if release is None or release.get("tag_name") != tag:
+            raise ValueError("encountered-condition release missing")
+        verify_release(release)
+        matches = [
+            asset for asset in release["assets"] if asset["name"].endswith("--conditions.jsonl.gz")
+        ]
+        if len(matches) != 1:
+            raise ValueError("encountered-condition asset inventory mismatch")
+        encountered_data = read_asset(matches[0])
+        encountered = {row["market"] for row in iter_jsonl_gzip(encountered_data)}
+        expected = sorted(encountered - classified)
+        if expected != part["unresolved_condition_references"]:
+            raise ValueError("partition identity closure differs from immutable inputs")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--index-tag", required=True)
@@ -108,6 +185,8 @@ def main() -> None:
     args = parser.parse_args()
     index_release, value = _load_index(args.index_tag, args.index_sha256)
     summary = summarize_index(value)
+    verify_condition_closure(value)
+    summary["independently_recomputed_condition_partition_closure"] = True
     summary["data_index_tag"] = args.index_tag
     summary["data_index_sha256"] = args.index_sha256
     summary["data_index_release_id"] = index_release["id"]
