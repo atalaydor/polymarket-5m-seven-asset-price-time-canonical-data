@@ -114,6 +114,21 @@ def _target_like(slug: str, question: Any) -> bool:
     )
 
 
+def _record_target_error(
+    errors: list[dict[str, Any]],
+    hour: str,
+    ordinal: int,
+    slug: str,
+    question: Any,
+    reason: str,
+) -> None:
+    detail: dict[str, Any] = {"hour": hour, "ordinal": ordinal, "reason": reason}
+    if len(errors) < 20:
+        detail["slug_sample"] = slug[:500]
+        detail["question_sample"] = question[:500] if isinstance(question, str) else None
+    errors.append(detail)
+
+
 def _chunks(
     hours: list[str],
     size: int,
@@ -373,14 +388,20 @@ def mapping_shard(inventory_tag: str, inventory_sha: str, chunk: str, partition:
                     else None
                 )
                 disposition = "out_of_scope"
+
                 try:
                     record = mapping_record(source_row, _source(item, "new_market", ordinal))
                 except (ValueError, TypeError, AttributeError, KeyError) as exc:
                     if _target_like(slug, source_row.get("question")):
                         disposition = "ambiguous_target_like"
                         classifications["ambiguous_target_like"] += 1
-                        target_like_errors.append(
-                            {"hour": hour, "ordinal": ordinal, "reason": str(exc)}
+                        _record_target_error(
+                            target_like_errors,
+                            hour,
+                            ordinal,
+                            slug,
+                            source_row.get("question"),
+                            str(exc),
                         )
                     else:
                         classifications["out_of_scope"] += 1
@@ -400,12 +421,13 @@ def mapping_shard(inventory_tag: str, inventory_sha: str, chunk: str, partition:
                     if question_assets and question_assets != {record["asset"]}:
                         disposition = "ambiguous_target_like"
                         classifications["ambiguous_target_like"] += 1
-                        target_like_errors.append(
-                            {
-                                "hour": hour,
-                                "ordinal": ordinal,
-                                "reason": "question asset contradicts canonical target slug",
-                            }
+                        _record_target_error(
+                            target_like_errors,
+                            hour,
+                            ordinal,
+                            slug,
+                            source_row.get("question"),
+                            "question asset contradicts canonical target slug",
                         )
                     else:
                         disposition = "in_scope_target"
@@ -414,12 +436,13 @@ def mapping_shard(inventory_tag: str, inventory_sha: str, chunk: str, partition:
                 elif _target_like(slug, source_row.get("question")):
                     disposition = "ambiguous_target_like"
                     classifications["ambiguous_target_like"] += 1
-                    target_like_errors.append(
-                        {
-                            "hour": hour,
-                            "ordinal": ordinal,
-                            "reason": "target-like slug does not match frozen identity rule",
-                        }
+                    _record_target_error(
+                        target_like_errors,
+                        hour,
+                        ordinal,
+                        slug,
+                        source_row.get("question"),
+                        "target-like slug does not match frozen identity rule",
                     )
                 else:
                     classifications["out_of_scope"] += 1
@@ -524,7 +547,10 @@ def catalog(inventory_tag: str, inventory_sha: str, max_days: int) -> dict[str, 
         ):
             raise ValueError("new_market classification accounting incomplete")
         if report.get("classification_counts", {}).get("ambiguous_target_like", 0):
-            raise ValueError("ambiguous target-like new_market classification")
+            raise ValueError(
+                "ambiguous target-like new_market classification: "
+                + canonical(report.get("target_like_errors", [])[:5]).decode().strip()
+            )
         _, rows_data = _release_asset(tag, "mappings.jsonl.gz")
         _, condition_data = _release_asset(tag, "condition-classifications.jsonl.gz")
         rows = read_jsonl_gzip(rows_data)
