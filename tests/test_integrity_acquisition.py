@@ -121,6 +121,17 @@ class IntegrityAcquisitionTests(unittest.TestCase):
             )
             self.assertFalse(proof["whole_file_verified"])
             self.assertTrue(all(p["range_hash_verified"] for p in proof["products"]))
+            # Explicit [] is a snapshot; a null list is not an observed empty side.
+            null_rows = [*rows]
+            null_rows[0] = {**rows[0], "asks": None}
+            null_path = Path(directory) / "null-snapshot.parquet"
+            pq.write_table(pa.Table.from_pylist(null_rows, schema), null_path, row_group_size=1)
+            null_file = pq.ParquetFile(null_path)
+            try:
+                with self.assertRaisesRegex(ValueError, "missing snapshot ask side"):
+                    target_rows(null_file, manifest, targets)
+            finally:
+                null_file.close()
             bad = data[:4] + b"x" + data[5:]
             with self.assertRaisesRegex(ValueError, "product hash mismatch"):
                 acquire(MemoryReader(bad), manifest, Path(directory) / "corrupt.parquet")

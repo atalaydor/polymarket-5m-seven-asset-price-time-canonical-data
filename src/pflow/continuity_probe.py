@@ -189,6 +189,8 @@ def target_rows(
                 label = by_token[token(row["asset_id"])]
                 if row["market"].hex() != targets[label]["market"] or row["event_type"] != product:
                     raise ValueError("target identity/product mismatch")
+                if product == "book" and not isinstance(row["asks"], list):
+                    raise ValueError("missing snapshot ask side cannot establish an anchor")
                 scan["target_rows"] += 1
                 if scan["target_rows"] > 1_000_000:
                     raise ValueError("bounded target-row budget")

@@ -93,3 +93,34 @@ Future native V3 releases may add such evidence or incorporate surviving missing
 Run 1 should measure the authorized transient replay and report observed anchors, comparisons, faults and remaining unknowns. A clean result may justify an accurately named checkpoint for validated observed signals. It must not automatically promote complete exact-continuity days while the missing native target coverage/order condition remains unresolved. Full sender equivalence and execution simulation are not part of this gate.
 
 Source attribution: PendulumFlow native V3, [archive.pendulumflow.com](https://archive.pendulumflow.com/), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The identifiability argument and acceptance conclusions are this project's independent analysis, not an upstream certification claim.
+
+## Final conclusion after the real transient canary
+
+Independently interpreted on 2026-09-06T08:18:07Z from `work/verified-continuity.json` and `work/continuity-measured-summary.json`. The reviewer recomputed the canonical report SHA-256 as `b107e4a5033ba09e1ace47439e37e2e5c529be94e7a91561884070f49c71c619`, matching the retained verification record. The prior public-release read/immutability verification is recorded in that wrapper; this review did not repeat its network download. Counter definitions were checked in `src/pflow/integrity.py`; the missing-ask normalization was checked in `src/pflow/continuity_probe.py`.
+
+The [completed canary run 34021182240](https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/actions/runs/34021182240) used commit `529e6b5e2b18d46834815e90ad2f1b0ff45c599c`. Its pinned diagnostic [Release](https://github.com/atalaydor/polymarket-5m-seven-asset-price-time-canonical-data/releases/tag/continuity-probe-c387591627194c3c5a6f668cbea707da7085c658ba94b3c054b41ce30c6a3b51) has ID `383511393`, asset ID `546922721`, and tag `continuity-probe-c387591627194c3c5a6f668cbea707da7085c658ba94b3c054b41ce30c6a3b51`. It is diagnostic evidence with `research_import_allowed=false`, not a day or rolling-window generation.
+
+The report covers `2026-08-28/11` and `2026-08-28/12`, using six verified complete product ranges across book, price-change and BBA. It explicitly records `whole_file_verified=false` for both source objects. Requested range bytes total 1,893,960,850; downloaded bytes total 1,894,050,290; network time is 121.526821495 seconds and decode time 10.975252367 seconds. These are actual bounded-run measurements, not a full-backfill estimate.
+
+There are 351,524 retained rows for 14 selected asset/outcome targets: 6,160 books, 328,528 price changes and 16,836 BBA observations. The targets represent both outcomes for all seven assets, not a complete daily market census. Selected-witness counts differ: BNB and HYPE have one per outcome; ETH, SOL and XRP have two; BTC and DOGE have three. Summing those counts to 28 does not mean every target has two independent replay streams, and a selected-copy subset is still not a complete witness recording.
+
+| Diagnostic | Observed result | Interpretation |
+| --- | ---: | --- |
+| Anchor state comparisons | 201 disagreements / 6,134 | The compared transient ask-level maps differ; this is not 201 proven best-ask errors or venue-loss events. |
+| Replayed ask versus delta's reported ask | 12,327 disagreements / 324,062 | Conditional replay does not consistently reproduce accompanying source asks. |
+| Replayed ask versus BBA | 5,992 disagreements / 16,634 | The selected-copy receipt-ordered replay and BBA observations differ at these comparisons. |
+| BBA versus delta ask at the same source timestamp | 24 disagreements / 14,624 | Even these narrower comparisons do not all agree; equal source time is not event identity. |
+| BBA observations with multiple delta-ask candidates at the same source time | 434 | These are counted BBA observations, not necessarily 434 distinct timestamp buckets; no artificial tie-break was applied. |
+| Unanchored deltas | 4,466 | These lacked a prior anchor in their selected-witness diagnostic stream. |
+| Source-time regressions | 2,115 | Source time moves backward under the diagnostic receipt/sequence ordering; this does not establish venue clock failure or data loss. |
+| Diagnostic hour-boundary state carries | 10 | The diagnostic retained state across ten selected-witness transitions; no continuity proof follows. |
+| Unchanged BBA ask at a later receipt | 10,891 | Later observed receipts remain meaningful evidence even when the ask is unchanged. |
+| Missing clock or witness fields | 0 | Required fields are present in this sample; their presence does not make ordering global or coverage complete. |
+
+The non-successor local-sequence count is not a missing-row count: targets/products omit other events, and merge selection omits copies. The mismatch counts also cannot be converted into a capture-loss rate. Retained-copy selection, receipt order versus source order, equal-time ambiguity, missing anchors and snapshot reanchoring all affect these diagnostics. The selected-witness experiment is appropriately conditional; it does not reconstruct one witness's complete original socket stream.
+
+One measurement limitation independently confirmed in the code is that an absent/null book ask list is normalized to an empty list. The report therefore does not separately count missing snapshot ask-side evidence versus a genuinely empty side. Snapshot/empty-side semantics in this run remain diagnostic. This limitation is not grounds to promote data or to conceal the result; it also does not change the source-identifiability argument. A future attempt to certify absence semantics would need that distinction measured and validated first.
+
+**Final source verdict: BLOCKED for exact-continuity research authority; completed and durable as a transient integrity diagnostic.** The report itself correctly states `continuity_proven=false`, `canonical_rows_emitted=0`, `certified_days=[]` and `research_authority=false`. No complete day or rolling research window is certified by this experiment. Neither the mismatches nor a hypothetical zero-mismatch rerun can resolve the hidden, reverted-excursion counterexample from the current contract.
+
+The exact continuation condition is newly published native V3 evidence that supplies verifiable target-token observation/order coverage and recovery boundaries sufficient to exclude or delimit missing best-ask intervals. Its source-content identities and semantics must be pinned and independently verified, then only the affected source gate and canary checks revisited. A changed hour hash or another matching snapshot alone is not that evidence. No healthy remote job is still awaited for this source conclusion, and rerunning the same two source hours to seek a passing count would not repair it. The downstream canonical contract and zero-authority status remain unchanged.
