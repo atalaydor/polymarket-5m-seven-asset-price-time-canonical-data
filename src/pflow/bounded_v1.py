@@ -89,6 +89,20 @@ RECORDED_OBSERVATION_SEMANTICS = {
     "maximum_signals_per_market": 1,
     "continuity_or_interpolation": False,
 }
+DAY_METRICS_POPULATION = "only admitted_target_markets in this exact generation"
+PROVEN_OPTIMAL_MEANING = (
+    "optimal only over the affine strategy space for this exact dataset generation, "
+    "admitted evidence population and objective"
+)
+WINDOW_METRIC_POPULATION = (
+    "OBSERVED_LOSS_COUNT, SIGNAL_MARKET_COUNT and MEAN_GROSS_PROFIT_PER_SIGNAL "
+    "use only the exact admitted bounded evidence population"
+)
+REPOSITORY = "atalaydor/polymarket-5m-seven-asset-price-time-canonical-data"
+DAY_STATUS_REASONS = {
+    "CERTIFIED": [],
+    "EXCLUDED": ["no_individually_valid_positively_identified_target_market"],
+}
 
 
 def profile_fields() -> dict[str, Any]:
@@ -103,6 +117,15 @@ def profile_fields() -> dict[str, Any]:
         "time_only_crossings_permitted": False,
         "canonical_depth_fields_permitted": False,
     }
+
+
+def _is_canonical_day(value: Any) -> bool:
+    if not isinstance(value, str):
+        return False
+    try:
+        return datetime.strptime(value, "%Y-%m-%d").date().isoformat() == value
+    except ValueError:
+        return False
 
 
 def require_import_profile(expected_profile: str) -> None:
@@ -585,11 +608,8 @@ def certify_day(
         "day": day,
         "population_claim": POPULATION_CLAIM,
         "limitations": LIMITATIONS,
-        "research_metrics_population": "only admitted_target_markets in this exact generation",
-        "proven_optimal_meaning": (
-            "optimal only over the affine strategy space for this exact dataset generation, "
-            "admitted evidence population and objective"
-        ),
+        "research_metrics_population": DAY_METRICS_POPULATION,
+        "proven_optimal_meaning": PROVEN_OPTIMAL_MEANING,
         "inventory_generation": catalog["inventory_generation"],
         "inventory_last_hour": catalog["inventory_last_hour"],
         "inventory_tag": catalog["inventory_tag"],
@@ -727,10 +747,9 @@ def _load_day_release(release: dict[str, Any]) -> tuple[dict[str, Any], dict[str
         "canonical_projection_sha256",
         "generation",
     }
-    try:
-        assessed_day = datetime.strptime(manifest["day"], "%Y-%m-%d").date()
-    except (KeyError, TypeError, ValueError) as exc:
-        raise ValueError("bounded day identity invalid") from exc
+    if not _is_canonical_day(manifest.get("day")):
+        raise ValueError("bounded day identity invalid")
+    assessed_day = datetime.strptime(manifest["day"], "%Y-%m-%d").date()
     if (
         not release.get("immutable")
         or set(manifest) != required_fields
@@ -742,6 +761,15 @@ def _load_day_release(release: dict[str, Any]) -> tuple[dict[str, Any], dict[str
         or assessed_day >= datetime.now(UTC).date()
         or manifest.get("population_claim") != POPULATION_CLAIM
         or manifest.get("limitations") != LIMITATIONS
+        or manifest.get("research_metrics_population") != DAY_METRICS_POPULATION
+        or manifest.get("proven_optimal_meaning") != PROVEN_OPTIMAL_MEANING
+        or manifest.get("source_transform") != TRANSFORM
+        or manifest.get("canonical_mapping_schema") != MAPPING_SCHEMA
+        or manifest.get("canonical_observation_schema") != OBSERVATION_SCHEMA
+        or manifest.get("canonical_resolution_schema") != RESOLUTION_SCHEMA
+        or manifest.get("status") not in DAY_STATUS_REASONS
+        or manifest.get("certification_reasons") != DAY_STATUS_REASONS.get(manifest.get("status"))
+        or manifest.get("research_import_allowed") is not (manifest.get("status") == "CERTIFIED")
         or type(manifest.get("admitted_target_markets")) is not int
         or manifest["admitted_target_markets"] < 0
         or type(manifest.get("rejected_target_markets")) is not int
@@ -852,14 +880,8 @@ def publish_window(
         "research_import_allowed_profile": PROFILE,
         "population_claim": POPULATION_CLAIM,
         "limitations": LIMITATIONS,
-        "metric_population_rule": (
-            "OBSERVED_LOSS_COUNT, SIGNAL_MARKET_COUNT and MEAN_GROSS_PROFIT_PER_SIGNAL "
-            "use only the exact admitted bounded evidence population"
-        ),
-        "proven_optimal_meaning": (
-            "optimal only over the affine strategy space for this exact generation, "
-            "admitted evidence population and objective"
-        ),
+        "metric_population_rule": WINDOW_METRIC_POPULATION,
+        "proven_optimal_meaning": PROVEN_OPTIMAL_MEANING,
         "rejected_import_profiles": ["PENDULUMFLOW_V3_OBSERVED", "OWN_RECORDER_EXACT"],
         "row_profile": ROW_PROFILE,
         "row_profile_version": ROW_PROFILE_VERSION,
@@ -898,7 +920,7 @@ def publish_window(
         "unresolved_condition_day_membership_known": False,
         "selection_rule": "all certified days when fewer than 30, otherwise latest 30 by UTC day",
         "verification": "python -m pflow.bounded_v1 verify --tag <tag> --sha256 <sha256>",
-        "repository": "atalaydor/polymarket-5m-seven-asset-price-time-canonical-data",
+        "repository": REPOSITORY,
         "v3_historical_source_reacquisition_bytes": 0,
         "implementation_commit": current_commit(),
     }
@@ -1051,6 +1073,9 @@ def verify_window(tag: str, digest: str, expected_profile: str = PROFILE) -> dic
         or value.get("row_profile") != ROW_PROFILE
         or value.get("row_profile_version") != ROW_PROFILE_VERSION
         or value.get("recorded_observation_semantics") != RECORDED_OBSERVATION_SEMANTICS
+        or value.get("metric_population_rule") != WINDOW_METRIC_POPULATION
+        or value.get("proven_optimal_meaning") != PROVEN_OPTIMAL_MEANING
+        or value.get("repository") != REPOSITORY
         or value.get("selection_rule")
         != "all certified days when fewer than 30, otherwise latest 30 by UTC day"
     ):
@@ -1064,6 +1089,11 @@ def verify_window(tag: str, digest: str, expected_profile: str = PROFILE) -> dic
     if (
         catalog["generation"] != value["catalog_generation"]
         or index["generation"] != value["data_index_generation"]
+        or value["inventory_generation"] != catalog["inventory_generation"]
+        or value["inventory_last_hour"] != catalog["inventory_last_hour"]
+        or value["inventory_release_id"] != catalog["inventory_release_id"]
+        or value["inventory_tag"] != catalog["inventory_tag"]
+        or value["inventory_sha256"] != catalog["inventory_sha256"]
         or value["inventory_wide_unresolved_not_admitted_count"]
         != len(index["unresolved_condition_references"])
         or value["inventory_wide_unresolved_not_admitted_set_sha256"]
@@ -1075,8 +1105,36 @@ def verify_window(tag: str, digest: str, expected_profile: str = PROFILE) -> dic
     if not isinstance(refs, list) or not refs or len(refs) > 30:
         raise ValueError("bounded window day set invalid")
     names = [ref.get("day") for ref in refs]
-    if names != sorted(set(names)) or names != value.get("included_certified_days"):
+    if (
+        not all(_is_canonical_day(name) for name in names)
+        or names != sorted(set(names))
+        or names != value.get("included_certified_days")
+    ):
         raise ValueError("bounded window day ordering invalid")
+    excluded = value.get("excluded_or_pending")
+    if not isinstance(excluded, list):
+        raise ValueError("bounded window exclusion ledger invalid")
+    excluded_days: list[str] = []
+    for item in excluded:
+        if (
+            not isinstance(item, dict)
+            or set(item) != {"day", "status", "reasons"}
+            or not _is_canonical_day(item.get("day"))
+            or item.get("status") != "EXCLUDED"
+            or item.get("reasons") != DAY_STATUS_REASONS["EXCLUDED"]
+        ):
+            raise ValueError("bounded window exclusion ledger invalid")
+        excluded_days.append(item["day"])
+    if excluded_days != sorted(set(excluded_days)) or set(excluded_days) & set(names):
+        raise ValueError("bounded window exclusion ledger invalid")
+    rollover = value.get("current_rollover_blocked_by_failed_newer_days")
+    if (
+        not isinstance(rollover, list)
+        or not all(_is_canonical_day(day) for day in rollover)
+        or rollover != sorted(set(rollover))
+        or not set(rollover).issubset(excluded_days)
+    ):
+        raise ValueError("bounded window rollover ledger invalid")
     totals = Counter[str]()
     for ref in refs:
         if set(ref) != {
@@ -1120,6 +1178,16 @@ def verify_window(tag: str, digest: str, expected_profile: str = PROFILE) -> dic
             or manifest["data_index_generation"] != day_index["generation"]
             or manifest["catalog_generation"] != day_catalog["generation"]
             or manifest["inventory_generation"] != day_catalog["inventory_generation"]
+            or manifest["inventory_last_hour"] != day_catalog["inventory_last_hour"]
+            or manifest["inventory_release_id"] != day_catalog["inventory_release_id"]
+            or manifest["inventory_tag"] != day_catalog["inventory_tag"]
+            or manifest["inventory_sha256"] != day_catalog["inventory_sha256"]
+            or manifest["inventory_wide_unresolved_not_admitted_count"]
+            != len(day_index["unresolved_condition_references"])
+            or manifest["inventory_wide_unresolved_not_admitted_set_sha256"]
+            != sha(canonical(day_index["unresolved_condition_references"]))
+            or manifest["unresolved_conditionless_rows"]
+            != day_index["unresolved_conditionless_rows"]
             or manifest["unresolved_conditions_classified_out_of_scope"] != 0
             or manifest["population_claim"] != POPULATION_CLAIM
             or manifest["v3_historical_source_reacquisition_bytes"] != 0

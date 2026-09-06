@@ -71,6 +71,16 @@ TRANSFORM_IMPLEMENTATION_FILES = {
 # version and digest rather than silently invalidating authenticated historical work.
 TRANSFORM_IMPLEMENTATION_SHA256 = "9607154c842b29ff658b5cab591c04e459c2109b2fb274d2f096545bf85fde08"
 ACQUISITION_CODE_SHA256 = "1d9786f73ddeb776a4a30ce5d26ff22afb1702abd63537872cb9165b173f8dde"
+ACQUISITION_DEPENDENCY_SHA256 = {
+    "requirements.lock": "feb28c912b8d1aed984925e2579612c7af0428a1772352883318091d916bf1c6",
+    "src/pflow/model.py": "25f1bf6f27f50f036f1312757d5d455158b093bde8cdff9c24a399084d6125c7",
+    "src/pflow/observed_v1.py": "f6a6e6a0e2604bfa81eb8b48706f682ea135e00a926a73131daa359ee056e3ef",
+    "src/pflow/probe.py": "f2dcab7311fcd603860bcf79db217b7a2ce88a307aa5b8e88d562416d7faecac",
+    "src/pflow/source.py": "21e0e378f43916ce58e6a9be4b523eadb3bc55f6a65b6adb0a53bb9f5ada0192",
+}
+for _dependency_name, _dependency_digest in ACQUISITION_DEPENDENCY_SHA256.items():
+    if sha(TRANSFORM_IMPLEMENTATION_FILES[_dependency_name].read_bytes()) != _dependency_digest:
+        raise RuntimeError("acquisition dependency changed without a new transform identity")
 _production_source = Path(__file__).read_bytes()
 _acquisition_start_marker = b"# " + b"ACQUISITION_CODE_START"
 _acquisition_start = _production_source.index(_acquisition_start_marker) + len(
