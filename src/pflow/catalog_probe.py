@@ -206,9 +206,10 @@ def scan(
     query = dict(parameters)
     terminal = False
     error: str | None = None
-    for index in range(max_pages):
+    offset = 0
+    for _ in range(max_pages):
         if not keyset:
-            query["offset"] = str(index * limit)
+            query["offset"] = str(offset)
         url = GAMMA + path + "?" + urllib.parse.urlencode(query)
         data, evidence = reader.get(url)
         page: dict[str, Any] = {"request": evidence, "row_count": None, "next_cursor": None}
@@ -233,9 +234,11 @@ def scan(
                 raise ValueError("repeated cursor or short nonterminal page")
             seen_cursors.add(cursor)
             query["after_cursor"] = cursor
-        elif len(source_rows) < limit:
-            terminal = True
-            break
+        else:
+            offset += len(source_rows)
+            if not source_rows:
+                terminal = True
+                break
     ids = [row["id"] for row in rows]
     return {
         "path": path,

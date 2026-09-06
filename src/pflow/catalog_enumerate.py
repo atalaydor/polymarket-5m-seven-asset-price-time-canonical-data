@@ -33,14 +33,19 @@ TARGET_WORDS = re.compile(
 
 
 def specification(name: str) -> dict[str, Any]:
-    if name in ("series-ascending", "series-descending"):
+    if name in (
+        "series-ascending",
+        "series-descending",
+        "series-complete-ascending",
+        "series-complete-descending",
+    ):
         return dict(
             name=name,
             path="/series",
             kind="series",
             max_pages=50,
             parameters={
-                "limit": "100",
+                "limit": "50" if "complete" in name else "100",
                 "order": "id",
                 "ascending": "true" if name.endswith("ascending") else "false",
                 "exclude_events": "true",
@@ -146,6 +151,8 @@ def summary(report: dict[str, Any]) -> dict[str, Any]:
 
 
 def validate(report: dict[str, Any], spec: dict[str, Any], commit: str) -> None:
+    if spec != specification(spec["name"]):
+        raise ValueError("unregistered catalog query specification")
     if report.keys() != {"schema", "identity", "commit", "specification", "evidence"}:
         raise ValueError("strict enumeration report fields")
     identity = sha(canonical(dict(schema=ENUM_SCHEMA, specification=spec, commit=commit)))
@@ -178,11 +185,11 @@ def validate(report: dict[str, Any], spec: dict[str, Any], commit: str) -> None:
     terminal = False
     error = None
     cursors: set[str] = set()
-    for index, page in enumerate(pages):
+    for page in pages:
         if terminal or error is not None:
             raise ValueError("pages after terminal/error")
         if not keyset:
-            query["offset"] = str(index * int(query["limit"]))
+            query["offset"] = str(count)
         expected_url = "https://gamma-api.polymarket.com" + spec["path"] + "?"
         expected_url += urllib.parse.urlencode(query)
         if page["request"]["url"] != expected_url:
@@ -208,7 +215,7 @@ def validate(report: dict[str, Any], spec: dict[str, Any], commit: str) -> None:
         else:
             if cursor is not None:
                 raise ValueError("offset page has cursor")
-            terminal = n < int(query["limit"])
+            terminal = n == 0 if "complete" in spec["name"] else n < int(query["limit"])
     ids = [row["id"] for row in stream["rows"]]
     if any(not isinstance(value, str) or not value for value in ids):
         raise ValueError("enumeration row lacks identity")

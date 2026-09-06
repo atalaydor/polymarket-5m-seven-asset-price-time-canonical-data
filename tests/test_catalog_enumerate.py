@@ -65,6 +65,16 @@ def report_fixture(name: str, pages: list[Any]) -> dict[str, Any]:
 
 
 class EnumerationTests(unittest.TestCase):
+    def test_offset_clamp_requires_empty_page_and_uses_actual_return_count(self) -> None:
+        reader = Reader([[{"id": str(i)} for i in range(50)], [{"id": "50"}], []])
+        result = scan(reader, "/series", {"limit": "100"}, "series", 3)  # type: ignore[arg-type]
+        self.assertTrue(result["terminal_observed"])
+        self.assertEqual(len(result["rows"]), 51)
+        self.assertIn("offset=50", reader.ledger[1]["url"])
+        self.assertIn("offset=51", reader.ledger[2]["url"])
+        report = report_fixture("series-complete-ascending", [[{"id": "1"}], []])
+        validate(report, report["specification"], report["commit"])
+
     def test_query_scope_is_independent_bounded_and_explicit(self) -> None:
         self.assertNotIn("closed", specification("series-ascending")["parameters"])
         self.assertEqual(specification("series-descending")["parameters"]["ascending"], "false")

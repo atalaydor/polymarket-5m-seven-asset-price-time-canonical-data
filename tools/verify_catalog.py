@@ -29,7 +29,13 @@ def verify(tag: str, digest: str) -> dict[str, Any]:
     enumeration = tag.startswith("catalog-enumeration-")
     if release is None or len(release["assets"]) != (2 if enumeration else 1):
         raise ValueError("exact report asset inventory required")
-    suffix = "--catalog-stream.json" if enumeration else "--catalog-report.json"
+    suffix = (
+        "--catalog-stream.json"
+        if enumeration
+        else (
+            "--access-report.json" if tag.startswith("catalog-access-") else "--catalog-report.json"
+        )
+    )
     matches = [a for a in release["assets"] if a["name"].endswith(suffix)]
     if len(matches) != 1:
         raise ValueError("unique report required")
