@@ -4,11 +4,13 @@ This is a new, independent, depth-free acquisition project for Polymarket five-m
 Up/Down BTC, ETH, SOL, XRP, DOGE, BNB and HYPE. Development and control run on Windows;
 market payload acquisition and decoding are restricted to standard GitHub-hosted Linux.
 
-**Current status: no certified daily or rolling research authority exists.** The first
-complete production projection is blocked because native observations reference
-conditions that lack identity records in the pinned V3 generation. Earlier checkpoints
-also preserved separate negative findings about historical venue membership and exact
-price continuity; neither is being imposed as the current gate.
+**Current status: no certified daily or rolling research authority exists.** The final
+target-first salvage proved 6,048 independently returned first-party target identities,
+but could not exclude deleted, moved or otherwise omitted historical targets among the
+170,369 retained V3 conditions without identity records. Tentative target-day/window
+objects produced before independent review are explicitly rejected; no current authority
+reference exists and imports remain disabled. See the
+[target-first capability gap](docs/target-first-salvage-capability-gap.md).
 
 The frozen research-facing acquisition path permits only `new_market`, `best_bid_ask`
 and `market_resolved` product ranges.

@@ -47,6 +47,12 @@ TARGET_SCOPE_VERSION = 1
 TARGET_CATALOG_SCHEMA = "polymarket-seven-asset-5m-target-catalog.v1"
 TARGET_DAY_SCHEMA = "pendulumflow-v3-observed-target-certified-day.v1"
 TARGET_WINDOW_SCHEMA = "pendulumflow-v3-observed-target-window.v1"
+TARGET_COMPLETENESS_ESTABLISHED = False
+TARGET_COMPLETENESS_BLOCKER = (
+    "the pinned first-party queries close a 6,048-market returned cohort but do not "
+    "exclude deleted, moved, null-dated, or otherwise omitted historical target listings; "
+    "170,369 retained V3 condition identities therefore cannot be proven unrelated"
+)
 
 V3_CATALOG_TAG = (
     "observed-catalog-v1-305b1e9b81cea2a844f9d9aa48c4a1b70cc7d9dc0d53a7bee369c3423c79a9de"
@@ -172,10 +178,12 @@ def _day_entries(report: dict[str, Any], asset: str, day: str) -> list[dict[str,
             raise ValueError("first-party target day enumeration did not close")
         for row in scan["rows"]:
             item = interval(row, asset)
-            if item["start_us"] is None or not begin_us <= item["start_us"] < end_us:
-                continue
+            if item["start_us"] is None:
+                raise ValueError("first-party target row has unknown day membership")
             if item["errors"]:
                 raise ValueError("first-party target identity is ambiguous")
+            if not begin_us <= item["start_us"] < end_us:
+                continue
             orientation = dict(zip(item["outcomes"], item["tokens"], strict=True))
             values.append(
                 {
@@ -341,6 +349,8 @@ def _resolution_relation(row: dict[str, Any], mapping: dict[str, Any]) -> bool:
 
 
 def certify_day(target_tag: str, target_sha: str, day: str) -> dict[str, Any]:
+    if not TARGET_COMPLETENESS_ESTABLISHED:
+        raise RuntimeError("target-first certification blocked: " + TARGET_COMPLETENESS_BLOCKER)
     target_catalog = _load_target_catalog(target_tag, target_sha)
     inventory, v3_catalog, index = _load_index()
     expected = [
@@ -535,6 +545,10 @@ def certify_day(target_tag: str, target_sha: str, day: str) -> dict[str, Any]:
 
 
 def publish_window(target_tag: str, target_sha: str) -> dict[str, Any]:
+    if not TARGET_COMPLETENESS_ESTABLISHED:
+        raise RuntimeError(
+            "target-first window publication blocked: " + TARGET_COMPLETENESS_BLOCKER
+        )
     target_catalog = _load_target_catalog(target_tag, target_sha)
     latest: dict[str, tuple[dict[str, Any], dict[str, Any]]] = {}
     for release in _all_releases():
@@ -703,6 +717,8 @@ def _update_target_current(tag: str, digest: str, value: dict[str, Any], release
 
 
 def verify_window(tag: str, digest: str) -> dict[str, Any]:
+    if not TARGET_COMPLETENESS_ESTABLISHED:
+        raise RuntimeError("target-first consumer import blocked: " + TARGET_COMPLETENESS_BLOCKER)
     release, value = _json_release(tag, digest, "consumer-handoff.json")
     if value.get("schema") != TARGET_WINDOW_SCHEMA or tag != "target-window-v1-" + _generation(
         value

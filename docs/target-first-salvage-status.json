@@ -1,0 +1,35 @@
+{
+  "schema": "pendulumflow-target-first-salvage-status.v1",
+  "verdict": "BLOCKED",
+  "profile": "PENDULUMFLOW_V3_OBSERVED",
+  "profile_version": 1,
+  "research_import_allowed": false,
+  "certified_days": [],
+  "current_window": null,
+  "v3_source_reacquisition_bytes": 0,
+  "retained_v3_partitions": 116,
+  "retained_v3_source_bytes": 40488664657,
+  "independent_returned_target_cohort": {
+    "days": ["2026-08-25", "2026-08-27", "2026-08-28"],
+    "assets": ["BTC", "ETH", "SOL", "XRP", "DOGE", "BNB", "HYPE"],
+    "markets": 6048,
+    "membership_independent_of_v3_presence": true,
+    "historical_deleted_or_moved_membership_complete": false
+  },
+  "unresolved_v3_condition_count": 170369,
+  "unresolved_v3_condition_set_sha256": "11c7ae4f3732a232dbb07c183b73a7b7fa655a7e52af211231514020bfea3984",
+  "smallest_missing_evidence": "First-party historical listing/tombstone or immutable as-of catalog closure for the seven target series/days, or positive identity/exclusion evidence for every retained V3 condition capable of changing that target membership.",
+  "tentative_outputs_rejected": [
+    {"release_id": 383656295, "kind": "target_catalog"},
+    {"release_id": 383658043, "day": "2026-08-25", "kind": "tentative_day"},
+    {"release_id": 383658096, "day": "2026-08-27", "kind": "excluded_day"},
+    {"release_id": 383658310, "day": "2026-08-28", "kind": "tentative_day"},
+    {"release_id": 383658420, "kind": "tentative_window", "research_import_allowed_rejected": true}
+  ],
+  "current_reference_exists": false,
+  "scheduled_accumulation_enabled": false,
+  "independent_review": {
+    "source": "rejected inventory-wide target completeness; approved only exact returned cohort identity",
+    "implementation": "rejected consumer shard closure and strict manifest acceptance"
+  }
+}

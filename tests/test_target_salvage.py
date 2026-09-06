@@ -3,6 +3,7 @@ from datetime import UTC, datetime
 from typing import Any
 
 from pflow.target_salvage import (
+    TARGET_COMPLETENESS_ESTABLISHED,
     TARGET_SCOPE,
     _day_entries,
     _mapping_relation,
@@ -98,6 +99,13 @@ class TargetSalvageTests(unittest.TestCase):
         self.assertEqual(value["certification_scope"], TARGET_SCOPE)
         self.assertFalse(value["continuity_between_observations_certified"])
         self.assertFalse(value["historical_deleted_listing_completeness_claimed"])
+        self.assertFalse(TARGET_COMPLETENESS_ESTABLISHED)
+
+    def test_unknown_day_membership_cannot_be_silently_skipped(self) -> None:
+        value = report()
+        value["evidence"]["scans"][0]["rows"][0]["startTime"] = None
+        with self.assertRaisesRegex(ValueError, "unknown day membership"):
+            _day_entries(value, "BTC", "2026-08-25")
 
     def test_canonical_rows_must_match_authoritative_orientation(self) -> None:
         mapping = _day_entries(report(), "BTC", "2026-08-25")[0]
