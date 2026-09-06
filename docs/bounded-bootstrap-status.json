@@ -1,0 +1,145 @@
+{
+  "schema": "pendulumflow-v3-observed-bounded-bootstrap-status.v1",
+  "verdict": "FACTORY_USABLE_AUTHORITY_PUBLISHED",
+  "repository": "atalaydor/polymarket-5m-seven-asset-price-time-canonical-data",
+  "repository_id": 1358712762,
+  "implementation_commit": "980647c2e6413609ca608d91307e438a177d600a",
+  "checkpoint_tag_planned": "run-1-bounded-bootstrap-v1.0.0",
+  "profile": "PENDULUMFLOW_V3_OBSERVED_BOUNDED_V1",
+  "profile_version": 1,
+  "certification_scope": "POSITIVE_TARGET_EVIDENCE_ADMISSION_FROM_PINNED_PENDULUMFLOW_V3",
+  "certification_scope_version": 1,
+  "research_import_allowed": true,
+  "population_exhaustive": false,
+  "continuity_between_observations_certified": false,
+  "canonical_depth_fields_permitted": false,
+  "historical_v3_reuse": {
+    "authenticated_partitions": 116,
+    "authenticated_source_bytes": 40488664657,
+    "v3_historical_source_reacquisition_bytes": 0
+  },
+  "pinned_inventory": {
+    "generation": "ead9a909a8c4fa5ad638a111040087609f6e7ac88c95b3f4596786810586bcc0",
+    "tag": "v3-inventory-v1-ead9a909a8c4fa5ad638a111040087609f6e7ac88c95b3f4596786810586bcc0",
+    "release_id": 383597088,
+    "asset_sha256": "c50e57a46b5f0ec0c1ea98381619100ef753de0db54656f952a9af9c121044d4",
+    "last_hour": "2026-09-06/11"
+  },
+  "pinned_catalog": {
+    "tag": "observed-catalog-v1-305b1e9b81cea2a844f9d9aa48c4a1b70cc7d9dc0d53a7bee369c3423c79a9de",
+    "asset_sha256": "0e49bd231274d0389aa40bf72d1d99c4a033c719f27b936c882fd8887b74f639"
+  },
+  "pinned_data_index": {
+    "tag": "observed-data-index-v1-24254f9fc394e161f916285cd8ddbac6644cdb7de1f7524d2f9c323b0d38070f",
+    "release_id": 383639220,
+    "asset_sha256": "85c6f7afeb6c19cd8ed891564f04e1adcd5da1058f9e9c4ee30995bc46cc780f"
+  },
+  "days": [
+    {
+      "day": "2026-09-03",
+      "status": "CERTIFIED",
+      "tag": "bounded-day-v1-5c150eeca87374846cec347727600951fb2f5a0defce0209bb9fe5c08652db5d",
+      "release_id": 383677987,
+      "manifest_asset_id": 547531990,
+      "manifest_sha256": "b32b6e0119077d09e0c87498a43734ec5d8625ed8793410fc91f73b8324f3d3b",
+      "admitted_mapping_asset_id": 547532000,
+      "admitted_mapping_sha256": "cea4e1cfeb4b6191bcbb1a69a4d0cea192a49747561fdd627266720d4663d002",
+      "admitted_mapping_size": 353518,
+      "admitted_target_markets": 1921,
+      "admitted_rows": 5953386,
+      "rejected_target_markets": 88,
+      "rejected_rows": 17737,
+      "rejected_asset_id": 547532010,
+      "rejected_sha256": "98df4a19c8f3771a6eeba50de9efa5f690c7b097656320284fb8057574575234",
+      "rejected_size": 4962
+    },
+    {
+      "day": "2026-09-04",
+      "status": "CERTIFIED",
+      "tag": "bounded-day-v1-2b847052adeb24a3f377ac044484fbb76842bebb75abab99f1a2141b4efb08cc",
+      "release_id": 383678040,
+      "manifest_asset_id": 547532185,
+      "manifest_sha256": "faa8d5780ceab2ba03245e54e2b0d77c93fcb922065366f55b98153033764935",
+      "admitted_mapping_asset_id": 547532213,
+      "admitted_mapping_sha256": "564ba2e61927abb4ab334f2c37b6780e879b67781e7f57ba5c587ea6330336cb",
+      "admitted_mapping_size": 371338,
+      "admitted_target_markets": 2015,
+      "admitted_rows": 6627014,
+      "rejected_target_markets": 0,
+      "rejected_rows": 0,
+      "rejected_asset_id": 547532235,
+      "rejected_sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "rejected_size": 20
+    },
+    {
+      "day": "2026-09-05",
+      "status": "CERTIFIED",
+      "tag": "bounded-day-v1-927635d7ba7542db114546f6985e380277f544cb7fa121747ea0c2552874b2f3",
+      "release_id": 383678051,
+      "manifest_asset_id": 547532247,
+      "manifest_sha256": "a0412662a7fe0d69661b6917e6608f7592a6061bec844ce6208d3b72a734b5a0",
+      "admitted_mapping_asset_id": 547532274,
+      "admitted_mapping_sha256": "0a82fdcb13dc064594b972405c6bf8c9c6b041a7a99fae4b91a902ed6f1b1d24",
+      "admitted_mapping_size": 371566,
+      "admitted_target_markets": 2016,
+      "admitted_rows": 4507822,
+      "rejected_target_markets": 0,
+      "rejected_rows": 0,
+      "rejected_asset_id": 547532297,
+      "rejected_sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "rejected_size": 20
+    }
+  ],
+  "aggregate": {
+    "certified_days": ["2026-09-03", "2026-09-04", "2026-09-05"],
+    "excluded_days": [],
+    "pending_days": [],
+    "admitted_target_markets": 5952,
+    "rejected_target_markets": 88,
+    "unresolved_v3_conditions": 170369,
+    "unresolved_v3_condition_set_sha256": "11c7ae4f3732a232dbb07c183b73a7b7fa655a7e52af211231514020bfea3984"
+  },
+  "current_window": {
+    "generation": "bounded-window-v1-412c585d6eabf59a0fbf19e991ff6ae67cb1ff7ed70f7576b8050e959523b59c",
+    "tag": "bounded-window-v1-412c585d6eabf59a0fbf19e991ff6ae67cb1ff7ed70f7576b8050e959523b59c",
+    "release_id": 383679345,
+    "immutable": true,
+    "consumer_handoff_asset_id": 547537482,
+    "consumer_handoff_asset": "31752ca576ade40788a046ef6da7ac803cde7f8a68b3a299c87ddea40f06f18c--consumer-handoff.json",
+    "consumer_handoff_sha256": "31752ca576ade40788a046ef6da7ac803cde7f8a68b3a299c87ddea40f06f18c",
+    "consumer_handoff_size": 6636,
+    "current_reference_branch": "bounded-current",
+    "current_reference_commit": "d7a2c05d3f28aa65373140f99b14fbf93c5762b8",
+    "current_reference_path": "authority/current-window.json",
+    "current_reference_blob": "b53cefa50d2d424ef8c5cc88b515b92f3464f129",
+    "current_reference_size": 1091
+  },
+  "proof_runs": {
+    "bounded_bootstrap": {
+      "run_id": 34051293375,
+      "head_sha": "980647c2e6413609ca608d91307e438a177d600a",
+      "conclusion": "success",
+      "independent_verify_job_id": 101540192047
+    },
+    "linux_ci": {
+      "run_id": 34051253433,
+      "job_id": 101535168532,
+      "head_sha": "980647c2e6413609ca608d91307e438a177d600a",
+      "conclusion": "success"
+    }
+  },
+  "future_accumulation": {
+    "workflow": ".github/workflows/observed-production.yml",
+    "run_id": 34054404836,
+    "head_sha": "980647c2e6413609ca608d91307e438a177d600a",
+    "status_observed": "in_progress",
+    "planner_job_id": 101543511167,
+    "planner_conclusion": "success",
+    "catalog_job_id": 101543921139,
+    "catalog_status_observed": "in_progress",
+    "schedule": "17 4 * * *",
+    "max_days": 3,
+    "reconciliation_rule": "NO-OP authenticated existing work; acquire only missing work; divergent durable bytes fail closed"
+  },
+  "independent_review": "docs/bounded-independent-review.md"
+}
