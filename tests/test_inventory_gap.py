@@ -45,8 +45,8 @@ class InventoryGapTests(unittest.TestCase):
             report["unresolved_condition_set_sha256"],
             sha(canonical(["condition-1", "condition-2"])),
         )
-        self.assertFalse(report["research_import_allowed"])
-        self.assertEqual(report["certified_days"], [])
+        self.assertFalse(report["diagnostic_research_import_allowed"])
+        self.assertEqual(report["diagnostic_certified_days"], [])
         self.assertEqual(report["profile"], "PENDULUMFLOW_V3_OBSERVED")
 
     def test_summary_rejects_unreconciled_global_and_partition_sets(self) -> None:

@@ -98,9 +98,9 @@ def summarize_index(value: dict[str, Any]) -> dict[str, Any]:
         "downloaded_source_bytes": int(measurements.get("downloaded_bytes", 0)),
         "network_seconds_us": int(measurements.get("network_seconds_us", 0)),
         "wall_seconds_us": int(measurements.get("wall_seconds_us", 0)),
-        "research_import_allowed": False,
-        "certified_days": [],
-        "current_window_generation": None,
+        "diagnostic_research_import_allowed": False,
+        "diagnostic_certified_days": [],
+        "diagnostic_current_window_generation": None,
         "limitation": (
             "best_bid_ask and/or market_resolved rows reference condition IDs for which the "
             "complete pinned native V3 inventory generation contains no new_market identity "
