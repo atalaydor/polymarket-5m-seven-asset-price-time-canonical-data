@@ -314,10 +314,13 @@ def _mapping_relation(target: dict[str, Any], mapping: dict[str, Any]) -> bool:
 
 
 def _observation_relation(row: dict[str, Any], mapping: dict[str, Any]) -> bool:
+    outcome = row.get("outcome")
+    if not isinstance(outcome, str):
+        return False
     expected_token = {
         "UP": mapping["up_token"],
         "DOWN": mapping["down_token"],
-    }.get(row.get("outcome"))
+    }.get(outcome)
     return (
         row.get("asset") == mapping["asset"]
         and row.get("start_us") == mapping["start_us"]
@@ -327,10 +330,13 @@ def _observation_relation(row: dict[str, Any], mapping: dict[str, Any]) -> bool:
 
 
 def _resolution_relation(row: dict[str, Any], mapping: dict[str, Any]) -> bool:
+    outcome = row.get("winning_outcome")
+    if not isinstance(outcome, str):
+        return False
     expected_token = {
         "UP": mapping["up_token"],
         "DOWN": mapping["down_token"],
-    }.get(row.get("winning_outcome"))
+    }.get(outcome)
     return row.get("asset") == mapping["asset"] and row.get("winning_token") == expected_token
 
 
