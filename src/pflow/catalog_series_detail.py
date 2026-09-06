@@ -18,7 +18,7 @@ from pflow.catalog_targets import SERIES, SERIES_SHA, interval, series_evidence
 from pflow.release import api, current_commit, publish, read_asset
 from pflow.source import canonical, sha
 
-SCHEMA = "polymarket-series-detail-diagnostic.v1"
+SCHEMA = "polymarket-series-detail-diagnostic.v2"
 BOUND = 128_000_000
 
 
@@ -56,7 +56,9 @@ def validate(report: dict[str, Any], asset: str, commit: str) -> None:
         raise ValueError("detail report generation/scope mismatch")
     request = report["request"]
     keys(
-        request, "url observed_at http_date status bytes network_ns body_complete sha256 hash_scope"
+        request,
+        "url observed_at http_date status bytes network_ns body_complete sha256 hash_scope "
+        "declared_bytes",
     )
     if request["url"] != "https://gamma-api.polymarket.com/series/" + SERIES[asset]:
         raise ValueError("detail request origin mismatch")
@@ -70,12 +72,20 @@ def validate(report: dict[str, Any], asset: str, commit: str) -> None:
         raise ValueError("detail measurements invalid")
     if (
         type(request["body_complete"]) is not bool
-        or request["body_complete"] != (request["bytes"] < BOUND)
+        or request["body_complete"]
+        != (
+            request["bytes"] < BOUND
+            and (request["declared_bytes"] is None or request["bytes"] == request["declared_bytes"])
+        )
         or request["hash_scope"]
         != ("whole_response" if request["body_complete"] else "downloaded_prefix_only")
         or not re.fullmatch("[0-9a-f]{64}", request["sha256"])
     ):
         raise ValueError("detail partial-byte integrity claim mismatch")
+    if request["declared_bytes"] is not None and (
+        type(request["declared_bytes"]) is not int or request["declared_bytes"] < 0
+    ):
+        raise ValueError("detail declared byte length invalid")
     if not isinstance(request["observed_at"], str) or (
         request["http_date"] is not None and not isinstance(request["http_date"], str)
     ):
@@ -133,7 +143,10 @@ def run(asset: str) -> None:
             body = response.read(BOUND)
             code = response.status
             http_date = response.headers.get("Date")
-        complete = len(body) < BOUND
+            header_length = response.headers.get("Content-Length")
+        network_ns = time.monotonic_ns() - begin
+        declared_bytes = int(header_length) if header_length is not None else None
+        complete = len(body) < BOUND and (declared_bytes is None or len(body) == declared_bytes)
         metadata = projection(json.loads(body)) if complete and code == 200 else None
         report = dict(
             schema=SCHEMA,
@@ -147,7 +160,8 @@ def run(asset: str) -> None:
                 http_date=http_date,
                 status=code,
                 bytes=len(body),
-                network_ns=time.monotonic_ns() - begin,
+                network_ns=network_ns,
+                declared_bytes=declared_bytes,
                 body_complete=complete,
                 sha256=sha(body),
                 hash_scope="whole_response" if complete else "downloaded_prefix_only",

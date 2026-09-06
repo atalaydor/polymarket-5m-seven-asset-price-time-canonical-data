@@ -1,13 +1,47 @@
 """First-party interval diagnostics preserve ambiguity and exact metadata roles."""
 
 import unittest
+from typing import Any
 
 from pflow.catalog_probe import project
-from pflow.catalog_series_detail import projection
-from pflow.catalog_targets import instant, interval, queries
+from pflow.catalog_series_detail import SCHEMA, projection, validate
+from pflow.catalog_targets import SERIES_SHA, instant, interval, queries
+from pflow.source import canonical, sha
 
 
 class TargetTests(unittest.TestCase):
+    def test_declared_truncation_cannot_claim_whole_series_response(self) -> None:
+        commit = "a" * 40
+        report: dict[str, Any] = dict(
+            schema=SCHEMA,
+            identity=sha(
+                canonical(dict(schema=SCHEMA, asset="BTC", commit=commit, series_sha256=SERIES_SHA))
+            ),
+            asset="BTC",
+            commit=commit,
+            series_sha256=SERIES_SHA,
+            request=dict(
+                url="https://gamma-api.polymarket.com/series/10684",
+                observed_at="2026-09-06T00:00:00Z",
+                http_date=None,
+                status=200,
+                bytes=10,
+                declared_bytes=20,
+                network_ns=1,
+                body_complete=False,
+                sha256="b" * 64,
+                hash_scope="downloaded_prefix_only",
+            ),
+            metadata=None,
+            expected_catalog_certified=False,
+            research_import_allowed=False,
+        )
+        validate(report, "BTC", commit)
+        report["request"]["body_complete"] = True
+        report["request"]["hash_scope"] = "whole_response"
+        with self.assertRaises(ValueError):
+            validate(report, "BTC", commit)
+
     def test_series_detail_never_preserves_foreign_research_fields(self) -> None:
         row = projection(
             dict(
