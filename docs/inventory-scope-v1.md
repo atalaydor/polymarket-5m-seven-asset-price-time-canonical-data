@@ -5,9 +5,9 @@ This additive user policy resolves the v0.4 historical catalog blocker for
 and v0.4 historical-membership checkpoints remain truthful evidence for their original
 claims. No claim is made that PendulumFlow captured every market Polymarket listed.
 
-A source generation is the exact byte-bound union of two identical complete passes over
-every page of the public `/v3/` index plus the raw manifest bytes for every indexed
-receipt hour. Index page bytes, parsed hour membership, terminal pagination, manifest
+A source generation binds the exact bytes from one complete pass over every page of the
+public `/v3/` index, a second pass with identical parsed membership/pagination, and the
+raw manifest bytes for every indexed receipt hour. Index page bytes, parsed hour membership, terminal pagination, manifest
 bytes, object identity, product byte ranges, row-group bounds, row counts and product
 hashes are retained. A changed page, manifest or product creates a different generation.
 

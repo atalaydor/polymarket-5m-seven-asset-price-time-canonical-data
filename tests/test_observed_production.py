@@ -122,6 +122,14 @@ class ObservedProductionTests(unittest.TestCase):
                     "next_page": None,
                 }
             ],
+            "second_pass_membership": [
+                {
+                    "page": 1,
+                    "url": "https://archive.pendulumflow.com/v3/",
+                    "parsed_hours": ["2026-09-05/00"],
+                    "next_page": None,
+                }
+            ],
         }
         inventory["generation"] = sha(canonical(inventory))
         validate_inventory(inventory)

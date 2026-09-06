@@ -92,7 +92,12 @@ def discover(reader: Reader | None = None) -> dict[str, Any]:
     reader = reader or Reader(limit=100_000_000)
     first_pages, first_hours = _read_pages(reader)
     second_pages, second_hours = _read_pages(reader)
-    if first_pages != second_pages or first_hours != second_hours:
+    membership_fields = ("page", "url", "parsed_hours", "next_page")
+    first_membership = [{field: page[field] for field in membership_fields} for page in first_pages]
+    second_membership = [
+        {field: page[field] for field in membership_fields} for page in second_pages
+    ]
+    if first_membership != second_membership or first_hours != second_hours:
         raise ValueError("published index changed during pinning; retry discovery")
 
     def get_manifest(hour: str) -> dict[str, Any]:
@@ -126,6 +131,7 @@ def discover(reader: Reader | None = None) -> dict[str, Any]:
             "published bytes do not prove no source event was missed",
         ],
         "index_pages": first_pages,
+        "second_pass_membership": second_membership,
         "hours": records,
     }
     body["generation"] = sha(canonical(body))
@@ -194,6 +200,13 @@ def validate_inventory(value: dict[str, Any]) -> None:
         flattened.extend(parsed)
     if flattened != list(reversed(hours)):
         raise ValueError("inventory pages do not bind exact normalized hour set")
+    second_membership = value.get("second_pass_membership")
+    expected_membership = [
+        {field: page[field] for field in ("page", "url", "parsed_hours", "next_page")}
+        for page in pages
+    ]
+    if second_membership != expected_membership:
+        raise ValueError("second index pass does not confirm membership chain")
     expected = sha(canonical({k: v for k, v in value.items() if k != "generation"}))
     if value.get("generation") != expected:
         raise ValueError("inventory generation mismatch")
