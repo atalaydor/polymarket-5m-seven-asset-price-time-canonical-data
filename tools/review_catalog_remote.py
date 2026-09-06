@@ -21,7 +21,7 @@ from pflow.model import ASSETS, validate_quote
 from pflow.release import api, current_commit, publish, read_asset, verify_release
 from pflow.source import canonical, sha
 
-SCHEMA = "polymarket-independent-catalog-review.v1"
+SCHEMA = "polymarket-independent-catalog-review.v2"
 SERIES_COMMIT = "8659c75117a2b2acf080cea49ee0143d54ef25ae"
 TARGET_COMMIT = "c4df60f9bfaa2ae1ea4f5d8838c33f73d6025e0b"
 NATIVE_COMMIT = "58b8fa385c676b8ce454a02e0e8bc5bfc9dfb19a"
@@ -361,6 +361,9 @@ def classify_series(rows: list[dict[str, Any]]) -> dict[str, Any]:
             candidates.append(
                 dict(
                     series_id=row["id"],
+                    slug=row["slug"],
+                    title=row["title"],
+                    recurrence=row["recurrence"],
                     known_target=row["id"] in known,
                     matched_assets=assets,
                     hint_fields=hints,
@@ -489,8 +492,25 @@ def validate_output(report: dict[str, Any]) -> None:
     for candidate in classification["candidate_samples"]:
         require(
             set(candidate)
-            == {"series_id", "known_target", "matched_assets", "hint_fields", "null_fields"},
+            == {
+                "series_id",
+                "slug",
+                "title",
+                "recurrence",
+                "known_target",
+                "matched_assets",
+                "hint_fields",
+                "null_fields",
+            },
             "unexpected candidate metadata field",
+        )
+        require(
+            all(
+                candidate[field] is None
+                or (isinstance(candidate[field], str) and len(candidate[field]) <= 2048)
+                for field in ("slug", "title", "recurrence")
+            ),
+            "unexpected candidate identity text",
         )
         require(
             re.fullmatch(r"[0-9]{1,20}", candidate["series_id"]) is not None
@@ -723,6 +743,12 @@ def self_test() -> None:
         and result["unknown_or_ambiguous_candidates"] == 1
         and result["null_slug_and_title_rows"] == 1,
         "self-test all-row unknown classification",
+    )
+    require(
+        result["candidate_samples"][0]["title"] == "Unknown five-minute test"
+        and result["candidate_samples"][0]["slug"] is None
+        and result["candidate_samples"][0]["recurrence"] is None,
+        "candidate identity text must be explicit without fabricated values",
     )
     print("Independent review self-tests passed; no network requests")
 
