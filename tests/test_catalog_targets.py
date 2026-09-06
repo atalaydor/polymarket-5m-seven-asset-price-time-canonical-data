@@ -3,10 +3,35 @@
 import unittest
 
 from pflow.catalog_probe import project
+from pflow.catalog_series_detail import projection
 from pflow.catalog_targets import instant, interval, queries
 
 
 class TargetTests(unittest.TestCase):
+    def test_series_detail_never_preserves_foreign_research_fields(self) -> None:
+        row = projection(
+            dict(
+                id="10684",
+                volume="123",
+                events=[
+                    dict(
+                        id="1",
+                        bestAsk="0.99",
+                        markets=[
+                            dict(
+                                id="2", outcomePrices='["1","0"]', winner=True, bids=[{"size": "2"}]
+                            )
+                        ],
+                    )
+                ],
+            )
+        )
+        self.assertNotIn("volume", row["series"])
+        self.assertNotIn("bestAsk", row["events"][0])
+        self.assertNotIn("winner", row["events"][0]["markets"][0])
+        self.assertEqual(row, projection(dict(row["series"], events=row["events"])))
+        self.assertIsNone(projection(dict(id="10684"))["events"])
+
     def test_first_party_identity_interval_and_orientation_are_cross_checked(self) -> None:
         raw = dict(
             id="1",
