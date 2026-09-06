@@ -14,6 +14,7 @@ from pflow.observed_v1 import (
     PROFILE_VERSION,
     iter_jsonl_gzip,
 )
+from pflow.production_consumer import _source_parts, _verify_inventory_catalog
 from pflow.release import api, current_commit, publish, read_asset, verify_release
 from pflow.source import canonical, sha
 
@@ -132,27 +133,19 @@ def _load_index(tag: str, expected_sha: str) -> tuple[dict[str, Any], dict[str, 
     return dict(release), value
 
 
-def _load_json_release(tag: str, expected_sha: str, suffix: str) -> dict[str, Any]:
-    release = api("releases/tags/" + tag)
-    if release is None or release.get("tag_name") != tag:
-        raise ValueError("exact dependency release not found")
-    verify_release(release)
-    matches = [asset for asset in release["assets"] if asset["name"].endswith("--" + suffix)]
-    if len(matches) != 1:
-        raise ValueError("dependency release asset inventory mismatch")
-    data = read_asset(matches[0])
-    if sha(data) != expected_sha:
-        raise ValueError("dependency release content pin mismatch")
-    return dict(json.loads(data))
-
-
 def verify_condition_closure(value: dict[str, Any]) -> None:
-    catalog = _load_json_release(value["catalog_tag"], value["catalog_sha256"], "catalog.json")
+    inventory, catalog = _verify_inventory_catalog(value["catalog_tag"], value["catalog_sha256"])
     if catalog.get("generation") != value["catalog_generation"]:
         raise ValueError("catalog generation mismatch")
+    planned = _source_parts(inventory, catalog["transform_implementation_sha256"])
+    entries = value["partitions"]
+    if [entry.get("source_partition") for entry in entries] != [
+        expected["id"] for expected in planned
+    ]:
+        raise ValueError("data source partition set/order differs from pinned inventory plan")
     classified = {row["market"] for row in catalog["source_condition_classifications"]}
     seen_partitions: set[str] = set()
-    for part in value["partitions"]:
+    for part in entries:
         source_partition = part.get("source_partition")
         if not isinstance(source_partition, str) or not re.fullmatch(
             r"[0-9a-f]{64}", source_partition
@@ -186,7 +179,9 @@ def main() -> None:
     index_release, value = _load_index(args.index_tag, args.index_sha256)
     summary = summarize_index(value)
     verify_condition_closure(value)
-    summary["independently_recomputed_condition_partition_closure"] = True
+    summary["independently_verified_catalog_mapping_partition_closure"] = True
+    summary["independently_verified_expected_data_partition_set"] = True
+    summary["independently_recomputed_condition_partition_differences"] = True
     summary["data_index_tag"] = args.index_tag
     summary["data_index_sha256"] = args.index_sha256
     summary["data_index_release_id"] = index_release["id"]
