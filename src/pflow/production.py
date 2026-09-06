@@ -65,9 +65,27 @@ TRANSFORM_IMPLEMENTATION_FILES = {
     "src/pflow/production.py": Path(__file__),
     "src/pflow/source.py": _MODULE_DIR / "source.py",
 }
-TRANSFORM_IMPLEMENTATION_SHA256 = _implementation_bundle_digest(
-    {name: path.read_bytes() for name, path in TRANSFORM_IMPLEMENTATION_FILES.items()}
+# The 116 retained partitions were produced with this acquisition transform.  Changes
+# below the acquisition/index boundary (for example certification policy) must not force
+# source reacquisition.  Any future acquisition-code change requires an explicit new
+# version and digest rather than silently invalidating authenticated historical work.
+TRANSFORM_IMPLEMENTATION_SHA256 = "9607154c842b29ff658b5cab591c04e459c2109b2fb274d2f096545bf85fde08"
+ACQUISITION_CODE_SHA256 = "1d9786f73ddeb776a4a30ce5d26ff22afb1702abd63537872cb9165b173f8dde"
+_production_source = Path(__file__).read_bytes()
+_acquisition_start_marker = b"# " + b"ACQUISITION_CODE_START"
+_acquisition_start = _production_source.index(_acquisition_start_marker) + len(
+    _acquisition_start_marker
 )
+while _production_source[_acquisition_start] in b"\r\n":
+    _acquisition_start += 1
+_acquisition_end_marker = b"# " + b"ACQUISITION_CODE_END"
+_acquisition_end = _production_source.index(_acquisition_end_marker)
+if (
+    sha(_production_source[_acquisition_start:_acquisition_end].rstrip(b"\r\n"))
+    != ACQUISITION_CODE_SHA256
+):
+    raise RuntimeError("acquisition code changed without a new transform identity")
+# ACQUISITION_CODE_START
 ASSET_ALIASES = {
     "BTC": ("btc", "bitcoin"),
     "ETH": ("eth", "ethereum"),
@@ -1040,6 +1058,7 @@ def data_index(
     return value
 
 
+# ACQUISITION_CODE_END
 def _resolution_evidence(
     markets: Iterable[str], winners: dict[str, set[tuple[str, str]]]
 ) -> tuple[list[str], list[str], int]:

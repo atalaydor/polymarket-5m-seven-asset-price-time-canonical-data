@@ -1,5 +1,7 @@
-name: V3 inventory-scoped observed accumulation
+name: V3 bounded observed accumulation
 on:
+  schedule:
+    - cron: '17 4 * * *'
   workflow_dispatch:
     inputs:
       max_days:
@@ -158,7 +160,7 @@ jobs:
           INDEX_TAG: ${{ needs.index.outputs.data_index_tag }}
           INDEX_SHA: ${{ needs.index.outputs.data_index_sha256 }}
           MARKET_DAYS: ${{ toJSON(matrix.batch.days) }}
-        run: python -m pflow.production certify-batch --catalog-tag "$CATALOG_TAG" --catalog-sha "$CATALOG_SHA" --index-tag "$INDEX_TAG" --index-sha "$INDEX_SHA" --days "$MARKET_DAYS"
+        run: python -m pflow.bounded_v1 certify-batch --catalog-tag "$CATALOG_TAG" --catalog-sha "$CATALOG_SHA" --index-tag "$INDEX_TAG" --index-sha "$INDEX_SHA" --days "$MARKET_DAYS"
   window:
     needs: [catalog, index, certify]
     runs-on: ubuntu-24.04
@@ -166,8 +168,8 @@ jobs:
     permissions:
       contents: write
     outputs:
-      window_tag: ${{ steps.window.outputs.window_tag }}
-      handoff_sha256: ${{ steps.window.outputs.handoff_sha256 }}
+      window_tag: ${{ steps.window.outputs.bounded_window_tag }}
+      handoff_sha256: ${{ steps.window.outputs.consumer_handoff_sha256 }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
@@ -182,7 +184,7 @@ jobs:
           CATALOG_SHA: ${{ needs.catalog.outputs.catalog_sha256 }}
           INDEX_TAG: ${{ needs.index.outputs.data_index_tag }}
           INDEX_SHA: ${{ needs.index.outputs.data_index_sha256 }}
-        run: python -m pflow.production window --catalog-tag "$CATALOG_TAG" --catalog-sha "$CATALOG_SHA" --index-tag "$INDEX_TAG" --index-sha "$INDEX_SHA"
+        run: python -m pflow.bounded_v1 window --catalog-tag "$CATALOG_TAG" --catalog-sha "$CATALOG_SHA" --index-tag "$INDEX_TAG" --index-sha "$INDEX_SHA"
   verify:
     needs: window
     runs-on: ubuntu-24.04
@@ -200,4 +202,4 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           WINDOW_TAG: ${{ needs.window.outputs.window_tag }}
           HANDOFF_SHA: ${{ needs.window.outputs.handoff_sha256 }}
-        run: python -m pflow.production_consumer --tag "$WINDOW_TAG" --sha256 "$HANDOFF_SHA"
+        run: python -m pflow.bounded_v1 verify --tag "$WINDOW_TAG" --sha256 "$HANDOFF_SHA"

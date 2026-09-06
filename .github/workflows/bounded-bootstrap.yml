@@ -1,0 +1,78 @@
+name: Certify retained V3 bounded bootstrap
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pendulumflow-v3-observed-production
+  cancel-in-progress: false
+env:
+  CATALOG_TAG: observed-catalog-v1-305b1e9b81cea2a844f9d9aa48c4a1b70cc7d9dc0d53a7bee369c3423c79a9de
+  CATALOG_SHA: 0e49bd231274d0389aa40bf72d1d99c4a033c719f27b936c882fd8887b74f639
+  INDEX_TAG: observed-data-index-v1-24254f9fc394e161f916285cd8ddbac6644cdb7de1f7524d2f9c323b0d38070f
+  INDEX_SHA: 85c6f7afeb6c19cd8ed891564f04e1adcd5da1058f9e9c4ee30995bc46cc780f
+jobs:
+  certify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        day: ['2026-09-03', '2026-09-04', '2026-09-05']
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.14.7'
+      - run: python -m pip install --no-cache-dir -r requirements.lock
+      - env:
+          PYTHONPATH: src
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          python -m pflow.bounded_v1 certify
+          --catalog-tag "$CATALOG_TAG" --catalog-sha "$CATALOG_SHA"
+          --index-tag "$INDEX_TAG" --index-sha "$INDEX_SHA" --day "${{ matrix.day }}"
+  window:
+    needs: certify
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    outputs:
+      window_tag: ${{ steps.window.outputs.bounded_window_tag }}
+      handoff_sha256: ${{ steps.window.outputs.consumer_handoff_sha256 }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.14.7'
+      - run: python -m pip install --no-cache-dir -r requirements.lock
+      - id: window
+        env:
+          PYTHONPATH: src
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          python -m pflow.bounded_v1 window
+          --catalog-tag "$CATALOG_TAG" --catalog-sha "$CATALOG_SHA"
+          --index-tag "$INDEX_TAG" --index-sha "$INDEX_SHA"
+  verify:
+    needs: window
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.14.7'
+      - run: python -m pip install --no-cache-dir -r requirements.lock
+      - env:
+          PYTHONPATH: src
+          GH_TOKEN: ${{ github.token }}
+          WINDOW_TAG: ${{ needs.window.outputs.window_tag }}
+          HANDOFF_SHA: ${{ needs.window.outputs.handoff_sha256 }}
+        run: python -m pflow.bounded_v1 verify --tag "$WINDOW_TAG" --sha256 "$HANDOFF_SHA"

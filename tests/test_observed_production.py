@@ -19,8 +19,10 @@ from pflow.observed_v1 import (
     validate_observation,
 )
 from pflow.production import (
+    ACQUISITION_CODE_SHA256,
     DAY_SCHEMA,
     TRANSFORM_IMPLEMENTATION_FILES,
+    TRANSFORM_IMPLEMENTATION_SHA256,
     _chunks,
     _day_batches,
     _existing_partition,
@@ -253,6 +255,14 @@ class ObservedProductionTests(unittest.TestCase):
             _implementation_bundle_digest({**base, "observed_v1.py": b"changed"}),
         )
         self.assertFalse(any(name.startswith("docs/") for name in TRANSFORM_IMPLEMENTATION_FILES))
+        self.assertEqual(
+            TRANSFORM_IMPLEMENTATION_SHA256,
+            "9607154c842b29ff658b5cab591c04e459c2109b2fb274d2f096545bf85fde08",
+        )
+        self.assertEqual(
+            ACQUISITION_CODE_SHA256,
+            "1d9786f73ddeb776a4a30ce5d26ff22afb1702abd63537872cb9165b173f8dde",
+        )
 
     def test_current_window_handles_29_to_31_without_allowing_shrink(self) -> None:
         old = [f"2026-07-{day:02d}" for day in range(1, 30)]

@@ -1,0 +1,26 @@
+{
+  "schema": "pendulumflow-v3-observed-bounded-profile.v1",
+  "profile": "PENDULUMFLOW_V3_OBSERVED_BOUNDED_V1",
+  "profile_version": 1,
+  "certification_scope": "POSITIVE_TARGET_EVIDENCE_ADMISSION_FROM_PINNED_PENDULUMFLOW_V3",
+  "certification_scope_version": 1,
+  "population_exhaustive": false,
+  "unresolved_conditions_out_of_scope": false,
+  "continuity_between_observations_certified": false,
+  "time_only_crossings_permitted": false,
+  "canonical_depth_fields_permitted": false,
+  "historical_source_products": ["new_market", "best_bid_ask", "market_resolved"],
+  "admission_requires": [
+    "positive seven-asset Polymarket 5-minute Up/Down identity",
+    "condition and market identity",
+    "authoritative UP/DOWN token orientation",
+    "recorded non-null best ask for both outcome tokens",
+    "one non-contradictory native V3 official resolution",
+    "authenticated source provenance and lawful row semantics"
+  ],
+  "unresolved_disposition": "UNRESOLVED_NOT_ADMITTED",
+  "invalid_identified_target_disposition": "REJECTED_TARGET_EVIDENCE",
+  "research_metrics_population": "exact admitted bounded evidence population in the pinned generation",
+  "proven_optimal_limit": "affine strategy space for the exact dataset generation, admitted evidence population and objective",
+  "incompatible_authority_profiles": ["PENDULUMFLOW_V3_OBSERVED", "OWN_RECORDER_EXACT"]
+}

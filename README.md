@@ -4,13 +4,12 @@ This is a new, independent, depth-free acquisition project for Polymarket five-m
 Up/Down BTC, ETH, SOL, XRP, DOGE, BNB and HYPE. Development and control run on Windows;
 market payload acquisition and decoding are restricted to standard GitHub-hosted Linux.
 
-**Current status: no certified daily or rolling research authority exists.** The final
-target-first salvage proved 6,048 independently returned first-party target identities,
-but could not exclude deleted, moved or otherwise omitted historical targets among the
-170,369 retained V3 conditions without identity records. Tentative target-day/window
-objects produced before independent review are explicitly rejected; no current authority
-reference exists and imports remain disabled. See the
-[target-first capability gap](docs/target-first-salvage-capability-gap.md).
+The earlier exhaustive and inventory-complete certification attempts remain preserved as
+truthful blocked checkpoints. The final bounded-bootstrap policy is separately defined in
+[PENDULUMFLOW_V3_OBSERVED_BOUNDED_V1](docs/bounded-profile-v1.md). It permits research only
+over positively identified, individually valid target markets in an exact pinned V3
+generation. Unidentified conditions remain unresolved and unadmitted; they are never
+called unrelated, and the admitted population is never called historically exhaustive.
 
 The frozen research-facing acquisition path permits only `new_market`, `best_bid_ask`
 and `market_resolved` product ranges.
