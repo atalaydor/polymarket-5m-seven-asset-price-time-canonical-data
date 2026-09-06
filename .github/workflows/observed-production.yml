@@ -43,7 +43,7 @@ jobs:
       contents: write
     strategy:
       fail-fast: false
-      max-parallel: 8
+      max-parallel: 16
       matrix:
         batch: ${{ fromJSON(needs.plan.outputs.mapping_batches) }}
     steps:
@@ -92,7 +92,7 @@ jobs:
       contents: write
     strategy:
       fail-fast: false
-      max-parallel: 8
+      max-parallel: 16
       matrix:
         batch: ${{ fromJSON(needs.plan.outputs.data_batches) }}
     steps:
