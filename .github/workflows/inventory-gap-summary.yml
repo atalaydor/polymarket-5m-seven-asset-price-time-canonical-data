@@ -1,0 +1,31 @@
+name: V3 inventory identity gap summary
+on:
+  workflow_dispatch:
+    inputs:
+      index_tag:
+        description: Exact immutable observed data-index Release tag
+        required: true
+        type: string
+      index_sha256:
+        description: Exact data-index asset SHA-256
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  summarize:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.14.7'
+      - env:
+          PYTHONPATH: src
+          GH_TOKEN: ${{ github.token }}
+          INDEX_TAG: ${{ inputs.index_tag }}
+          INDEX_SHA256: ${{ inputs.index_sha256 }}
+        run: python -m pflow.inventory_gap --index-tag "$INDEX_TAG" --index-sha256 "$INDEX_SHA256"

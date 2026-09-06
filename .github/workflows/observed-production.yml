@@ -6,8 +6,6 @@ on:
         description: Latest market-start days to assess; 0 means every available complete past day
         type: number
         default: 0
-  schedule:
-    - cron: '17 */6 * * *'
 permissions:
   contents: read
 concurrency:
