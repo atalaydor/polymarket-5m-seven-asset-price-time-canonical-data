@@ -1,0 +1,99 @@
+name: Exhaust retained V3 bounded days
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pendulumflow-v3-observed-production
+  cancel-in-progress: false
+jobs:
+  plan:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    outputs:
+      has_work: ${{ steps.plan.outputs.has_work }}
+      day_batches: ${{ steps.plan.outputs.day_batches }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.14.7'
+      - run: python -m pip install --no-cache-dir -r requirements.lock
+      - id: plan
+        env:
+          PYTHONPATH: src
+          GH_TOKEN: ${{ github.token }}
+        run: python -m pflow.salvage plan
+  certify:
+    needs: plan
+    if: needs.plan.outputs.has_work == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+      matrix:
+        batch: ${{ fromJSON(needs.plan.outputs.day_batches) }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.14.7'
+      - run: python -m pip install --no-cache-dir -r requirements.lock
+      - env:
+          PYTHONPATH: src
+          GH_TOKEN: ${{ github.token }}
+          MARKET_DAYS: ${{ toJSON(matrix.batch.days) }}
+        run: python -m pflow.salvage certify-batch --days "$MARKET_DAYS"
+  finalize:
+    needs: [plan, certify]
+    if: >-
+      always() && needs.plan.result == 'success' &&
+      (needs.certify.result == 'success' || needs.certify.result == 'skipped')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    permissions:
+      contents: write
+    outputs:
+      salvage_tag: ${{ steps.finalize.outputs.salvage_tag }}
+      salvage_sha256: ${{ steps.finalize.outputs.salvage_sha256 }}
+      window_tag: ${{ steps.finalize.outputs.window_tag }}
+      consumer_handoff_sha256: ${{ steps.finalize.outputs.consumer_handoff_sha256 }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.14.7'
+      - run: python -m pip install --no-cache-dir -r requirements.lock
+      - id: finalize
+        env:
+          PYTHONPATH: src
+          GH_TOKEN: ${{ github.token }}
+        run: python -m pflow.salvage finalize
+  verify:
+    needs: finalize
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.14.7'
+      - run: python -m pip install --no-cache-dir -r requirements.lock
+      - env:
+          PYTHONPATH: src
+          GH_TOKEN: ${{ github.token }}
+          SALVAGE_TAG: ${{ needs.finalize.outputs.salvage_tag }}
+          SALVAGE_SHA: ${{ needs.finalize.outputs.salvage_sha256 }}
+          WINDOW_TAG: ${{ needs.finalize.outputs.window_tag }}
+          HANDOFF_SHA: ${{ needs.finalize.outputs.consumer_handoff_sha256 }}
+        run: >-
+          python -m pflow.salvage verify
+          --tag "$SALVAGE_TAG" --sha256 "$SALVAGE_SHA"
+          --window-tag "$WINDOW_TAG" --handoff-sha256 "$HANDOFF_SHA"

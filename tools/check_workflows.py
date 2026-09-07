@@ -11,9 +11,19 @@ def main() -> None:
     for path in Path(".github/workflows").glob("*.yml"):
         data: dict[str, Any] = yaml.safe_load(path.read_text())
         assert "jobs" in data
-        for job in data["jobs"].values():
+        for name, job in data["jobs"].items():
             assert job["runs-on"] == "ubuntu-24.04"
-            assert 1 <= job["timeout-minutes"] <= 45
+            maximum = (
+                180
+                if path.name == "historical-salvage.yml"
+                and name
+                in {
+                    "finalize",
+                    "verify",
+                }
+                else 45
+            )
+            assert 1 <= job["timeout-minutes"] <= maximum
             for step in job["steps"]:
                 if "uses" in step:
                     assert re.fullmatch(r"actions/[a-z-]+@[0-9a-f]{40}", step["uses"])

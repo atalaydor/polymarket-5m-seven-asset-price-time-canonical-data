@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import MagicMock, patch
 
 from pflow.bounded_v1 import (
     POPULATION_CLAIM,
@@ -10,6 +11,7 @@ from pflow.bounded_v1 import (
     require_import_profile,
     verify_window,
 )
+from pflow.salvage import _day_batches, certify_missing_days, coverage_summary
 
 
 class BoundedProfileTests(unittest.TestCase):
@@ -52,6 +54,48 @@ class BoundedProfileTests(unittest.TestCase):
         resolution["winning_token"] = "10"
         self.assertFalse(_mapping_relation(observation, mapping))
         self.assertFalse(_resolution_relation(resolution, mapping))
+
+    def test_salvage_coverage_selects_only_full_utc_days(self) -> None:
+        hours = [f"2026-08-18/{hour:02d}" for hour in range(6, 24)]
+        hours += [f"2026-08-19/{hour:02d}" for hour in range(24)]
+        hours += [f"2026-08-20/{hour:02d}" for hour in range(12)]
+        inventory = {
+            "hours": [
+                {"hour": hour, "manifest": {"bytes": index + 1}} for index, hour in enumerate(hours)
+            ]
+        }
+        result = coverage_summary(inventory)
+        self.assertEqual(result["first_hour"], "2026-08-18/06")
+        self.assertEqual(result["last_hour"], "2026-08-20/11")
+        self.assertEqual(result["complete_utc_days"], ["2026-08-19"])
+        self.assertEqual(
+            [item["day"] for item in result["partial_utc_days"]],
+            [
+                "2026-08-18",
+                "2026-08-20",
+            ],
+        )
+
+    def test_salvage_batches_are_bounded_and_order_preserving(self) -> None:
+        days = [f"2026-08-{day:02d}" for day in range(1, 9)]
+        self.assertEqual(
+            _day_batches(days),
+            [
+                {"days": days[0:3]},
+                {"days": days[3:6]},
+                {"days": days[6:8]},
+            ],
+        )
+
+    @patch("pflow.salvage.certify_day")
+    @patch("pflow.salvage._terminal_days")
+    def test_salvage_batch_reuses_terminal_siblings(
+        self, terminal: MagicMock, certify: MagicMock
+    ) -> None:
+        terminal.return_value = {"2026-08-19": ({}, {}, {})}
+        certify_missing_days(["2026-08-19", "2026-08-20"])
+        certify.assert_called_once()
+        self.assertEqual(certify.call_args.args[-1], "2026-08-20")
 
 
 if __name__ == "__main__":

@@ -783,7 +783,12 @@ def _load_day_release(release: dict[str, Any]) -> tuple[dict[str, Any], dict[str
 
 
 def publish_window(
-    catalog_tag: str, catalog_sha: str, index_tag: str, index_sha: str
+    catalog_tag: str,
+    catalog_sha: str,
+    index_tag: str,
+    index_sha: str,
+    *,
+    exact_dependency_days: set[str] | None = None,
 ) -> dict[str, Any]:
     _, catalog, index = _load_dependencies(catalog_tag, catalog_sha, index_tag, index_sha)
     latest: dict[str, tuple[dict[str, Any], dict[str, Any]]] = {}
@@ -797,6 +802,14 @@ def publish_window(
         ):
             continue
         _, manifest = _load_day_release(release)
+        if exact_dependency_days is not None and (
+            manifest["day"] not in exact_dependency_days
+            or manifest["catalog_tag"] != catalog_tag
+            or manifest["catalog_sha256"] != catalog_sha
+            or manifest["data_index_tag"] != index_tag
+            or manifest["data_index_sha256"] != index_sha
+        ):
+            continue
         prior = latest.get(manifest["day"])
         rank = (manifest["inventory_release_id"], manifest["inventory_last_hour"], release["id"])
         if prior is None or rank > (
