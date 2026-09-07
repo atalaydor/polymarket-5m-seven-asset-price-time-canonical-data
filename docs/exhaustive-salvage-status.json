@@ -1,0 +1,113 @@
+{
+  "schema": "pendulumflow-run1-exhaustive-salvage-status.v1",
+  "verdict": "MAXIMUM_ELIGIBLE_RETAINED_GENERATION_PUBLISHED",
+  "repository": "atalaydor/polymarket-5m-seven-asset-price-time-canonical-data",
+  "repository_id": 1358712762,
+  "branch": "main",
+  "implementation_commit": "5f6e74b1d0967926a7a9cbe5546492146946f20e",
+  "checkpoint_tag": "run-1-bounded-maximum-salvage-v1.0.0",
+  "profile": "PENDULUMFLOW_V3_OBSERVED_BOUNDED_V1",
+  "research_import_allowed": true,
+  "population_exhaustive": false,
+  "continuity_between_observations_certified": false,
+  "canonical_depth_fields_permitted": false,
+  "retained_generation": {
+    "first_receipt_hour": "2026-08-18/06",
+    "last_receipt_hour": "2026-09-06/11",
+    "published_receipt_hours": 460,
+    "authenticated_partitions": 116,
+    "data_partition_download_counter_bytes": 40488664657,
+    "advertised_full_object_bytes": 415539376156,
+    "v3_historical_source_reacquisition_bytes": 0,
+    "inventory_tag": "v3-inventory-v1-ead9a909a8c4fa5ad638a111040087609f6e7ac88c95b3f4596786810586bcc0",
+    "catalog_tag": "observed-catalog-v1-305b1e9b81cea2a844f9d9aa48c4a1b70cc7d9dc0d53a7bee369c3423c79a9de",
+    "catalog_sha256": "0e49bd231274d0389aa40bf72d1d99c4a033c719f27b936c882fd8887b74f639",
+    "data_index_tag": "observed-data-index-v1-24254f9fc394e161f916285cd8ddbac6644cdb7de1f7524d2f9c323b0d38070f",
+    "data_index_sha256": "85c6f7afeb6c19cd8ed891564f04e1adcd5da1058f9e9c4ee30995bc46cc780f"
+  },
+  "salvage_scope": {
+    "eligibility_rule": "past UTC day with all 24 pinned V3 receipt-hour objects present",
+    "complete_assessable_day_count": 17,
+    "certified_days": [
+      "2026-08-19",
+      "2026-08-20",
+      "2026-08-21",
+      "2026-08-22",
+      "2026-08-23",
+      "2026-08-24",
+      "2026-08-25",
+      "2026-08-27",
+      "2026-08-28",
+      "2026-08-29",
+      "2026-08-30",
+      "2026-08-31",
+      "2026-09-01",
+      "2026-09-02",
+      "2026-09-03",
+      "2026-09-04",
+      "2026-09-05"
+    ],
+    "proven_non_certifiable_days": [],
+    "partial_days_outside_this_pass_not_proven_non_certifiable": [
+      {"day": "2026-08-18", "present_hours": 18, "missing_hours": ["00", "01", "02", "03", "04", "05"]},
+      {"day": "2026-08-26", "present_hours": 22, "missing_hours": ["05", "06"]},
+      {"day": "2026-09-06", "present_hours": 12, "missing_hours": ["12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"]}
+    ],
+    "admitted_target_markets": 32625,
+    "rejected_target_markets": 960,
+    "admitted_observation_and_resolution_rows": 88966104,
+    "rejected_observation_and_resolution_rows": 60742,
+    "inventory_wide_unresolved_not_admitted_count": 170369,
+    "inventory_wide_unresolved_not_admitted_set_sha256": "11c7ae4f3732a232dbb07c183b73a7b7fa655a7e52af211231514020bfea3984"
+  },
+  "salvage_ledger": {
+    "tag": "bounded-salvage-v1-3dc259a5c6a29869250b2a1adb27835fddaeb10f24e81e9565bbbe7ac9fec281",
+    "release_id": 383939140,
+    "asset_id": 548456117,
+    "asset_sha256": "53e52583fdab6f364e5db875cca342610516889161473155263b5248621e752a",
+    "asset_size": 12435,
+    "immutable": true
+  },
+  "current_window": {
+    "generation": "69bf743b2998e4fece8a392bf990cb98e2271b19dd58b20d3a2c00de9e47db8e",
+    "tag": "bounded-window-v1-69bf743b2998e4fece8a392bf990cb98e2271b19dd58b20d3a2c00de9e47db8e",
+    "release_id": 383884845,
+    "consumer_handoff_asset_id": 548325631,
+    "consumer_handoff_sha256": "9cd7a058357d27b80b58ddb8ed61b9d2d1c48171652ff633eb0a5cdc6643999f",
+    "consumer_handoff_size": 18660,
+    "immutable": true,
+    "current_reference_branch": "bounded-current",
+    "current_reference_commit": "705d5123be744fb9bcbddda851b758ef19348e6d",
+    "current_reference_path": "authority/current-window.json"
+  },
+  "verification": {
+    "implementation_checks_run_id": 34090364194,
+    "implementation_checks_job_id": 101642410044,
+    "salvage_run_id": 34090418412,
+    "independent_verify_job_id": 101676879395,
+    "independent_verify_conclusion": "success",
+    "independent_verify_runtime": "103m24s",
+    "source_review": "PASS_WITH_EXPLICIT_FULL_RECEIPT_DAY_SCOPE",
+    "implementation_review": "PASS_WITH_EXPLICIT_FULL_RECEIPT_DAY_SCOPE"
+  },
+  "actions_recovery": {
+    "original_run_id": 34054404836,
+    "original_run_conclusion": "failure",
+    "successful_jobs_preserved": 179,
+    "failed_job_id": 101544312110,
+    "failed_unsealed_partial_day_shard_retried_by_salvage": false,
+    "failed_shard_admitted_to_retained_generation": false,
+    "downstream_salvage_run_id": 34090418412,
+    "downstream_salvage_conclusion": "success"
+  },
+  "future_accumulation": {
+    "workflow_id": 351551068,
+    "workflow_path": ".github/workflows/observed-production.yml",
+    "workflow_state": "active",
+    "schedule": "17 4 * * *",
+    "observed_run_id": 34106009193,
+    "observed_run_status": "in_progress",
+    "authority_independent_of_future_run": true
+  },
+  "observed_at": "2026-09-07T10:42:23Z"
+}
